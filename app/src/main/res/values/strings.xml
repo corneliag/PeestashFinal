@@ -3,4 +3,71 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="connexion">Connexion</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="logo">peestash logo</string>
+    <string name="hint_email">Email</string>
+    <string name="votreEmail">Votre e-mail</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="mdpOublie">Mot de passe oublié ?</string>
+    <string name="btn_register_artist">Artiste</string>
+    <string name="btn_register_etablissement">Établissement</string>
+    <string name="inscription">Pas encore membre ? Inscrivez-vous en tant que... </string>
+    <string name="title_activity_register_artist">RegisterArtistActivity</string>
+    <string name="title_activity_register_etablissement">RegisterEtablissementActivity</string>
+    <string name="title_activity_artist_home">ArtistHomeActivity</string>
+    <string name="title_activity_etablissement_home">EtablissementHomeActivity</string>
+    <string name="title_activity_edit_artist_profil">EditArtistProfilActivity</string>
+    <string name="title_activity_liste_deroulante">ListeDeroulanteActivity</string>
+    <string name="title_activity_edit_etablissement_profil">EditEtablissementProfilActivity</string>
+
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Accueil</item>
+        <item>Mon profil</item>
+        <item>Mes événements</item>
+        <item>Mes notifications</item>
+        <item>Mes options</item>
+        <item>Réglage du filtre</item>
+        <item>Déconnexion</item>
+        <item>Supprimer mon compte</item>
+    </string-array>
+
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/icon_home</item>
+        <item>@drawable/icon_profil</item>
+        <item>@drawable/icon_events</item>
+        <item>@drawable/icon_messages</item>
+        <item>@drawable/icon_options</item>
+        <item>@drawable/icon_filtre</item>
+        <item>@drawable/icon_lougout</item>
+        <item>@drawable/icon_supprimer</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="title_activity_main">Menu artiste</string>
+    <string name="title_activity_etb_main">Menu etablissement</string>
+    <string name="btnEditProfil">Modifier mon profil</string>
+    <string name="title_activity_upload">UploadActivity</string>
+    <string name="title_activity_slide">Slideshow</string>
+    <string name="firstLayout">Bienvenue ! </string>
+    <string name="secondLayout">Qu\'est-ce que Peestash ? </string>
+    <string name="desc_appli">Application dediee à la recherche d\’artistes ou de salles pour se produire.
+        C\'est a la fois une application destinee aux artistes souhaitant faire de la scene et ameliorer leur notoriete. Mais aussi,
+        c\'est l\'outil parfait pour tout etablissement desirant recruter facilement des artistes de qualite pour leurs evenements.</string>
+    <string name="list_fonc">
+        Des Profils mis en valeur
+        En recherche de bons plans
+        En recherche d\'artistes musicaux
+    </string>
+
+    <string name="seconnecter">Se connecter</string>
+    <string name="logout">Me deconnecter</string>
 </resources>

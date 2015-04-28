@@ -5,4 +5,21 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="button_text" >
+        <item name="android:layout_width" >fill_parent</item>
+        <item name="android:layout_height" >wrap_content</item>
+        <item name="android:textColor" >#fff</item>
+        <item name="android:gravity" >center</item>
+        <item name="android:layout_margin" >3dp</item>
+        <item name="android:textSize" >20dp</item>
+    </style>
+
+    <style name="indicator_style">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">4dip</item>
+        <item name="android:background">@color/l_blue</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    
 </resources>
