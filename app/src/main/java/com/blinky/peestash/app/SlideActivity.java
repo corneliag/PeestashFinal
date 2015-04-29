@@ -36,25 +36,7 @@ public class SlideActivity extends FragmentActivity {
 
         final Button btn = (Button) findViewById(R.id.btn);
 
-       /*View.OnClickListener listnr = new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                    new Thread(new Runnable() {
-                        public void run() {
-
-                            Intent i = new Intent(SlideActivity.this, LoginActivity.class);
-                            startActivity(i);
-
-                        }
-                    }).start();
-
-                }
-
-        };
-
-        btn.setOnClickListener(listnr);*/
+      
 
         // Call isNetworkAvailable class
 
