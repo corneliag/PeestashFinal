@@ -3,7 +3,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/bg"
+            android:background="@color/beige"
 
         >
 
@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/mdpOublie"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_marginBottom="10dip"
                     android:gravity="right"
                     />
@@ -92,8 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/inscription"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"
                     android:layout_marginTop="30dip"
                     android:gravity="center"
                     />
