@@ -71,8 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/mdpOublie"
-                    android:textColor="@color/orange"
-                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_marginBottom="10dip"
                     android:gravity="right"
                     />
@@ -93,8 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/inscription"
-                    android:textColor="@color/orange"
-                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
                     android:layout_marginTop="30dip"
                     android:gravity="center"
                     />
