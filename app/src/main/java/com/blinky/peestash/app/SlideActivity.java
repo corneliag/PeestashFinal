@@ -1,47 +1,121 @@
 package com.blinky.peestash.app;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.content.DialogInterface.OnClickListener;
+import android.widget.Toast;
 
 public class SlideActivity extends FragmentActivity {
+
     private ViewPager _mViewPager;
     private ViewPagerAdapter _adapter;
     private Button _btn1,_btn2, _btn3;
+    Context appContext;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.slide);
         setUpView();
         setTab();
 
-        Button btn = (Button) findViewById(R.id.btn);
-        View.OnClickListener listnr = new View.OnClickListener() {
+        final Button btn = (Button) findViewById(R.id.btn);
+
+       /*View.OnClickListener listnr = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    public void run() {
 
-                        Intent i = new Intent(SlideActivity.this, LoginActivity.class);
-                        startActivity(i);
+                    new Thread(new Runnable() {
+                        public void run() {
 
-                    }
-                }).start();
+                            Intent i = new Intent(SlideActivity.this, LoginActivity.class);
+                            startActivity(i);
 
+                        }
+                    }).start();
 
-            }
+                }
+
         };
 
-        btn.setOnClickListener(listnr);
+        btn.setOnClickListener(listnr);*/
+
+        // Call isNetworkAvailable class
+
+            final View.OnClickListener listnr = new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    if (!isNetworkAvailable()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(
+                                SlideActivity.this);
+                        builder.setMessage("Connexion internet impossible ! :( ").setCancelable(false).setPositiveButton(
+                                "Ressayer", new DialogInterface.OnClickListener() {
+                                    public void onClick(
+                                            DialogInterface dialog,
+                                            int id) {
+                                        btn.setVisibility(View.GONE);
+                                        // Restart the activity
+                                        Intent intent = new Intent(
+                                                SlideActivity.this,
+                                                SlideActivity.class);
+                                        finish();
+                                        startActivity(intent);
+
+                                    }
+
+                                }
+
+                        );
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    } else {
+
+                            new Thread(new Runnable() {
+                                public void run() {
+
+                                    Intent i = new Intent(SlideActivity.this, LoginActivity.class);
+                                    startActivity(i);
+
+                                }
+                            }).start();
+
+                        }
+                    }
+
+            };
+            btn.setOnClickListener(listnr);
+
+
+
+    }
+
+    // Private class isNetworkAvailable
+
+    private boolean isNetworkAvailable() {
+        // Using ConnectivityManager to check for Network Connection
+        ConnectivityManager connectivityManager = (ConnectivityManager) this
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager
+                .getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
     private void setUpView(){
         _mViewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -107,4 +181,5 @@ public class SlideActivity extends FragmentActivity {
         btn.setHeight(h);
         btn.setText(text);
     }
+
 }
