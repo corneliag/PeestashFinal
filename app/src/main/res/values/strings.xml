@@ -54,7 +54,7 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_main">Menu artiste</string>
     <string name="title_activity_etb_main">Menu etablissement</string>
-    <string name="btnEditProfil">Modifier mon profil</string>
+    <string name="btnEditProfil">Modifier mes informations</string>
     <string name="title_activity_upload">UploadActivity</string>
     <string name="title_activity_slide">Slideshow</string>
     <string name="firstLayout">Bienvenue ! </string>
