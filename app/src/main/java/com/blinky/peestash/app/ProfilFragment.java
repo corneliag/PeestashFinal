@@ -6,8 +6,7 @@ package com.blinky.peestash.app;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -204,7 +203,9 @@ public class ProfilFragment extends Fragment {
                     if (imgUrl.length() != 0) {
                         InputStream in = new java.net.URL(imgUrl).openStream();
                         imgurl = BitmapFactory.decodeStream(in);
-                        img.setImageBitmap(imgurl);
+
+                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+
                     }
 
                     Nom.setText(nom);
@@ -249,5 +250,33 @@ public class ProfilFragment extends Fragment {
 
         }
     }
+    public static Bitmap getCircularBitmapWithBorder(Bitmap bitmap,
+                                                     int borderWidth, int bordercolor) {
+        if (bitmap == null || bitmap.isRecycled()) {
+            return null;
+        }
 
+        final int width = bitmap.getWidth() + borderWidth;
+        final int height = bitmap.getHeight() + borderWidth;
+
+        Bitmap canvasBitmap = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP,
+                Shader.TileMode.CLAMP);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
+
+        Canvas canvas = new Canvas(canvasBitmap);
+        float radius = width > height ? ((float) height) / 2f
+                : ((float) width) / 2f;
+        canvas.drawCircle(width / 2, height / 2, radius, paint);
+        paint.setShader(null);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(bordercolor);
+        paint.setStrokeWidth(borderWidth);
+        canvas.drawCircle(width / 2, height / 2, radius - borderWidth / 2,
+                paint);
+        return canvasBitmap;
+    }
 }
