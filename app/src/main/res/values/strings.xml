@@ -56,7 +56,7 @@
     <string name="title_activity_etb_main">Menu etablissement</string>
     <string name="btnEditProfil">Modifier mes informations</string>
     <string name="title_activity_upload">UploadActivity</string>
-    <string name="title_activity_slide">Slideshow</string>
+    <string name="title_activity_slide">Peestash</string>
     <string name="firstLayout">Bienvenue ! </string>
     <string name="secondLayout">Qu\'est-ce que Peestash ? </string>
     <string name="desc_appli">Application dediee à la recherche d\’artistes ou de salles pour se produire.
