@@ -36,7 +36,7 @@ public class SlideActivity extends FragmentActivity {
 
         final Button btn = (Button) findViewById(R.id.btn);
 
-      
+
 
         // Call isNetworkAvailable class
 
