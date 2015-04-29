@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context _context;
-    public static int totalPage=3;
+    public static int totalPage=4;
     public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         _context=context;
@@ -29,6 +29,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 2:
                 f=LayoutThree.newInstance(_context);
+                break;
+            case 3:
+                f=LayoutFour.newInstance(_context);
                 break;
         }
         return f;
