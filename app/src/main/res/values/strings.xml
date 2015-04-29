@@ -59,15 +59,13 @@
     <string name="title_activity_slide">Peestash</string>
     <string name="firstLayout">Bienvenue ! </string>
     <string name="secondLayout">Qu\'est-ce que Peestash ? </string>
-    <string name="desc_appli">Application dediee à la recherche d\’artistes ou de salles pour se produire.
-        C\'est a la fois une application destinee aux artistes souhaitant faire de la scene et ameliorer leur notoriete. Mais aussi,
-        c\'est l\'outil parfait pour tout etablissement desirant recruter facilement des artistes de qualite pour leurs evenements.</string>
+    <string name="desc_appli">Des artistes de qualite a votre disposition pour un show d exception</string>
     <string name="list_fonc">
-        Des Profils mis en valeur
-        En recherche de bons plans
-        En recherche d\'artistes musicaux
+        Vous etes talentueux ? Creatif ? Passionne de musique ? Venez profiter de scenes d exception.
     </string>
 
     <string name="seconnecter">Se connecter</string>
     <string name="logout">Me deconnecter</string>
+    <string name="etb">Etablissements</string>
+    <string name="art">Artistes</string>
 </resources>
