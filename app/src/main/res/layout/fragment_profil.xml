@@ -25,18 +25,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/icon_profil"
+
                             android:minWidth="120dp" android:minHeight="90dp"
                             android:maxWidth="300dp" android:maxHeight="220dp"/>
-                    <!-- <Button
-                             android:layout_width="100dp"
-                             android:layout_height="20dp"
-                             android:layout_marginTop="20dp"
-                             android:text="Modifier mon image"
-                             android:id="@+id/btnImage"
-                             android:background="@color/orange"
-                             android:textSize="11dp"
-                             style="@style/button_text"
-                             android:layout_below="@+id/imageView"/>-->
+
 
                 </RelativeLayout>
 
