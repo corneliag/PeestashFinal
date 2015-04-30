@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
@@ -41,6 +42,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.blinky.peestash.app.ProfilFragment.getCircularBitmapWithBorder;
+
 public class HomeFragment extends Fragment {
 
     public HomeFragment(){}
@@ -50,13 +53,13 @@ public class HomeFragment extends Fragment {
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
             Fixe, Siteweb, Genre, Dispo, Facebook, Age;
     int nbreponse;
-    List<String> nom, prenom, adresse, ville, pays, cp, email, pseudo, telportable, telfixe, soundcloud, dispo, siteweb, imgUrl, genre_musical, age;
+    List<String> nom, prenom, adresse, ville, pays, cp, email, pseudo, telportable, telfixe, soundcloud, facebook, dispo, siteweb, imgUrl, genre_musical, age;
     ImageView img;
     ProgressDialog progress;
     private WebView wv;
     int i=0;
     String html;
-
+    Bitmap imgurl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +76,7 @@ public class HomeFragment extends Fragment {
         Nom = (TextView) rootView.findViewById(R.id.Nom);
         Prenom = (TextView) rootView.findViewById(R.id.Prenom);
         Age = (TextView) rootView.findViewById(R.id.Age);
-        Adresse = (TextView) rootView.findViewById(R.id.Adresse);
+        //Adresse = (TextView) rootView.findViewById(R.id.Adresse);
         CP = (TextView) rootView.findViewById(R.id.CP);
         Ville = (TextView) rootView.findViewById(R.id.Ville);
         Pays = (TextView) rootView.findViewById(R.id.Pays);
@@ -91,22 +94,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-             /*   String msg = "nb" + nbreponse;
-                System.out.println("nb" + nbreponse);*/
+                String msg = "nb" + nbreponse;
+                System.out.println("nb" + nbreponse);
 
                 i++;
-                Pseudo.setText(pseudo.get(i).toString());
-                Email.setText(email.get(i).toString());
-                Nom.setText(nom.get(i).toString());
-                Prenom.setText(prenom.get(i).toString());
-                Adresse.setText(adresse.get(i).toString());
-                CP.setText(cp.get(i).toString());
-                Ville.setText(ville.get(i).toString());
-                Pays.setText(pays.get(i).toString());
-                Genre.setText(genre_musical.get(i).toString());
-                Siteweb.setText(siteweb.get(i).toString());
-                Fixe.setText(telfixe.get(i).toString());
-                Mobile.setText(telportable.get(i).toString());
+                afficheProfilContent(i);
 
                 if (i == (nbreponse - 1)) {
                     i = 0;
@@ -142,20 +134,7 @@ public class HomeFragment extends Fragment {
 
                                 Log.i("right to left", "Right to Left");
                                 i++;
-                                Pseudo.setText(pseudo.get(i).toString());
-                                Email.setText(email.get(i).toString());
-                                Nom.setText(nom.get(i).toString());
-                                Prenom.setText(nom.get(i).toString());
-                                Adresse.setText(adresse.get(i).toString());
-                                CP.setText(cp.get(i).toString());
-                                Ville.setText(ville.get(i).toString());
-                                Pays.setText(pays.get(i).toString());
-                                Genre.setText(genre_musical.get(0).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-                                Siteweb.setText(siteweb.get(i).toString());
-                                Fixe.setText(telfixe.get(i).toString());
-                                Mobile.setText(telportable.get(i).toString());
-                                Dispo.setText(dispo.get(0).toString().replaceAll(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-
+                                afficheProfilContent(i);
 
                                 if (i == (nbreponse - 1)) {
                                     i = -1;
@@ -170,21 +149,7 @@ public class HomeFragment extends Fragment {
                                     i=nbreponse;
                                 }
                                     i--;
-                                    Pseudo.setText(pseudo.get(i).toString());
-                                    Email.setText(email.get(i).toString());
-                                    Nom.setText(nom.get(i).toString());
-                                    Prenom.setText(nom.get(i).toString());
-                                    Adresse.setText(adresse.get(i).toString());
-                                    CP.setText(cp.get(i).toString());
-                                    Ville.setText(ville.get(i).toString());
-                                    Pays.setText(pays.get(i).toString());
-                                    Genre.setText(genre_musical.get(0).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-                                    Siteweb.setText(siteweb.get(i).toString());
-                                    Fixe.setText(telfixe.get(i).toString());
-                                    Mobile.setText(telportable.get(i).toString());
-                                    Dispo.setText(dispo.get(0).toString().replaceAll(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-
-
+                                afficheProfilContent(i);
 
                             }
                         } catch (Exception e) {
@@ -270,12 +235,12 @@ public class HomeFragment extends Fragment {
                 String json = reader.readLine();
                 JSONTokener tokener = new JSONTokener(json);
                 JSONArray finalResult = new JSONArray(tokener);
-                Bitmap imgurl;
+
                 int i=0;
                 // Access by key : value
                 nbreponse = finalResult.length();
-                String nb = String.valueOf(nbreponse);
-                System.out.println("nb reponse "+ nb);
+               /* String nb = String.valueOf(nbreponse);
+                System.out.println("nb reponse "+ nb); */
 
                 email = new ArrayList<String>(nbreponse);
                 pseudo = new ArrayList<String>(nbreponse);
@@ -293,6 +258,7 @@ public class HomeFragment extends Fragment {
                 imgUrl = new ArrayList<String>(nbreponse);
                 genre_musical = new ArrayList<String>(nbreponse);
                 age = new ArrayList<String>(nbreponse);
+                facebook = new ArrayList<String>(nbreponse);
 
                 for (i = 0; i < finalResult.length(); i++) {
 
@@ -303,57 +269,23 @@ public class HomeFragment extends Fragment {
                     soundcloud.add(element.getString("soundcloud"));
                     adresse.add(element.getString("adresse"));
                     cp.add(element.getString("code_postal"));
-
                     prenom.add(element.getString("prenom"));
                     ville.add(element.getString("ville"));
                     pays.add(element.getString("pays"));
                     telportable.add(element.getString("tel_portable"));
                     telfixe.add(element.getString("tel_fixe"));
                     dispo.add(element.getString("disponibilites"));
-
                     siteweb.add(element.getString("siteweb"));
                     imgUrl.add(element.getString("image_url"));
                     genre_musical.add(element.getString("genre_musical"));
                     age.add(element.getString("age"));
+                    facebook.add(element.getString("facebook"));
 
                 }
+                i=0;
 
-                    /*  if(imgUrl[i].length() != 0) {
-                        InputStream in = new java.net.URL(imgUrl[i]).openStream();
-                        imgurl = BitmapFactory.decodeStream(in);
-                        img.setImageBitmap(imgurl);
-                    }*/
-
-
-                    Prenom.setText(prenom.get(0).toString());
-
-                    Age.setText(age.get(0).toString());
-                    Genre.setText(genre_musical.get(0).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-                    Pseudo.setText(pseudo.get(0).toString());
-                    Email.setText(email.get(0).toString());
-                    Nom.setText(nom.get(0).toString());
-                    Adresse.setText(adresse.get(0).toString());
-                    CP.setText(cp.get(0).toString());
-                    Ville.setText(ville.get(0).toString());
-                    Pays.setText(pays.get(0).toString());
-                    Dispo.setText(dispo.get(0).toString().replaceAll(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-                    Mobile.setText(telportable.get(0).toString());
-                    Fixe.setText(telfixe.get(0).toString());
-
-                    Siteweb.setText(siteweb.get(0).toString());
-
-
-             /*   if (soundcloud[i].length() != 0) {
-                    html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" + soundcloud[i] + "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";
-                    wv.getSettings().setJavaScriptEnabled(true);
-                    wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-                } else {
-                    html = "Vous n'avez pas renseigne l\'ID de votre playlist Soundcloud";
-                    wv.getSettings().setJavaScriptEnabled(true);
-                    wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-
-                }*/
-
+                afficheProfilContent(i);
+                
                 is.close();
 
             } catch (Exception e) {
@@ -365,5 +297,45 @@ public class HomeFragment extends Fragment {
 
         }
     }
+protected void afficheProfilContent(int i)
+{
+    Pseudo.setText(pseudo.get(i).toString());
+    Email.setText(email.get(i).toString());
+    Nom.setText(nom.get(i).toString());
+    Prenom.setText(prenom.get(i).toString());
+    //Adresse.setText(adresse.get(i).toString());
+    CP.setText(cp.get(i).toString());
+    Ville.setText(ville.get(i).toString());
+    Pays.setText(pays.get(i).toString());
+    Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
+    Siteweb.setText(siteweb.get(i).toString());
+    Fixe.setText(telfixe.get(i).toString());
+    Mobile.setText(telportable.get(i).toString());
+    Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
+    Age.setText(age.get(i).toString());
+    Facebook.setText(facebook.get(i).toString());
 
+    if(imgUrl.get(i).toString().length() != 0) {
+        InputStream in = null;
+        try {
+            in = new java.net.URL(imgUrl.get(i).toString()).openStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imgurl = BitmapFactory.decodeStream(in);
+        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+
+    }
+    if (soundcloud.get(i).toString().length() != 0) {
+        html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" +soundcloud.get(i).toString()+ "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+    } else {
+        html = "Vous n'avez pas renseigne l\'ID de votre playlist Soundcloud";
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+
+    }
+
+}
 }
