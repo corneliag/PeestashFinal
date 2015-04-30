@@ -10,7 +10,7 @@ public class Verify {
 
     public static Boolean valid = false;
 
-    /* Vérification email et confirmation d'e-mail identiques
+    /* Verification email et confirmation d'e-mail identiques
     */
 
     public Boolean checkEmail(String email, String confirmEmail)
@@ -25,7 +25,7 @@ public class Verify {
         }
         return valid;
     }
-    /* Vérification de la structure de l'email avec un regex
+    /* Verification de la structure de l'email avec un regex
     */
     public Boolean checkEmailWriting(String email)
     {
@@ -41,7 +41,7 @@ public class Verify {
         return valid;
     }
 
-    /* Vérification de la structure du mot de passe
+    /* Verification de la structure du mot de passe
     */
 
     public Boolean checkMdpWriting(String password)
@@ -52,7 +52,7 @@ public class Verify {
         }
         return valid;
     }
-    /* Vérification du mot de passe et vérification de mot de passe
+    /* Verification du mot de passe et vérification de mot de passe
     */
     public Boolean checkMdp(String password, String confirmPassword)
     {
