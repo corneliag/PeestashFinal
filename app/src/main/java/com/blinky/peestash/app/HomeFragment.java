@@ -94,14 +94,16 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                String msg = "nb" + nbreponse;
-                System.out.println("nb" + nbreponse);
+               /* String msg = "nb" + nbreponse;
+                System.out.println("nb" + nbreponse);*/
 
-                i++;
-                afficheProfilContent(i);
-
-                if (i == (nbreponse - 1)) {
+                if (i == (nbreponse-1)) {
                     i = 0;
+                    afficheProfilContent(i);
+                }
+                else {
+                    i++;
+                    afficheProfilContent(i);
                 }
 
             }
@@ -132,24 +134,31 @@ public class HomeFragment extends Fragment {
                             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 
-                                Log.i("right to left", "Right to Left");
-                                i++;
-                                afficheProfilContent(i);
+                                //Log.i("right to left", "Right to Left");
+
 
                                 if (i == (nbreponse - 1)) {
-                                    i = -1;
+                                    i = 0;
+                                    afficheProfilContent(i);
+
+                                }else {
+                                    i++;
+                                    afficheProfilContent(i);
+
                                 }
 
                             } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Log.i("left to rigth", "Left to Right");
+                                //Log.i("left to rigth", "Left to Right");
 
-                                if(i==0||i<0)
+                                if(i==0)
                                 {
-                                    i=nbreponse;
-                                }
+                                    i=nbreponse-1;
+                                    afficheProfilContent(i);
+                                } else {
                                     i--;
-                                afficheProfilContent(i);
+                                    afficheProfilContent(i);
+                                }
 
                             }
                         } catch (Exception e) {
@@ -285,7 +294,7 @@ public class HomeFragment extends Fragment {
                 i=0;
 
                 afficheProfilContent(i);
-                
+
                 is.close();
 
             } catch (Exception e) {
