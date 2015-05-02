@@ -178,6 +178,7 @@ public class UploadActivity extends Activity {
                     i.putExtra("id_user", id_user);
                     i.putExtra("position", position);
                     startActivity(i);
+                    finish();
 
                     } else {
 
@@ -186,6 +187,7 @@ public class UploadActivity extends Activity {
                         i.putExtra("id_user", id_user);
                         i.putExtra("position", position);
                         startActivity(i);
+                    finish();
                     }
                 }
 

@@ -44,7 +44,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
             editTelFixe, editSoundcloud, editSiteweb, editPassword, editConfirmMdp;
     TextView affichageEmail;
     int i;
-    ImageView img;
+    //ImageView img;
     private Button btnSave;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", confirmEmail="", ville = "", adresse = "", cp = "", pays = "",
             telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "", password = "", confirmMdp="";
@@ -95,7 +95,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
         editTelFixe = (EditText) findViewById(R.id.editTelFixe);
         editSoundcloud = (EditText) findViewById(R.id.editSoundcloud);
         editSiteweb = (EditText) findViewById(R.id.editSiteweb);
-        img = (ImageView) findViewById(R.id.img);
+       // img = (ImageView) findViewById(R.id.img);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editConfirmMdp = (EditText) findViewById(R.id.editConfirmMdp);
 
@@ -248,8 +248,15 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                         is = entity.getContent();
 
                                         //displaying a toast message if the data is entered in the database
-                                        msg = "Données modifiées en BDD artist";
+                                        msg = "Vos informations ont bien été modifiées";
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                        int position=1;
+                                        Intent i = new Intent(EditArtistProfilActivity.this, MainActivity.class);
+                                        i.putExtra("id_user", id_user);
+                                        i.putExtra("position", position);
+                                        startActivity(i);
+                                        finish();
+
 
                                     } catch (ClientProtocolException e) {
                                         Log.e("ClientProtocole", "Log_tag");
@@ -264,6 +271,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                 }else {
                                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                     msg ="";
+
                                 }
                             }
                         });
@@ -283,7 +291,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
         }
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Button btn = (Button) findViewById(R.id.btnImage);
+       /* Button btn = (Button) findViewById(R.id.btnImage);
 
         View.OnClickListener listnr = new View.OnClickListener() {
             public void onClick(View v) {
@@ -301,7 +309,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
 
         };
 
-        btn.setOnClickListener(listnr);
+        btn.setOnClickListener(listnr);*/
 
     }
 
@@ -634,7 +642,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                 String json = reader.readLine();
                 JSONTokener tokener = new JSONTokener(json);
                 JSONArray finalResult = new JSONArray(tokener);
-                Bitmap imgurl;
+               // Bitmap imgurl;
 
                 // Spinner element
                 spinnerAge = (Spinner) findViewById(R.id.spinnerAge);
@@ -656,16 +664,16 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                     dispo = element.getString("disponibilites");
                     soundcloud = element.getString("soundcloud");
                     siteweb = element.getString("siteweb");
-                    imgUrl = element.getString("image_url");
+                   // imgUrl = element.getString("image_url");
                     genre_musical = element.getString("genre_musical");
                     age = element.getString("age");
 
-                    if(imgUrl.length()!=0)
+                   /* if(imgUrl.length()!=0)
                     {
                         InputStream in = new java.net.URL(imgUrl).openStream();
                         imgurl = BitmapFactory.decodeStream(in);
                         img.setImageBitmap(imgurl);
-                    }
+                    }*/
 
                     editNom.setText(nom);
                     editPrenom.setText(prenom);

@@ -65,6 +65,14 @@
                 android:screenOrientation="portrait" >
         </activity>
         <activity
+                android:name=".TabActivity"
+                android:label="@string/title_activity_etablissement_home"
+                android:parentActivityName=".MainActivity"
+                android:screenOrientation="portrait" >
+
+        </activity>
+
+        <activity
                 android:name=".SlideActivity"
                 android:label="@string/title_activity_slide"
                 android:screenOrientation="portrait" >

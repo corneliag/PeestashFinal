@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -194,6 +195,7 @@ public class MainActivity extends Activity {
             case 7:
                 fragment = new SupprimerFragment();
                 break;
+
 
             default:
                 break;

@@ -3,12 +3,14 @@ package com.blinky.peestash.app;
 /**
  * Created by nelly on 15/04/2015.
  */
-import android.app.Fragment;
-import android.app.ProgressDialog;
+
+import android.app.*;
 import android.content.Intent;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +19,6 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.blinky.peestash.app.EditArtistProfilActivity;
-import com.blinky.peestash.app.R;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -32,6 +31,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import android.support.v4.app.FragmentManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,11 +44,12 @@ public class ProfilFragment extends Fragment {
 
     public ProfilFragment(){}
 
+
     ImageView btnEdit;
     Button btnEditProfil;
 
     int id;
-    String id_user = "";
+    String id_user = "", type="";
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
             Fixe, Siteweb, Genre, Dispo, Facebook, Age;
 
@@ -61,11 +62,22 @@ public class ProfilFragment extends Fragment {
     String html;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View rootView = inflater.inflate(R.layout.fragment_profil, container, false);
+
+        Button testtab = (Button) rootView.findViewById(R.id.testtab);
+        testtab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TabActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnEditProfil = (Button) rootView.findViewById(R.id.btnEditProfil);
 
@@ -91,6 +103,24 @@ public class ProfilFragment extends Fragment {
         img = (ImageView) rootView.findViewById(R.id.imageView);
         wv = (WebView) rootView.findViewById(R.id.webView);
 
+        View.OnClickListener listnr = new View.OnClickListener() {
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        type="artiste";
+                        Intent i = new Intent(getActivity(), UploadActivity.class);
+                        i.putExtra("id_user", id_user);
+                        i.putExtra("type", type);
+                        startActivity(i);
+
+                    }
+                }).start();
+            }
+
+        };
+
+        img.setOnClickListener(listnr);
+
 
         btnEditProfil.setOnClickListener(new View.OnClickListener() {
 
@@ -114,6 +144,7 @@ public class ProfilFragment extends Fragment {
 
         return rootView;
     }
+
     private class ReadProfilTask extends AsyncTask<Void, Void, InputStream> {
         int i;
         String result = null;
@@ -205,6 +236,7 @@ public class ProfilFragment extends Fragment {
                         imgurl = BitmapFactory.decodeStream(in);
 
                         img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+
 
                     }
 

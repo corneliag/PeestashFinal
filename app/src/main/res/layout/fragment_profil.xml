@@ -26,11 +26,23 @@
                         >
                     <ImageView
                             android:id="@+id/imageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
                             android:src="@drawable/ic_img_base"
-                            android:minWidth="120dp" android:minHeight="90dp"
-                            android:maxWidth="300dp" android:maxHeight="220dp"/>
+                           />
+                    <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="70dp"
+                            android:layout_marginStart="80dp"
+                            android:src="@drawable/icon_edit_img" />
 
 
                 </RelativeLayout>
@@ -430,6 +442,7 @@
                         android:id="@+id/webView"/>
             </LinearLayout>
 
+
         </LinearLayout>
 
         <LinearLayout
@@ -450,8 +463,20 @@
                     android:background="@drawable/orange_button"
                     android:text="@string/btnEditProfil"
                     style="@style/button_text" />
+
         </LinearLayout>
+
+        <Button
+                android:id="@+id/testtab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dip"
+                android:background="@drawable/orange_button"
+                android:text="test tab"
+                style="@style/button_text" />
     </LinearLayout>
+
 </ScrollView>
 
 
