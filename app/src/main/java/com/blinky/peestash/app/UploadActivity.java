@@ -15,6 +15,7 @@ import android.support.v4.app.*;
 import android.util.Base64;
 import android.view.View;
 
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;

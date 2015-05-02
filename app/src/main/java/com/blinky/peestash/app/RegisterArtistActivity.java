@@ -161,10 +161,12 @@ public class RegisterArtistActivity extends Activity {
 
         protected void onPostExecute(String loginOk) {
             if(loginOk=="ok") {
+
                 Intent i = new Intent(RegisterArtistActivity.this, LoginActivity.class);
                 startActivity(i);
                 msg="Bienvenue ! ";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                finish();
 
             }
             else
