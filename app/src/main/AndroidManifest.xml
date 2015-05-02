@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
 
     <application
@@ -23,12 +24,18 @@
         <activity
             android:name=".RegisterArtistActivity"
             android:label="@string/title_activity_register_artist"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".LoginActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".LoginActivity" />
         </activity>
         <activity
             android:name=".RegisterEtablissementActivity"
             android:label="@string/title_activity_register_etablissement"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".LoginActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".LoginActivity" />
         </activity>
         <activity
             android:name=".EditArtistProfilActivity"
@@ -54,9 +61,7 @@
             android:name=".UploadActivity"
             android:label="@string/title_activity_upload"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".MainActivity" />
+          >
         </activity>
         <activity
                 android:name=".ArtistHomeActivity"

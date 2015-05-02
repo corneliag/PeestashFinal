@@ -196,7 +196,6 @@ public class MainActivity extends Activity {
                 fragment = new SupprimerFragment();
                 break;
 
-
             default:
                 break;
         }

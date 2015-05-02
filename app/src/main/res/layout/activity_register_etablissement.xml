@@ -15,7 +15,7 @@
                       android:focusableInTouchMode="true"
                       android:gravity="left"
                 >
-                <TextView
+               <!-- <TextView
                         android:id="@+id/textView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                         android:textColor="@color/black"
                         android:layout_marginTop="30dp"
                         android:text="Créer mon compte d'établissement"
-                        />
+                        />-->
 
                 <TextView
                         android:id="@+id/textView2"
