@@ -289,7 +289,12 @@ public class HomeEtbFragment extends Fragment {
         Fixe.setText(telfixe.get(i).toString());
         Mobile.setText(telportable.get(i).toString());
         Facebook.setText(facebook.get(i).toString());
-        Type_etab.setText(type_etablissement.get(i).toString());
+        if(type_etablissement.get(i).toString() != null)
+        {
+
+            Type_etab.setText(type_etablissement.get(i).toString());
+
+        }
 
         if(imgUrl.get(i).toString().length() != 0) {
             InputStream in = null;

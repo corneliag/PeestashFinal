@@ -243,10 +243,10 @@ public class EditEtablissementProfilActivity extends Activity implements Adapter
         spinnerType.setOnItemSelectedListener(this);
 
            genre_etab.add(String.valueOf(""));
-           genre_etab.add(String.valueOf("Café concert"));
+           genre_etab.add(String.valueOf("Cafe concert"));
            genre_etab.add(String.valueOf("Salle de concert"));
            genre_etab.add(String.valueOf("Bar"));
-           genre_etab.add(String.valueOf("Discothèque"));
+           genre_etab.add(String.valueOf("Discotheque"));
            genre_etab.add(String.valueOf("Association"));
            genre_etab.add(String.valueOf("Autre"));
 
