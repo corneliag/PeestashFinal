@@ -506,21 +506,21 @@
                                 android:textColorHint="@color/gray"
                                 android:id="@+id/editConfirmMdp"
                                 android:inputType="textPassword"/>
-                        <TextView
+                       <!-- <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:layout_below="@+id/editConfirmMdp"
                                 android:layout_marginTop="20dp"
                                 android:text="Image de profil"
-                                android:id="@+id/txtimg"/>
-                        <ImageView
+                                android:id="@+id/txtimg"/>-->
+                       <!-- <ImageView
                                 android:id="@+id/img"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" >
-                        </ImageView>
-                        <Button
+                        </ImageView>-->
+                       <!-- <Button
                                 android:layout_width="340dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
@@ -528,7 +528,7 @@
                                 android:text="Gérer mon image"
                                 android:id="@+id/btnImage"
                                 android:background="@drawable/orange_button"
-                                style="@style/button_text"/>
+                                style="@style/button_text"/>-->
                         <Button
                                 android:layout_width="340dp"
                                 android:layout_height="wrap_content"

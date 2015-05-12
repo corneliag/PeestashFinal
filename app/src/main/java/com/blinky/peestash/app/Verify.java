@@ -52,7 +52,7 @@ public class Verify {
         }
         return valid;
     }
-    /* Verification du mot de passe et vérification de mot de passe
+    /* Verification du mot de passe et verification de mot de passe
     */
     public Boolean checkMdp(String password, String confirmPassword)
     {

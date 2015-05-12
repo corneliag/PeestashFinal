@@ -13,8 +13,8 @@
     <string name="btn_register_artist">Artiste</string>
     <string name="btn_register_etablissement">Établissement</string>
     <string name="inscription">Pas encore membre ? Inscrivez-vous en tant que... </string>
-    <string name="title_activity_register_artist">RegisterArtistActivity</string>
-    <string name="title_activity_register_etablissement">RegisterEtablissementActivity</string>
+    <string name="title_activity_register_artist">Je suis un artiste</string>
+    <string name="title_activity_register_etablissement">Je suis un etablissement</string>
     <string name="title_activity_artist_home">ArtistHomeActivity</string>
     <string name="title_activity_etablissement_home">EtablissementHomeActivity</string>
     <string name="title_activity_edit_artist_profil">EditArtistProfilActivity</string>

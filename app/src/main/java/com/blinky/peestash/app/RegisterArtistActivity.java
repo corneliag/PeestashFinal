@@ -39,7 +39,7 @@ public class RegisterArtistActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register_artist);
 
         etPseudo = (EditText) findViewById(R.id.editPseudo);
@@ -161,10 +161,12 @@ public class RegisterArtistActivity extends Activity {
 
         protected void onPostExecute(String loginOk) {
             if(loginOk=="ok") {
+
                 Intent i = new Intent(RegisterArtistActivity.this, LoginActivity.class);
                 startActivity(i);
                 msg="Bienvenue ! ";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                finish();
 
             }
             else
