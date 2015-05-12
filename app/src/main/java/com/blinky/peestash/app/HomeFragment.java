@@ -334,6 +334,10 @@ protected void afficheProfilContent(int i)
         imgurl = BitmapFactory.decodeStream(in);
         img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
 
+    }else
+    {
+        img.setImageDrawable(getResources().getDrawable(R.drawable.ic_img_base));
+
     }
     if (soundcloud.get(i).toString().length() != 0) {
         html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" +soundcloud.get(i).toString()+ "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";

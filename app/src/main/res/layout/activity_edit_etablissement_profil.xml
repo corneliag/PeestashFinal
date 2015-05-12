@@ -157,6 +157,51 @@
                     android:background="@drawable/bg_edittext"
                     android:textColorHint="@color/gray"
                     android:layout_below="@+id/textView14"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_marginLeft="5dp" android:layout_marginTop="20dp" android:text="Type d&apos;établissement"
+                          android:id="@+id/textView58" android:layout_below="@+id/editMobile"/>
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerType"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_marginLeft="5dp" android:layout_below="@+id/spinnerAge"
+                      android:layout_marginTop="20dp" android:text="Genre Musical" android:id="@+id/textView59"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Rock"
+                          android:id="@+id/rock" android:layout_weight="6.52"/>
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Jazz"
+                          android:id="@+id/jazz" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Métal"
+                          android:id="@+id/metal" android:layout_weight="6.52"/>
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Pop"
+                          android:id="@+id/pop" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Électro"
+                          android:id="@+id/electro" android:layout_weight="6.52"/>
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Blues"
+                          android:id="@+id/blues" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Classique"
+                          android:id="@+id/classique" android:layout_weight="6.52"/>
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Funk"
+                          android:id="@+id/funk" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                          android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Folk"
+                          android:id="@+id/folk" android:layout_weight="6.52"/>
+                <CheckBox android:layout_width="250dp" android:layout_height="wrap_content" android:text="Rap"
+                          android:id="@+id/rap" android:layout_weight="6.52"/>
+            </LinearLayout>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,6 +238,16 @@
                     android:textColorHint="@color/gray"
                     android:layout_below="@+id/textView16"/>
 
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                          android:layout_height="fill_parent">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_marginLeft="5dp" android:layout_marginTop="20dp"
+                          android:text="Statut du recrutement :" android:id="@+id/textView60"
+                          android:layout_below="@+id/editMobile"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_marginLeft="5dp" android:layout_marginTop="20dp" android:text="Ouvert/fermé"
+                          android:id="@+id/statut_recrutement" android:layout_below="@+id/editMobile"/>
+            </LinearLayout>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

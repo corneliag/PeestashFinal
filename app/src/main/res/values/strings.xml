@@ -68,4 +68,6 @@
     <string name="logout">Me deconnecter</string>
     <string name="etb">Etablissements</string>
     <string name="art">Artistes</string>
+    <string name="Event">Evènements</string>
+    <string name="Event_status">Statut du recrutement</string>
 </resources>
