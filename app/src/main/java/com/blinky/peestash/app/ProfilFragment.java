@@ -51,11 +51,11 @@ public class ProfilFragment extends Fragment {
     int id;
     String id_user = "", type="";
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age;
+            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age, Type_artiste;
 
     ImageView img;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", ville = "", adresse = "", cp = "", pays = "",
-            telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "", facebook="", twitter="";
+            telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "", facebook="", twitter="", type_artiste="";
     ProgressDialog progress;
     private WebView wv;
 
@@ -98,6 +98,7 @@ public class ProfilFragment extends Fragment {
         Facebook = (TextView) rootView.findViewById(R.id.Facebook);
         Twitter = (TextView) rootView.findViewById(R.id.Twitter);
         Siteweb = (TextView) rootView.findViewById(R.id.Siteweb);
+        Type_artiste = (TextView) rootView.findViewById(R.id.Type_artiste);
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
         Email = (TextView) rootView.findViewById(R.id.Email);
@@ -232,6 +233,7 @@ public class ProfilFragment extends Fragment {
                     age = element.getString("age");
                     facebook=element.getString("facebook");
                     twitter=element.getString("twitter");
+                    type_artiste=element.getString("type_artiste");
 
                     if (imgUrl.length() != 0) {
                         InputStream in = new java.net.URL(imgUrl).openStream();
@@ -262,6 +264,7 @@ public class ProfilFragment extends Fragment {
                     Siteweb.setText(siteweb);
                     Facebook.setText(facebook);
                     Twitter.setText(twitter);
+                    Type_artiste.setText(type_artiste);
 
                 }
                 if (soundcloud.length() != 0) {

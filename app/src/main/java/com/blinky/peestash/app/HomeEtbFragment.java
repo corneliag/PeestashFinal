@@ -213,7 +213,7 @@ public class HomeEtbFragment extends Fragment {
 
         protected void onPreExecute() {
             progress = new ProgressDialog(getActivity());
-            progress.setMessage("Chargement de vos informations de profil...");
+            progress.setMessage("Chargement de la liste des établissements...");
             progress.show();
         }
 
@@ -245,6 +245,7 @@ public class HomeEtbFragment extends Fragment {
                 genre_musical = new ArrayList<String>(nbreponse);
                 type_etablissement = new ArrayList<String>(nbreponse);
                 facebook = new ArrayList<String>(nbreponse);
+                twitter = new ArrayList<String>(nbreponse);
 
                 for (i = 0; i < finalResult.length(); i++) {
 
@@ -293,13 +294,10 @@ public class HomeEtbFragment extends Fragment {
         Mobile.setText(telportable.get(i).toString());
         Facebook.setText(facebook.get(i).toString());
         Twitter.setText(twitter.get(i).toString());
+
         Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-        if(type_etablissement.get(i).toString() != null)
-        {
 
-            Type_etab.setText(type_etablissement.get(i).toString());
-
-        }
+        Type_etab.setText(type_etablissement.get(i).toString());
 
         if(imgUrl.get(i).toString().length() != 0) {
             InputStream in = null;

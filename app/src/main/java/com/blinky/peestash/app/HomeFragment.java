@@ -51,10 +51,10 @@ public class HomeFragment extends Fragment {
 
     Button btnNextProfil;
     String id_user = "";
-    private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age;
+    private TextView Pseudo, Email, Adresse, CP, Ville, Pays, Mobile,
+            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Type_artiste;
     int nbreponse;
-    List<String> nom, prenom, adresse, ville, pays, cp, email, pseudo, telportable, telfixe, soundcloud, facebook, twitter, dispo, siteweb, imgUrl, genre_musical, age;
+    List<String>  adresse, ville, pays, cp, email, pseudo, type_artiste, telportable, telfixe, soundcloud, facebook, twitter, dispo, siteweb, imgUrl, genre_musical;
     ImageView img;
     ProgressDialog progress;
     private WebView wv;
@@ -74,10 +74,7 @@ public class HomeFragment extends Fragment {
         id_user = var.getString("id_user");
 
         Pseudo = (TextView) rootView.findViewById(R.id.Pseudo);
-        Nom = (TextView) rootView.findViewById(R.id.Nom);
-        Prenom = (TextView) rootView.findViewById(R.id.Prenom);
-        Age = (TextView) rootView.findViewById(R.id.Age);
-        //Adresse = (TextView) rootView.findViewById(R.id.Adresse);
+         //Adresse = (TextView) rootView.findViewById(R.id.Adresse);
         CP = (TextView) rootView.findViewById(R.id.CP);
         Ville = (TextView) rootView.findViewById(R.id.Ville);
         Pays = (TextView) rootView.findViewById(R.id.Pays);
@@ -89,6 +86,7 @@ public class HomeFragment extends Fragment {
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
         Email = (TextView) rootView.findViewById(R.id.Email);
+        Type_artiste = (TextView) rootView.findViewById(R.id.Type_artiste);
         img = (ImageView) rootView.findViewById(R.id.imageView);
         wv = (WebView) rootView.findViewById(R.id.webView);
 
@@ -255,8 +253,6 @@ public class HomeFragment extends Fragment {
 
                 email = new ArrayList<String>(nbreponse);
                 pseudo = new ArrayList<String>(nbreponse);
-                nom = new ArrayList<String>(nbreponse);
-                prenom = new ArrayList<String>(nbreponse);
                 adresse = new ArrayList<String>(nbreponse);
                 cp = new ArrayList<String>(nbreponse);
                 soundcloud = new ArrayList<String>(nbreponse);
@@ -268,7 +264,7 @@ public class HomeFragment extends Fragment {
                 siteweb = new ArrayList<String>(nbreponse);
                 imgUrl = new ArrayList<String>(nbreponse);
                 genre_musical = new ArrayList<String>(nbreponse);
-                age = new ArrayList<String>(nbreponse);
+                type_artiste = new ArrayList<String>(nbreponse);
                 facebook = new ArrayList<String>(nbreponse);
                 twitter = new ArrayList<String>(nbreponse);
 
@@ -276,12 +272,10 @@ public class HomeFragment extends Fragment {
 
                     JSONObject element = finalResult.getJSONObject(i);
                     email.add(element.getString("email"));
-                    nom.add(element.getString("nom"));
-                    pseudo.add(element.getString("pseudo"));
+                     pseudo.add(element.getString("pseudo"));
                     soundcloud.add(element.getString("soundcloud"));
                     adresse.add(element.getString("adresse"));
                     cp.add(element.getString("code_postal"));
-                    prenom.add(element.getString("prenom"));
                     ville.add(element.getString("ville"));
                     pays.add(element.getString("pays"));
                     telportable.add(element.getString("tel_portable"));
@@ -290,7 +284,7 @@ public class HomeFragment extends Fragment {
                     siteweb.add(element.getString("siteweb"));
                     imgUrl.add(element.getString("image_url"));
                     genre_musical.add(element.getString("genre_musical"));
-                    age.add(element.getString("age"));
+                    type_artiste.add(element.getString("type_artiste"));
                     facebook.add(element.getString("facebook"));
                     twitter.add(element.getString("twitter"));
 
@@ -314,8 +308,6 @@ protected void afficheProfilContent(int i)
 {
     Pseudo.setText(pseudo.get(i).toString());
     Email.setText(email.get(i).toString());
-    Nom.setText(nom.get(i).toString());
-    Prenom.setText(prenom.get(i).toString());
     //Adresse.setText(adresse.get(i).toString());
     CP.setText(cp.get(i).toString());
     Ville.setText(ville.get(i).toString());
@@ -325,7 +317,7 @@ protected void afficheProfilContent(int i)
     Fixe.setText(telfixe.get(i).toString());
     Mobile.setText(telportable.get(i).toString());
     Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-    Age.setText(age.get(i).toString());
+    Type_artiste.setText(type_artiste.get(i).toString());
     Facebook.setText(facebook.get(i).toString());
     Twitter.setText(twitter.get(i).toString());
 
