@@ -41,13 +41,13 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
 
     String id_user = "", type="";
     private EditText editPseudo, editEmail, editConfirmEmail, editAdress, editCP, editNom, editPrenom, editVille, editPays, editTelMobile,
-            editTelFixe, editSoundcloud, editSiteweb, editFacebook, editTwitter, editPassword, editConfirmMdp;
+            editTelFixe, editSoundcloud, editSiteweb, editFacebook, editTwitter, editPassword, editConfirmMdp, editTypeArtiste;
     TextView affichageEmail;
     int i;
     //ImageView img;
     private Button btnSave;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", confirmEmail="", ville = "", adresse = "", cp = "", pays = "",
-            telportable = "", telfixe = "", dispo = "", soundcloud = "", twitter="", facebook="", siteweb = "", imgUrl = "", genre_musical = "", password = "", confirmMdp="";
+            telportable = "", telfixe = "", dispo = "", soundcloud = "", twitter="", facebook="", siteweb = "", imgUrl = "", genre_musical = "", password = "", confirmMdp="", type_artiste="";
     private CheckBox rock, pop, metal, jazz, funk, electro, blues, rap, folk, classique, lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche;
     private String genremusical = "", disponibilites = "";
 
@@ -57,8 +57,10 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
     String msg="";
     ProgressDialog progress;
     List<String> categories;
-    ArrayAdapter<String> dataAdapter;
+    ArrayAdapter<String> dataAdapter, typeAdapter;
     Spinner spinnerAge;
+    List<String> type_art;
+    Spinner spinnerTypeArtiste;
     private WebView wv;
 
     String html;
@@ -75,6 +77,14 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
 
         // Creating adapter for spinner
         dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Spinner element
+        spinnerTypeArtiste = (Spinner) findViewById(R.id.spinnerTypeArtiste);
+        // Spinner Drop down elements
+        type_art = new ArrayList<String>();
+
+        // Creating adapter for spinner
+        typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, type_art);
 
         //tag récupération des informations de profil artiste
 
@@ -97,7 +107,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
         editFacebook = (EditText) findViewById(R.id.editFacebook);
         editTwitter = (EditText) findViewById(R.id.editTwitter);
         editSiteweb = (EditText) findViewById(R.id.editSiteweb);
-       // img = (ImageView) findViewById(R.id.img);
+        // img = (ImageView) findViewById(R.id.img);
         editPassword = (EditText) findViewById(R.id.editPassword);
         editConfirmMdp = (EditText) findViewById(R.id.editConfirmMdp);
 
@@ -126,10 +136,10 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
 
         addListenerOnChkWindows();
         int id;
-        id=Integer.parseInt(id_user);
+        id = Integer.parseInt(id_user);
         new ReadProfilTask().execute(id);
 
-        wv = (WebView)findViewById(R.id.webView);
+        wv = (WebView) findViewById(R.id.webView);
 
         // On met un Listener sur le bouton Artist
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +174,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                 facebook = "" + editFacebook.getText().toString();
                                 twitter = "" + editTwitter.getText().toString();
                                 age = "" + age;
+                                type_artiste = "" + type_artiste;
                                 genre_musical = "" + genrelist.toString();
                                 password = "" + editPassword.getText().toString();
                                 confirmMdp = "" + editConfirmMdp.getText().toString();
@@ -188,32 +199,31 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                 nameValuePairs.add(new BasicNameValuePair("twitter", twitter));
                                 nameValuePairs.add(new BasicNameValuePair("siteweb", siteweb));
                                 nameValuePairs.add(new BasicNameValuePair("age", age));
+                                nameValuePairs.add(new BasicNameValuePair("type_artiste", type_artiste));
                                 nameValuePairs.add(new BasicNameValuePair("genre_musical", genre_musical));
 
-                                String emailvalid="ok",  passwordvalid = "ok", msg= "";
+                                String emailvalid = "ok", passwordvalid = "ok", msg = "";
 
-                                if(email!="") {
-                                    if(test.checkEmailWriting(email)) {
+                                if (email != "") {
+                                    if (test.checkEmailWriting(email)) {
 
                                         if (test.checkEmail(email, confirmEmail)) {
-                                            emailvalid="ok";
+                                            emailvalid = "ok";
                                             nameValuePairs.add(new BasicNameValuePair("email", email));
-                                        }
-                                        else {
-                                            emailvalid="no";
+                                        } else {
+                                            emailvalid = "no";
                                             msg = "Veuillez écrire correctement l'email et la confirmation d'e-mail.\n";
                                         }
-                                    } else
-                                    {
-                                        emailvalid ="no";
+                                    } else {
+                                        emailvalid = "no";
                                         msg = "Veuillez écrire un email correct.\n";
                                     }
 
-                                }else {
+                                } else {
                                     email = "" + affichageEmail.getText().toString();
                                     nameValuePairs.add(new BasicNameValuePair("email", email));
                                 }
-                                if(password!="") {
+                                if (password != "") {
 
                                     if (test.checkMdpWriting(password)) {
                                         if (test.checkMdp(password, confirmMdp)) {
@@ -228,12 +238,12 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                         passwordvalid = "no";
                                         msg = msg + "Votre mot de passe doit contenir au minimum 3 caractères.\n";
                                     }
-                                }else {
+                                } else {
                                     password = "" + editPassword.getText().toString();
                                     nameValuePairs.add(new BasicNameValuePair("password", password));
                                 }
 
-                                if(emailvalid == "ok" && passwordvalid == "ok") {
+                                if (emailvalid == "ok" && passwordvalid == "ok") {
                                     //setting the connection to the database
                                     try {
 
@@ -256,7 +266,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                         //displaying a toast message if the data is entered in the database
                                         msg = "Vos informations ont bien été modifiées";
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                        int position=1;
+                                        int position = 1;
                                         Intent i = new Intent(EditArtistProfilActivity.this, MainActivity.class);
                                         i.putExtra("id_user", id_user);
                                         i.putExtra("position", position);
@@ -274,9 +284,9 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                         msg = "Erreur IOException";
                                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                     }
-                                }else {
+                                } else {
                                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                    msg ="";
+                                    msg = "";
 
                                 }
                             }
@@ -297,6 +307,23 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
         }
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Spinner click listener
+        spinnerTypeArtiste.setOnItemSelectedListener(new AddTypeArtist());
+
+           type_art.add(String.valueOf(""));
+           type_art.add(String.valueOf("Musicien solo amateur"));
+           type_art.add(String.valueOf("Musicien solo professionnel"));
+           type_art.add(String.valueOf("Groupe amateur"));
+           type_art.add(String.valueOf("Groupe professionnel"));
+           type_art.add(String.valueOf("DJ amateur"));
+           type_art.add(String.valueOf("DJ professionnel"));
+
+
+        // Drop down layout style - list view with radio button
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
        /* Button btn = (Button) findViewById(R.id.btnImage);
 
         View.OnClickListener listnr = new View.OnClickListener() {
@@ -574,11 +601,13 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
-        age = parent.getItemAtPosition(position).toString();
-        // Showing selected spinner item
-        //   Toast.makeText(parent.getContext(), "Age: " + age, Toast.LENGTH_LONG).show();
+
+            age = spinnerAge.getItemAtPosition(position).toString();
+
 
     }
+
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -652,6 +681,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
 
                 // Spinner element
                 spinnerAge = (Spinner) findViewById(R.id.spinnerAge);
+                spinnerTypeArtiste = (Spinner) findViewById(R.id.spinnerTypeArtiste);
 
                 // Access by key : value
                 for (i = 0; i < finalResult.length(); i++) {
@@ -675,6 +705,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                    // imgUrl = element.getString("image_url");
                     genre_musical = element.getString("genre_musical");
                     age = element.getString("age");
+                    type_artiste = element.getString("type_artiste");
 
                    /* if(imgUrl.length()!=0)
                     {
@@ -803,7 +834,19 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                 spinnerAge.setAdapter(dataAdapter);
 
                 int posi = categories.indexOf(age);
+
                 spinnerAge.setSelection(posi);
+
+                // attaching data adapter to spinner
+                spinnerTypeArtiste.setAdapter(typeAdapter);
+
+                int pos= type_art.indexOf(type_artiste);
+                System.out.print("pos"+pos);
+                if(pos>-1&&pos<7) {
+                    spinnerTypeArtiste.setSelection(pos);
+                }else {
+                    spinnerTypeArtiste.setSelection(0);
+                }
 
                 is.close();
 
@@ -823,4 +866,20 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
         }
     }
 
+    private class AddTypeArtist implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if((spinnerTypeArtiste.getItemAtPosition(position).toString())!="") {
+                type_artiste = spinnerTypeArtiste.getItemAtPosition(position).toString();
+            }
+            String msg = "type "+type_artiste;
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
 }

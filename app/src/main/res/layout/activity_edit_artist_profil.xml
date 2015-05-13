@@ -161,6 +161,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/spinnerAge"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:layout_marginLeft="5dp" android:layout_below="@+id/editPrenom"
+                                  android:layout_marginTop="20dp" android:text="Vous êtes : " android:id="@+id/textView61"/>
+                        <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                 android:id="@+id/spinnerTypeArtiste"/>
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
