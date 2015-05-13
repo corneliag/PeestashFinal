@@ -196,6 +196,38 @@
 
 
             </LinearLayout>
+            <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
+                       android:layout_gravity="center"
+                       android:src="@drawable/ic_trait"/>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="30dp"
+                          android:id="@+id/l8"
+                          android:layout_below="@+id/l5"
+                          android:layout_marginTop="10dp"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginBottom="10dp"
+                          android:orientation="horizontal">
+                <ImageView android:layout_width="30dp"
+                           android:src="@drawable/ic_type_artiste"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Genre musical"
+                           android:layout_marginRight="5dp"
+                        />
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_vertical_trait"
+                           android:layout_gravity="left"
+                           android:layout_marginRight="5dp"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/Type_artiste"
+                          android:text="pas défini"
+                          android:layout_marginTop="5dp"
+                          android:textStyle="bold"
+                          android:layout_marginLeft="5dp"/>
+            </LinearLayout>
 
             <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
                        android:layout_gravity="center"
