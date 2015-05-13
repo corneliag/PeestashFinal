@@ -57,13 +57,15 @@
                                 android:layout_marginLeft="100dp"/>
                     </LinearLayout>
 
-                    <LinearLayout android:layout_width="wrap_content"
+                    <LinearLayout android:layout_width="fill_parent"
                                   android:layout_height="wrap_content"
                                   android:orientation="horizontal"
                                   android:id="@+id/l2"
-                                  android:layout_below="@+id/l1" android:layout_marginLeft="20dp">
+                                  android:layout_below="@+id/l1" android:layout_marginLeft="5dp"
+                                  android:layout_alignParentStart="true" android:weightSum="1"
+                                  android:layout_marginRight="5dp">
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView android:layout_width="130dp"
                                   android:layout_height="wrap_content"
                                   android:id="@+id/typeetab"
                                   android:text="Type d'établissement"
@@ -71,7 +73,7 @@
                                   android:layout_marginLeft="20dp"
 
 
-                                />
+                                  android:layout_weight="0.31" android:gravity="center"/>
                         <ImageView android:layout_width="wrap_content"
                                    android:layout_height="15dp"
                                    android:src="@drawable/ic_vertical_trait"
@@ -80,7 +82,7 @@
                                    android:layout_marginLeft="10dp"
                                 />
 
-                        <TextView android:layout_width="wrap_content"
+                        <TextView android:layout_width="140dp"
                                   android:layout_height="wrap_content"
                                   android:id="@+id/event_status"
                                   android:text="@string/Event_status"
@@ -88,7 +90,7 @@
                                   android:layout_marginLeft="10dp"
                                   android:layout_marginBottom="10dp"
 
-                                />
+                                  android:gravity="center"/>
 
                     </LinearLayout>
                 </RelativeLayout>
@@ -166,14 +168,13 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
             <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
                        android:layout_gravity="center"
                        android:layout_marginTop="10dp"
                        android:src="@drawable/ic_trait"/>
+
             <LinearLayout
                     android:id="@+id/l13"
                     android:layout_below="@+id/l12"
@@ -296,6 +297,39 @@
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:id="@+id/Facebook"
+                          android:text="pas défini"
+                          android:textStyle="bold"
+                          android:layout_marginTop="5dp"
+                          android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+            <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
+                       android:layout_gravity="center"
+                       android:src="@drawable/ic_trait"/>
+            <LinearLayout
+                    android:id="@+id/l19"
+                    android:layout_below="@+id/l10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+
+                    android:layout_marginTop="10dp">
+                <ImageView android:layout_width="30dp"
+                           android:src="@drawable/twitter_logo"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Twitter"
+                           android:layout_marginRight="5dp"
+                        />
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="30dp"
+                           android:src="@drawable/ic_vertical_trait"
+                           android:layout_gravity="left"
+                           android:layout_marginRight="5dp"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/Twitter"
                           android:text="pas défini"
                           android:textStyle="bold"
                           android:layout_marginTop="5dp"

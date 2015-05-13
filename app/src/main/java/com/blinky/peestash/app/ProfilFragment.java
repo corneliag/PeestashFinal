@@ -51,11 +51,11 @@ public class ProfilFragment extends Fragment {
     int id;
     String id_user = "", type="";
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Dispo, Facebook, Age;
+            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age;
 
     ImageView img;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", ville = "", adresse = "", cp = "", pays = "",
-            telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "";
+            telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "", facebook="", twitter="";
     ProgressDialog progress;
     private WebView wv;
 
@@ -96,6 +96,7 @@ public class ProfilFragment extends Fragment {
         Genre = (TextView) rootView.findViewById(R.id.Genre);
         Dispo = (TextView) rootView.findViewById(R.id.Dispo);
         Facebook = (TextView) rootView.findViewById(R.id.Facebook);
+        Twitter = (TextView) rootView.findViewById(R.id.Twitter);
         Siteweb = (TextView) rootView.findViewById(R.id.Siteweb);
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
@@ -225,11 +226,12 @@ public class ProfilFragment extends Fragment {
                     telportable = element.getString("tel_portable");
                     telfixe = element.getString("tel_fixe");
                     dispo = element.getString("disponibilites");
-
                     siteweb = element.getString("siteweb");
                     imgUrl = element.getString("image_url");
                     genre_musical = element.getString("genre_musical");
                     age = element.getString("age");
+                    facebook=element.getString("facebook");
+                    twitter=element.getString("twitter");
 
                     if (imgUrl.length() != 0) {
                         InputStream in = new java.net.URL(imgUrl).openStream();
@@ -257,8 +259,9 @@ public class ProfilFragment extends Fragment {
                     Dispo.setText(dispo);
                     Mobile.setText(telportable);
                     Fixe.setText(telfixe);
-
                     Siteweb.setText(siteweb);
+                    Facebook.setText(facebook);
+                    Twitter.setText(twitter);
 
                 }
                 if (soundcloud.length() != 0) {

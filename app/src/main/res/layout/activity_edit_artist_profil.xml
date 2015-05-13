@@ -416,6 +416,43 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
+                                android:layout_below="@+id/editSitewb"
+                                android:layout_marginTop="20dp"
+                                android:text="Facebook"
+                                android:id="@+id/textView50"/>
+
+                        <EditText
+                                android:id="@+id/editFacebook"
+                                android:layout_width="340dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_below="@+id/textView37"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_edittext"
+                                android:textColorHint="@color/gray"/>
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_below="@+id/editFacebook"
+                                android:layout_marginTop="20dp"
+                                android:text="Twitter"
+                                android:id="@+id/textView45"/>
+
+                        <EditText
+                                android:id="@+id/editTwitter"
+                                android:layout_width="340dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_below="@+id/textView37"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/bg_edittext"
+                                android:textColorHint="@color/gray"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:layout_below="@+id/editSoundcloud"
                                 android:layout_marginTop="20dp"
                                 android:text="Votre E-mail "

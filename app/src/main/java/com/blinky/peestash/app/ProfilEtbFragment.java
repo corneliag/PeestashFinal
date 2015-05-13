@@ -48,10 +48,10 @@ public class ProfilEtbFragment extends Fragment {
     ImageView btnEdit;
     String id_user="";
     private TextView Nom, Adresse, CP, Ville, Pays, Mobile,
-            Fixe, Email, Siteweb, Facebook;
+            Fixe, Email, Siteweb, Facebook, Twitter, Genre_musical, Type_etab;
     ImageView img;
     private String nom = "", email = "", ville = "", adresse = "", cp = "", pays = "",
-            telportable = "", telfixe = "", siteweb = "", imgUrl = "", facebook = "", description = "", genre="";
+            telportable = "", telfixe = "", siteweb = "", imgUrl = "", facebook = "", twitter="", description = "", genre="", type_etab;
     ProgressDialog progress;
 
     @Override
@@ -59,7 +59,6 @@ public class ProfilEtbFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_etb_profil, container, false);
-
 
         Bundle var = getActivity().getIntent().getExtras();
         id_user=var.getString("id_user");
@@ -70,10 +69,13 @@ public class ProfilEtbFragment extends Fragment {
         Ville = (TextView) rootView.findViewById(R.id.Ville);
         Pays = (TextView) rootView.findViewById(R.id.Pays);
         Facebook = (TextView) rootView.findViewById(R.id.Facebook);
+        Twitter =(TextView) rootView.findViewById(R.id.Twitter);
         Siteweb = (TextView) rootView.findViewById(R.id.Siteweb);
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
         Email = (TextView) rootView.findViewById(R.id.Email);
+        Genre_musical = (TextView) rootView.findViewById(R.id.Genre);
+        Type_etab =(TextView) rootView.findViewById(R.id.typeetab);
         img = (ImageView) rootView.findViewById(R.id.imageView);
 
         editProfil = (Button) rootView.findViewById(R.id.editprofil);
@@ -136,8 +138,6 @@ public class ProfilEtbFragment extends Fragment {
                 Log.e("id_user value", id_user);
                 Log.e("is value", String.valueOf(is));
 
-
-
             } catch (ClientProtocolException e) {
 
                 Log.e("ClientProtocole", "Log_tag");
@@ -181,6 +181,10 @@ public class ProfilEtbFragment extends Fragment {
                     telfixe = element.getString("tel_fixe");
                     siteweb = element.getString("siteweb");
                     facebook = element.getString("facebook");
+                    twitter = element.getString("twitter");
+                    genre = element.getString("genre_musical");
+                    type_etab = element.getString("type_etablissement");
+
                     imgUrl = element.getString("image_url");
 
                     if(imgUrl.length()!=0)
@@ -199,7 +203,12 @@ public class ProfilEtbFragment extends Fragment {
                     Fixe.setText(telfixe);
                     Siteweb.setText(siteweb);
                     Facebook.setText(facebook);
+                    Twitter.setText(twitter);
+                    Genre_musical.setText(genre.toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
+                    Type_etab.setText(type_etab);
+
                 }
+
                 is.close();
 
             } catch (Exception e) {
@@ -208,9 +217,6 @@ public class ProfilEtbFragment extends Fragment {
             if (progress.isShowing()) {
                 progress.dismiss();
             }
-
         }
     }
-
-
 }

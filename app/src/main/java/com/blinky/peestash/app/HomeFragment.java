@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.TwoStatePreference;
 import android.support.v4.util.ArrayMap;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -51,9 +52,9 @@ public class HomeFragment extends Fragment {
     Button btnNextProfil;
     String id_user = "";
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Dispo, Facebook, Age;
+            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age;
     int nbreponse;
-    List<String> nom, prenom, adresse, ville, pays, cp, email, pseudo, telportable, telfixe, soundcloud, facebook, dispo, siteweb, imgUrl, genre_musical, age;
+    List<String> nom, prenom, adresse, ville, pays, cp, email, pseudo, telportable, telfixe, soundcloud, facebook, twitter, dispo, siteweb, imgUrl, genre_musical, age;
     ImageView img;
     ProgressDialog progress;
     private WebView wv;
@@ -83,6 +84,7 @@ public class HomeFragment extends Fragment {
         Genre = (TextView) rootView.findViewById(R.id.Genre);
         Dispo = (TextView) rootView.findViewById(R.id.Dispo);
         Facebook = (TextView) rootView.findViewById(R.id.Facebook);
+        Twitter = (TextView) rootView.findViewById(R.id.Twitter);
         Siteweb = (TextView) rootView.findViewById(R.id.Siteweb);
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
@@ -268,6 +270,7 @@ public class HomeFragment extends Fragment {
                 genre_musical = new ArrayList<String>(nbreponse);
                 age = new ArrayList<String>(nbreponse);
                 facebook = new ArrayList<String>(nbreponse);
+                twitter = new ArrayList<String>(nbreponse);
 
                 for (i = 0; i < finalResult.length(); i++) {
 
@@ -289,6 +292,7 @@ public class HomeFragment extends Fragment {
                     genre_musical.add(element.getString("genre_musical"));
                     age.add(element.getString("age"));
                     facebook.add(element.getString("facebook"));
+                    twitter.add(element.getString("twitter"));
 
                 }
                 i=0;
@@ -323,6 +327,7 @@ protected void afficheProfilContent(int i)
     Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
     Age.setText(age.get(i).toString());
     Facebook.setText(facebook.get(i).toString());
+    Twitter.setText(twitter.get(i).toString());
 
     if(imgUrl.get(i).toString().length() != 0) {
         InputStream in = null;

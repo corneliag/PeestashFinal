@@ -54,7 +54,42 @@
                                          />
 
                              </RelativeLayout>
+                         <LinearLayout android:layout_width="fill_parent"
+                                       android:layout_height="wrap_content"
+                                       android:orientation="horizontal"
+                                       android:id="@+id/l2"
+                                       android:layout_below="@+id/l1" android:layout_marginLeft="5dp"
+                                       android:layout_alignParentStart="true" android:weightSum="1"
+                                       android:layout_marginRight="5dp">
 
+                             <TextView android:layout_width="130dp"
+                                       android:layout_height="wrap_content"
+                                       android:id="@+id/typeetab"
+                                       android:text="Type d'établissement"
+                                       android:textColor="@color/white"
+                                       android:layout_marginLeft="20dp"
+
+
+                                       android:layout_weight="0.31" android:gravity="center"/>
+                             <ImageView android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:src="@drawable/ic_vertical_trait"
+                                        android:layout_gravity="left"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginLeft="10dp"
+                                     />
+
+                             <TextView android:layout_width="140dp"
+                                       android:layout_height="wrap_content"
+                                       android:id="@+id/event_status"
+                                       android:text="@string/Event_status"
+                                       android:textColor="@color/white"
+                                       android:layout_marginLeft="10dp"
+                                       android:layout_marginBottom="10dp"
+
+                                       android:gravity="center"/>
+
+                         </LinearLayout>
                     </LinearLayout>
 
 
@@ -132,7 +167,38 @@
 
 
             </LinearLayout>
-
+        <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
+                   android:layout_gravity="center"
+                   android:src="@drawable/ic_trait"/>
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="30dp"
+                      android:id="@+id/l6"
+                      android:layout_below="@+id/l5"
+                      android:layout_marginTop="10dp"
+                      android:layout_marginLeft="10dp"
+                      android:layout_marginBottom="10dp"
+                      android:orientation="horizontal">
+            <ImageView android:layout_width="30dp"
+                       android:src="@drawable/ic_action_headphones"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="left"
+                       android:text="Genre musical"
+                       android:layout_marginRight="5dp"
+                    />
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="30dp"
+                       android:src="@drawable/ic_vertical_trait"
+                       android:layout_gravity="left"
+                       android:layout_marginRight="5dp"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/Genre"
+                      android:text="pas défini"
+                      android:layout_marginTop="5dp"
+                      android:textStyle="bold"
+                      android:layout_marginLeft="5dp"/>
+        </LinearLayout>
 
 
         <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"

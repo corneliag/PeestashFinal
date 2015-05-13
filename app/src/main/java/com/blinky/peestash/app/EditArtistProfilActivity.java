@@ -41,13 +41,13 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
 
     String id_user = "", type="";
     private EditText editPseudo, editEmail, editConfirmEmail, editAdress, editCP, editNom, editPrenom, editVille, editPays, editTelMobile,
-            editTelFixe, editSoundcloud, editSiteweb, editPassword, editConfirmMdp;
+            editTelFixe, editSoundcloud, editSiteweb, editFacebook, editTwitter, editPassword, editConfirmMdp;
     TextView affichageEmail;
     int i;
     //ImageView img;
     private Button btnSave;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", confirmEmail="", ville = "", adresse = "", cp = "", pays = "",
-            telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "", password = "", confirmMdp="";
+            telportable = "", telfixe = "", dispo = "", soundcloud = "", twitter="", facebook="", siteweb = "", imgUrl = "", genre_musical = "", password = "", confirmMdp="";
     private CheckBox rock, pop, metal, jazz, funk, electro, blues, rap, folk, classique, lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche;
     private String genremusical = "", disponibilites = "";
 
@@ -94,6 +94,8 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
         editTelMobile = (EditText) findViewById(R.id.editTelMobile);
         editTelFixe = (EditText) findViewById(R.id.editTelFixe);
         editSoundcloud = (EditText) findViewById(R.id.editSoundcloud);
+        editFacebook = (EditText) findViewById(R.id.editFacebook);
+        editTwitter = (EditText) findViewById(R.id.editTwitter);
         editSiteweb = (EditText) findViewById(R.id.editSiteweb);
        // img = (ImageView) findViewById(R.id.img);
         editPassword = (EditText) findViewById(R.id.editPassword);
@@ -159,6 +161,8 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                 dispo = "" + dispolist.toString();
                                 soundcloud = "" + editSoundcloud.getText().toString();
                                 siteweb = "" + editSiteweb.getText().toString();
+                                facebook = "" + editFacebook.getText().toString();
+                                twitter = "" + editTwitter.getText().toString();
                                 age = "" + age;
                                 genre_musical = "" + genrelist.toString();
                                 password = "" + editPassword.getText().toString();
@@ -180,6 +184,8 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                                 nameValuePairs.add(new BasicNameValuePair("tel_portable", telportable));
                                 nameValuePairs.add(new BasicNameValuePair("disponibilites", dispo));
                                 nameValuePairs.add(new BasicNameValuePair("soundcloud", soundcloud));
+                                nameValuePairs.add(new BasicNameValuePair("facebook", facebook));
+                                nameValuePairs.add(new BasicNameValuePair("twitter", twitter));
                                 nameValuePairs.add(new BasicNameValuePair("siteweb", siteweb));
                                 nameValuePairs.add(new BasicNameValuePair("age", age));
                                 nameValuePairs.add(new BasicNameValuePair("genre_musical", genre_musical));
@@ -663,6 +669,8 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                     telfixe = element.getString("tel_fixe");
                     dispo = element.getString("disponibilites");
                     soundcloud = element.getString("soundcloud");
+                    facebook = element.getString("facebook");
+                    twitter = element.getString("twitter");
                     siteweb = element.getString("siteweb");
                    // imgUrl = element.getString("image_url");
                     genre_musical = element.getString("genre_musical");
@@ -687,6 +695,8 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
                     editTelFixe.setText(telfixe);
                     editSoundcloud.setText(soundcloud);
                     editSiteweb.setText(siteweb);
+                    editFacebook.setText(facebook);
+                    editTwitter.setText(twitter);
                     editPassword.setText(password);
 
                     //verification et affichage des genres musicaux en bdd

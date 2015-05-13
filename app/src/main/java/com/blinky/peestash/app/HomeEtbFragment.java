@@ -47,9 +47,9 @@ public class HomeEtbFragment extends Fragment {
     Button btnEvent;
     String id_user = "";
     private TextView Email, Adresse, CP, Nom, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Facebook, Type_etab;
+            Fixe, Siteweb, Genre, Facebook, Twitter, Type_etab;
     int nbreponse;
-    List<String> nom, adresse, ville, pays, cp, email, telportable, telfixe, facebook, siteweb, imgUrl, genre_musical, type_etablissement;
+    List<String> nom, adresse, ville, pays, cp, email, telportable, telfixe, facebook, twitter, siteweb, imgUrl, genre_musical, type_etablissement;
     ImageView img;
     ProgressDialog progress;
     int i=0;
@@ -72,6 +72,7 @@ public class HomeEtbFragment extends Fragment {
         Pays = (TextView) rootView.findViewById(R.id.Pays);
         Genre = (TextView) rootView.findViewById(R.id.Genre);
         Facebook = (TextView) rootView.findViewById(R.id.Facebook);
+        Twitter = (TextView) rootView.findViewById(R.id.Twitter);
         Siteweb = (TextView) rootView.findViewById(R.id.Siteweb);
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
@@ -258,8 +259,10 @@ public class HomeEtbFragment extends Fragment {
                     telfixe.add(element.getString("tel_fixe"));
                     siteweb.add(element.getString("siteweb"));
                     imgUrl.add(element.getString("image_url"));
-                   facebook.add(element.getString("facebook"));
-                   type_etablissement.add(element.getString("type_etablissement"));
+                    facebook.add(element.getString("facebook"));
+                    twitter.add(element.getString("twitter"));
+                    type_etablissement.add(element.getString("type_etablissement"));
+                    genre_musical.add(element.getString("genre_musical"));
 
                 }
                 i=0;
@@ -289,6 +292,8 @@ public class HomeEtbFragment extends Fragment {
         Fixe.setText(telfixe.get(i).toString());
         Mobile.setText(telportable.get(i).toString());
         Facebook.setText(facebook.get(i).toString());
+        Twitter.setText(twitter.get(i).toString());
+        Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
         if(type_etablissement.get(i).toString() != null)
         {
 
