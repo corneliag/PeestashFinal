@@ -142,6 +142,7 @@ public class MainActivity extends Activity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.action_settings:

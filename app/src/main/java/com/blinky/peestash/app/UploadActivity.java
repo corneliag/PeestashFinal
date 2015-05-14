@@ -24,7 +24,7 @@ import com.loopj.android.http.RequestParams;
 
 import java.io.*;
 
-public class UploadActivity extends Activity {
+public class UploadActivity extends MainActivity {
     ProgressDialog prgDialog;
     String encodedString;
     RequestParams params = new RequestParams();
@@ -34,6 +34,7 @@ public class UploadActivity extends Activity {
     Bitmap bitmap;
     private static int RESULT_LOAD_IMG = 1;
 
+
     ProgressDialog progress;
 
     @Override
@@ -41,6 +42,8 @@ public class UploadActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle var = this.getIntent().getExtras();
         id_user = var.getString("id_user");
         type = var.getString("type");
@@ -181,20 +184,20 @@ public class UploadActivity extends Activity {
                     startActivity(i);
                     finish();
 
-                    } else {
+                } else {
 
-                        int position=1;
-                        Intent i = new Intent(UploadActivity.this, MainEtbActivity.class);
-                        i.putExtra("id_user", id_user);
-                        i.putExtra("position", position);
-                        startActivity(i);
+                    int position=1;
+                    Intent i = new Intent(UploadActivity.this, MainEtbActivity.class);
+                    i.putExtra("id_user", id_user);
+                    i.putExtra("position", position);
+                    startActivity(i);
                     finish();
-                    }
                 }
+            }
 
-                // When the response returned by REST has Http
-                // response code other than '200' such as '404',
-                // '500' or '403' etc
+            // When the response returned by REST has Http
+            // response code other than '200' such as '404',
+            // '500' or '403' etc
 
             public void onFailure(int statusCode, Throwable error,
                                   String content) {
