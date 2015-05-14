@@ -33,7 +33,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:src="@drawable/ic_img_base"
-                           />
+                            />
                     <ImageView
                             android:id="@+id/imageView2"
                             android:layout_width="40dp"
@@ -364,13 +364,13 @@
                        android:layout_gravity="center"
                        android:src="@drawable/ic_trait"/>
             <LinearLayout
-                          android:id="@+id/l12"
-                          android:layout_below="@+id/l11"
-                          android:layout_width="wrap_content"
-                          android:layout_height="30dp"
-                          android:layout_marginBottom="10dp"
-                          android:layout_marginLeft="10dp"
-                          android:layout_marginTop="10dp">
+                    android:id="@+id/l12"
+                    android:layout_below="@+id/l11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp">
                 <ImageView android:layout_width="30dp"
                            android:src="@drawable/ic_action_web_site"
                            android:layout_height="wrap_content"
@@ -396,13 +396,13 @@
                        android:layout_gravity="center"
                        android:src="@drawable/ic_trait"/>
             <LinearLayout
-                          android:id="@+id/l13"
-                          android:layout_below="@+id/l12"
-                          android:layout_width="wrap_content"
-                          android:layout_height="30dp"
-                          android:layout_marginBottom="10dp"
-                          android:layout_marginLeft="10dp"
-                          android:layout_marginTop="10dp">
+                    android:id="@+id/l13"
+                    android:layout_below="@+id/l12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp">
                 <ImageView android:layout_width="30dp"
                            android:src="@drawable/ic_action_call_fix"
                            android:layout_height="wrap_content"
@@ -428,13 +428,13 @@
                        android:layout_gravity="center"
                        android:src="@drawable/ic_trait"/>
             <LinearLayout
-                          android:id="@+id/l14"
-                          android:layout_below="@+id/l13"
-                          android:layout_width="wrap_content"
-                          android:layout_height="30dp"
-                          android:layout_marginBottom="10dp"
-                          android:layout_marginLeft="10dp"
-                          android:layout_marginTop="10dp">
+                    android:id="@+id/l14"
+                    android:layout_below="@+id/l13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp">
                 <ImageView android:layout_width="30dp"
                            android:src="@drawable/ic_call_mobile"
                            android:layout_height="wrap_content"
@@ -460,13 +460,13 @@
                        android:layout_gravity="center"
                        android:src="@drawable/ic_trait"/>
             <LinearLayout
-                          android:id="@+id/l15"
-                          android:layout_below="@+id/l14"
-                          android:layout_width="wrap_content"
-                          android:layout_height="30dp"
-                          android:layout_marginBottom="10dp"
-                          android:layout_marginLeft="10dp"
-                          android:layout_marginTop="10dp">
+                    android:id="@+id/l15"
+                    android:layout_below="@+id/l14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp">
                 <ImageView android:layout_width="30dp"
                            android:src="@drawable/ic_action_email"
                            android:layout_height="wrap_content"
@@ -543,6 +543,5 @@
     </LinearLayout>
 
 </ScrollView>
-
 
 

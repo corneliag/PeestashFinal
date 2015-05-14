@@ -142,13 +142,13 @@
                                   android:layout_marginLeft="5dp"
                                 />
                     </LinearLayout>
-                        <TextView android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:id="@+id/Pays"
-                                  android:text="pas défini"
-                                  android:layout_marginLeft="5dp"
-                                  android:textStyle="bold"
-                                />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/Pays"
+                              android:text="pas défini"
+                              android:layout_marginLeft="5dp"
+                              android:textStyle="bold"
+                            />
 
                 </LinearLayout>
 
@@ -458,7 +458,6 @@
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
-
 
 
 
