@@ -24,7 +24,7 @@ import com.loopj.android.http.RequestParams;
 
 import java.io.*;
 
-public class UploadActivity extends MainActivity {
+public class UploadActivity extends Activity {
     ProgressDialog prgDialog;
     String encodedString;
     RequestParams params = new RequestParams();
@@ -34,7 +34,6 @@ public class UploadActivity extends MainActivity {
     Bitmap bitmap;
     private static int RESULT_LOAD_IMG = 1;
 
-
     ProgressDialog progress;
 
     @Override
@@ -42,8 +41,6 @@ public class UploadActivity extends MainActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         Bundle var = this.getIntent().getExtras();
         id_user = var.getString("id_user");
         type = var.getString("type");
