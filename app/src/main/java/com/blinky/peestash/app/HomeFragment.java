@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         id_user = var.getString("id_user");
 
         Pseudo = (TextView) rootView.findViewById(R.id.Pseudo);
-         //Adresse = (TextView) rootView.findViewById(R.id.Adresse);
+        //Adresse = (TextView) rootView.findViewById(R.id.Adresse);
         CP = (TextView) rootView.findViewById(R.id.CP);
         Ville = (TextView) rootView.findViewById(R.id.Ville);
         Pays = (TextView) rootView.findViewById(R.id.Pays);
@@ -272,7 +272,7 @@ public class HomeFragment extends Fragment {
 
                     JSONObject element = finalResult.getJSONObject(i);
                     email.add(element.getString("email"));
-                     pseudo.add(element.getString("pseudo"));
+                    pseudo.add(element.getString("pseudo"));
                     soundcloud.add(element.getString("soundcloud"));
                     adresse.add(element.getString("adresse"));
                     cp.add(element.getString("code_postal"));
@@ -304,48 +304,48 @@ public class HomeFragment extends Fragment {
 
         }
     }
-protected void afficheProfilContent(int i)
-{
-    Pseudo.setText(pseudo.get(i).toString());
-    Email.setText(email.get(i).toString());
-    //Adresse.setText(adresse.get(i).toString());
-    CP.setText(cp.get(i).toString());
-    Ville.setText(ville.get(i).toString());
-    Pays.setText(pays.get(i).toString());
-    Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-    Siteweb.setText(siteweb.get(i).toString());
-    Fixe.setText(telfixe.get(i).toString());
-    Mobile.setText(telportable.get(i).toString());
-    Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-    Type_artiste.setText(type_artiste.get(i).toString());
-    Facebook.setText(facebook.get(i).toString());
-    Twitter.setText(twitter.get(i).toString());
-
-    if(imgUrl.get(i).toString().length() != 0) {
-        InputStream in = null;
-        try {
-            in = new java.net.URL(imgUrl.get(i).toString()).openStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        imgurl = BitmapFactory.decodeStream(in);
-        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
-
-    }else
+    protected void afficheProfilContent(int i)
     {
-        img.setImageDrawable(getResources().getDrawable(R.drawable.ic_img_base));
+        Pseudo.setText(pseudo.get(i).toString());
+        Email.setText(email.get(i).toString());
+        //Adresse.setText(adresse.get(i).toString());
+        CP.setText(cp.get(i).toString());
+        Ville.setText(ville.get(i).toString());
+        Pays.setText(pays.get(i).toString());
+        Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
+        Siteweb.setText(siteweb.get(i).toString());
+        Fixe.setText(telfixe.get(i).toString());
+        Mobile.setText(telportable.get(i).toString());
+        Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
+        Type_artiste.setText(type_artiste.get(i).toString());
+        Facebook.setText(facebook.get(i).toString());
+        Twitter.setText(twitter.get(i).toString());
+
+        if(imgUrl.get(i).toString().length() != 0) {
+            InputStream in = null;
+            try {
+                in = new java.net.URL(imgUrl.get(i).toString()).openStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imgurl = BitmapFactory.decodeStream(in);
+            img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+
+        }else
+        {
+            img.setImageDrawable(getResources().getDrawable(R.drawable.ic_img_base));
+
+        }
+        if (soundcloud.get(i).toString().length() != 0) {
+            html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" +soundcloud.get(i).toString()+ "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";
+            wv.getSettings().setJavaScriptEnabled(true);
+            wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+        } else {
+            html = "Vous n'avez pas renseigne l\'ID de votre playlist Soundcloud";
+            wv.getSettings().setJavaScriptEnabled(true);
+            wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+
+        }
 
     }
-    if (soundcloud.get(i).toString().length() != 0) {
-        html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" +soundcloud.get(i).toString()+ "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";
-        wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-    } else {
-        html = "Vous n'avez pas renseigne l\'ID de votre playlist Soundcloud";
-        wv.getSettings().setJavaScriptEnabled(true);
-        wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-
-    }
-
-}
 }
