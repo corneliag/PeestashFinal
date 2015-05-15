@@ -53,7 +53,7 @@ public class ProfilFragment extends Fragment {
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
             Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age, Type_artiste;
 
-    ImageView img;
+    ImageView img, editImg;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", ville = "", adresse = "", cp = "", pays = "",
             telportable = "", telfixe = "", dispo = "", soundcloud = "", siteweb = "", imgUrl = "", genre_musical = "", facebook="", twitter="", type_artiste="";
     ProgressDialog progress;
@@ -103,6 +103,7 @@ public class ProfilFragment extends Fragment {
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
         Email = (TextView) rootView.findViewById(R.id.Email);
         img = (ImageView) rootView.findViewById(R.id.imageView);
+        editImg = (ImageView) rootView.findViewById(R.id.imageView2);
         wv = (WebView) rootView.findViewById(R.id.webView);
 
         View.OnClickListener listnr = new View.OnClickListener() {
@@ -121,7 +122,7 @@ public class ProfilFragment extends Fragment {
 
         };
 
-        img.setOnClickListener(listnr);
+        editImg.setOnClickListener(listnr);
 
 
         btnEditProfil.setOnClickListener(new View.OnClickListener() {

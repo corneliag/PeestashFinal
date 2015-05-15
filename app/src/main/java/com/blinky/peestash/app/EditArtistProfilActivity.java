@@ -67,7 +67,6 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_edit_artist_profil);
 
         // Spinner element
