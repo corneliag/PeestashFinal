@@ -70,4 +70,12 @@
     <string name="art">Artistes</string>
     <string name="Event">Evènements</string>
     <string name="Event_status">Statut du recrutement</string>
+    <string name="BtnAddEvents">Ajouter un évènement</string>
+    <string name="BtnGetEvents">Voir mes évènements</string>
+    <string name="from_date">From Date</string>
+    <string name="to_date">To Date</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add_event">AddEventActivity</string>
 </resources>

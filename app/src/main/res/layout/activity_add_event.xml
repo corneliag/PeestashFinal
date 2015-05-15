@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+        >
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:orientation="vertical" android:background="#eaeaea">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false" android:weightSum="300" android:orientation="vertical"
+                    android:baselineAligned="true">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                        >
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent" android:background="#75b7b7b7">
+                        <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentTop="true"
+                                android:src="@drawable/icon_events"
+                                android:layout_marginLeft="20dp"/>
+                        <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="10dp"
+                                android:id="@+id/Textevent"
+                                android:text="Créer un évènement"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/orange"
+                                android:textSize="20dp"
+                                android:textAllCaps="true"
+                                />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:id="@+id/editText" android:layout_margin="5dp" android:selectAllOnFocus="true"
+                        android:shadowColor="#ffd3d3d3" android:hint="Titre de l&apos;évènement"/>
+
+            </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium" android:text="Date de l&apos;évènement :"
+                  android:id="@+id/textView65" android:gravity="center" android:layout_marginLeft="20dp"
+                  android:layout_margin="5dp"/>
+            <EditText
+                    android:id="@+id/etxt_fromdate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:hint="@string/from_date" />
+
+            <EditText
+                    android:id="@+id/etxt_todate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:hint="@string/to_date" android:layout_marginTop="5dp"/>
+
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium" android:text="Horaires :"
+                  android:id="@+id/textView68" android:gravity="center" android:layout_marginLeft="20dp"
+                  android:layout_margin="8dp"/>
+            <EditText android:id="@+id/HeureDebut" android:layout_width="fill_parent"
+                      android:layout_height="wrap_content" android:layout_weight=".5" android:hint="Heure de début"/>
+            <EditText android:id="@+id/HeureFin" android:layout_width="fill_parent"
+                      android:layout_height="wrap_content" android:layout_weight=".5" android:hint="Heure de fin"
+                      android:layout_marginTop="5dp"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="Adresse :"
+                      android:id="@+id/textView62" android:gravity="center" android:layout_marginLeft="20dp"
+                      android:layout_margin="5dp"/>
+            <Spinner android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:id="@+id/spinnerAdresse" android:layout_weight="1" android:gravity="center"
+                     android:layout_marginTop="5dp"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp" android:id="@+id/layout_hidden">
+                <EditText android:id="@+id/Adresse" android:layout_width="fill_parent"
+                              android:layout_height="wrap_content" android:layout_weight=".5" android:hint="Adresse"
+                              android:visibility="invisible"/>
+                <EditText android:id="@+id/Cp" android:layout_width="fill_parent"
+                              android:layout_height="wrap_content" android:layout_weight=".5" android:hint="Code Postal"
+                              android:visibility="invisible"/>
+                <EditText android:id="@+id/Ville" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                              android:layout_weight=".5" android:hint="Ville" android:visibility="invisible"/>
+                <EditText android:id="@+id/Pays" android:layout_width="fill_parent"
+                              android:layout_height="wrap_content" android:hint="Pays"
+                              android:visibility="invisible"/>
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium" android:text="Statut du recrutement :"
+                  android:id="@+id/textView63" android:gravity="center" android:layout_marginLeft="20dp"
+                      android:layout_margin="5dp"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                      android:layout_height="fill_parent">
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerStatut" android:layout_weight="1" android:gravity="center"
+                    android:layout_margin="5dp"/>
+        </LinearLayout>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_below="@+id/spinnerAge"
+                    android:layout_marginTop="20dp"
+                    android:text="Genre Musical"
+                    android:id="@+id/textView31"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:layout_weight="6.67">
+
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Rock"
+                        android:id="@+id/rock" android:layout_weight="6.52" android:layout_marginLeft="10dp"/>
+
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jazz"
+                        android:id="@+id/jazz" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Métal"
+                        android:id="@+id/metal" android:layout_weight="6.52" android:layout_marginLeft="10dp"/>
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Pop"
+                        android:id="@+id/pop" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Électro"
+                        android:id="@+id/electro" android:layout_weight="6.52" android:layout_marginLeft="10dp"/>
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Blues"
+                        android:id="@+id/blues" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Classique"
+                        android:id="@+id/classique" android:layout_weight="6.52" android:layout_marginLeft="10dp"/>
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Funk"
+                        android:id="@+id/funk" android:layout_weight="6.52"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:layout_weight="6.67">
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Folk"
+                        android:id="@+id/folk" android:layout_weight="6.52" android:layout_marginLeft="10dp"/>
+                <CheckBox
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Rap"
+                        android:id="@+id/rap" android:layout_weight="6.52"/>
+            </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/bottomProfil"
+                android:id="@+id/layoutVoirEvent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <Button
+                    android:id="@+id/btnCreateEvent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dip"
+                    android:background="@drawable/orange_button"
+                    android:text="Créer mon évènement"
+                    style="@style/button_text" />
+
+        </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>
+
+
