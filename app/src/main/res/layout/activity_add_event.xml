@@ -61,7 +61,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:id="@+id/editText" android:layout_margin="5dp" android:selectAllOnFocus="true"
+                        android:id="@+id/Titre" android:layout_margin="5dp" android:selectAllOnFocus="true"
                         android:shadowColor="#ffd3d3d3" android:hint="Titre de l&apos;évènement"/>
 
             </LinearLayout>
@@ -105,20 +105,30 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="0dp" android:id="@+id/layout_hidden">
+                    android:layout_height="wrap_content" android:id="@+id/layout_hidden">
                 <EditText android:id="@+id/Adresse" android:layout_width="fill_parent"
-                              android:layout_height="wrap_content" android:layout_weight=".5" android:hint="Adresse"
+                              android:layout_height="wrap_content" android:hint="Adresse"
                               android:visibility="invisible"/>
                 <EditText android:id="@+id/Cp" android:layout_width="fill_parent"
-                              android:layout_height="wrap_content" android:layout_weight=".5" android:hint="Code Postal"
+                              android:layout_height="wrap_content" android:hint="Code Postal"
                               android:visibility="invisible"/>
                 <EditText android:id="@+id/Ville" android:layout_width="fill_parent" android:layout_height="wrap_content"
-                              android:layout_weight=".5" android:hint="Ville" android:visibility="invisible"/>
+                          android:hint="Ville" android:visibility="invisible"/>
                 <EditText android:id="@+id/Pays" android:layout_width="fill_parent"
                               android:layout_height="wrap_content" android:hint="Pays"
                               android:visibility="invisible"/>
             </LinearLayout>
 
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="Description : "
+                      android:id="@+id/textView64" android:gravity="center" android:layout_marginLeft="20dp"
+                      android:layout_margin="5dp"/>
+            <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/Description" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceMedium" android:text="Statut du recrutement :"
                   android:id="@+id/textView63" android:gravity="center" android:layout_marginLeft="20dp"
@@ -217,7 +227,21 @@
                         android:text="Rap"
                         android:id="@+id/rap" android:layout_weight="6.52"/>
             </LinearLayout>
-        <LinearLayout
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="Page facebook : "
+                      android:id="@+id/textView66" android:gravity="center" android:layout_marginLeft="20dp"
+                      android:layout_margin="5dp"/>
+            <EditText android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:ems="10" android:id="@+id/Facebook" android:layout_marginLeft="5dp"
+                      android:layout_marginRight="5dp" android:inputType="text"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:textAppearance="?android:attr/textAppearanceMedium" android:text="Site web : "
+                      android:id="@+id/textView67" android:gravity="center" android:layout_marginLeft="20dp"
+                      android:layout_margin="5dp"/>
+            <EditText android:layout_width="match_parent" android:layout_height="match_parent" android:ems="10"
+                      android:id="@+id/Siteweb" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                      android:inputType="text"/>
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
