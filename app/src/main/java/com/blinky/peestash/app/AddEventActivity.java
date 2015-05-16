@@ -1,17 +1,30 @@
 package com.blinky.peestash.app;
 
 import android.app.*;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Address;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.Layout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.blinky.peestash.app.R;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,24 +37,24 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
     List<String> statuts, adresses;
     ArrayAdapter<String> statutAdapter, adresseAdapter;
     Spinner spinnerStatut, spinnerAdresse;
-    String statut, adresse;
 
-    private EditText fromDateEtxt, HeureDebut;
-    private EditText toDateEtxt, HeureFin;
-    private DatePickerDialog fromDatePickerDialog;
-    private DatePickerDialog toDatePickerDialog;
+    private EditText Titre, fromDateEtxt, HeureDebut, toDateEtxt, HeureFin;
+    private DatePickerDialog fromDatePickerDialog, toDatePickerDialog;
 
     private SimpleDateFormat dateFormatter;
 
     private CheckBox rock, pop, metal, jazz, funk, electro, blues, rap, folk, classique;
-    private String genremusical = "";
+    private String genremusical = "", titre="", cp="", ville="", pays="", statut="", adresse="", msg="", genre_musical="",
+            dateDebut="", dateFin="", heureDebut="", heureFin="", facebook="", siteweb="", description="", statut_recrutement="";
 
     private ArrayList<String> genrelist = new ArrayList<String>();
 
-    EditText Adresse, Cp, Ville, Pays;
+    private EditText Adresse, Cp, Ville, Pays, Facebook, Siteweb, Description;
     LinearLayout root;
     LinearLayout.LayoutParams rootParams;
     int layoutHeight;
+
+    Button btnCreateEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +84,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         spinnerStatut.setOnItemSelectedListener(this);
 
         statuts.add(String.valueOf("Ouvert"));
-        statuts.add(String.valueOf("Fermé"));
+        statuts.add(String.valueOf("Ferme"));
 
         // Drop down layout style - list view with radio button
         statutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -97,7 +110,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         // Spinner click listener
         spinnerAdresse.setOnItemSelectedListener(new SelectAdress());
 
-        adresses.add(String.valueOf("Par défaut celle de mon établissement"));
+        adresses.add(String.valueOf("Par defaut celle de mon etablissement"));
         adresses.add(String.valueOf("Ajouter une adresse"));
 
         // Drop down layout style - list view with radio button
@@ -112,6 +125,131 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         Cp = (EditText)findViewById(R.id.Cp);
         Ville = (EditText)findViewById(R.id.Ville);
         Pays = (EditText)findViewById(R.id.Pays);
+
+        Titre = (EditText)findViewById(R.id.Titre);
+        Facebook = (EditText)findViewById(R.id.Facebook);
+        Siteweb = (EditText)findViewById(R.id.Siteweb);
+        Description = (EditText)findViewById(R.id.Description);
+
+        btnCreateEvent = (Button)findViewById(R.id.btnCreateEvent);
+
+        // On met un Listener sur le bouton Artist
+        btnCreateEvent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+
+                                //update datas in database
+                                InputStream is = null;
+                                String result = null;
+                                String tag = "add_event";
+
+                                if(adresse=="Par défaut celle de mon établissement")
+                                {
+                                    adresse ="";
+                                    cp ="";
+                                    ville = "";
+                                    pays = "";
+
+                                }else
+                                {
+                                    adresse = "" + Adresse.getText().toString();
+                                    cp = "" + Cp.getText().toString();
+                                    ville = "" + Ville.getText().toString();
+                                    pays = "" + Pays.getText().toString();
+                                }
+
+                                titre = "" + Titre.getText().toString();
+                                dateDebut = ""+ fromDateEtxt.getText().toString();
+                                dateFin = ""+ toDateEtxt.getText().toString();
+                                heureDebut = ""+ HeureDebut.getText().toString();
+                                heureFin = ""+ HeureFin.getText().toString();
+                                description = "" + Description.getText().toString();
+                                facebook = "" + Facebook.getText().toString();
+                                siteweb = "" + Siteweb.getText().toString();
+                                genre_musical = "" + genrelist.toString();
+                                statut = "" + statut.toString();
+
+                                msg = tag + id_user + " " + titre  + " " + dateDebut  + " " + dateFin  + " " + heureDebut  + " " + heureFin  + " " + description  + " " + facebook  + " " + siteweb  + " " + genre_musical  + " " +statut  + " " +adresse  + " " +cp + " " + ville + " " + pays;
+                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                System.out.println(msg);
+                                //setting nameValuePairs
+                                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                                //adding string variables into the NameValuePairs
+                                nameValuePairs.add(new BasicNameValuePair("tag", tag));
+                                nameValuePairs.add(new BasicNameValuePair("id", id_user));
+                                nameValuePairs.add(new BasicNameValuePair("titre", titre));
+                                nameValuePairs.add(new BasicNameValuePair("date_debut", dateDebut));
+                                nameValuePairs.add(new BasicNameValuePair("date_fin", dateFin));
+                                nameValuePairs.add(new BasicNameValuePair("heure_debut", heureDebut));
+                                nameValuePairs.add(new BasicNameValuePair("heure_fin", heureFin));
+                                nameValuePairs.add(new BasicNameValuePair("adresse", adresse));
+                                nameValuePairs.add(new BasicNameValuePair("code_postal", cp));
+                                nameValuePairs.add(new BasicNameValuePair("ville", ville));
+                                nameValuePairs.add(new BasicNameValuePair("pays", pays));
+                                nameValuePairs.add(new BasicNameValuePair("description", description));
+                                nameValuePairs.add(new BasicNameValuePair("statut_recrutement", statut));
+                                nameValuePairs.add(new BasicNameValuePair("facebook", facebook));
+                                nameValuePairs.add(new BasicNameValuePair("siteweb", siteweb));
+                                nameValuePairs.add(new BasicNameValuePair("genre_musical", genre_musical));
+
+                                System.out.println(nameValuePairs);
+
+                                try {
+
+                                    //Setting up the default http client
+                                    HttpClient httpClient = new DefaultHttpClient();
+
+                                    //setting up the http post method
+                                    HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
+                                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                                    //getting the response
+                                    HttpResponse response = httpClient.execute(httpPost);
+
+                                    //setting up the entity
+                                    HttpEntity entity = response.getEntity();
+
+                                    //setting up the content inside the input stream reader
+                                    is = entity.getContent();
+
+                                    //displaying a toast message if the data is entered in the database
+                                    msg = "Votre évènement a été créé.";
+                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                    int position = 1;
+                                    Intent i = new Intent(AddEventActivity.this, MainEtbActivity.class);
+                                    i.putExtra("id_user", id_user);
+                                    i.putExtra("position", position);
+                                    startActivity(i);
+                                    finish();
+
+
+                                } catch (ClientProtocolException e) {
+                                    Log.e("ClientProtocole", "Log_tag");
+                                    msg = "Erreur client protocole";
+                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                } catch (IOException e) {
+                                    Log.e("Log_tag", "IOException");
+                                    e.printStackTrace();
+                                    msg = "Erreur IOException";
+                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                        });
+
+                    }
+                }).start();
+
+            }
+
+        });
+
 
     }
 
@@ -420,7 +558,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();*/
 
             if(adresse == "Ajouter une adresse") {
-                layoutHeight=200;
+                layoutHeight=500;
                 rootParams = (LinearLayout.LayoutParams) root.getLayoutParams();
                 rootParams.height = layoutHeight;
                 root.setLayoutParams(rootParams);
