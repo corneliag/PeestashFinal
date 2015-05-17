@@ -1,18 +1,27 @@
 package com.blinky.peestash.app;
 
 import android.app.*;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.location.Address;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputType;
-import android.text.Layout;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import com.blinky.peestash.app.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -23,6 +32,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -33,7 +43,7 @@ import java.util.Locale;
 
 public class AddEventActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private String id_user="";
+    private String id_user="", valid="ok";
     List<String> statuts, adresses;
     ArrayAdapter<String> statutAdapter, adresseAdapter;
     Spinner spinnerStatut, spinnerAdresse;
@@ -44,7 +54,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
     private SimpleDateFormat dateFormatter;
 
     private CheckBox rock, pop, metal, jazz, funk, electro, blues, rap, folk, classique;
-    private String genremusical = "", titre="", cp="", ville="", pays="", statut="", adresse="", msg="", genre_musical="",
+    private String genremusical = "", titre="", cp="", ville="", pays="", statut="", adresse="", genre_musical="",
             dateDebut="", dateFin="", heureDebut="", heureFin="", facebook="", siteweb="", description="", statut_recrutement="";
 
     private ArrayList<String> genrelist = new ArrayList<String>();
@@ -54,8 +64,21 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
     LinearLayout.LayoutParams rootParams;
     int layoutHeight;
 
-    Button btnCreateEvent;
+    Button btnCreateEvent, btnLoadPicture;
+    final Context context = this;
+    List<NameValuePair> nameValuePairs;
 
+    ProgressDialog prgDialog;
+    String encodedString;
+    RequestParams params = new RequestParams();
+    String type="", tag="", img="";
+    String msg;
+    String imgPath, fileName;
+    Bitmap bitmap;
+    private static int RESULT_LOAD_IMG = 1;
+
+    ProgressDialog progress;
+    InputStream is;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +87,11 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         Bundle var = this.getIntent().getExtras();
         id_user=var.getString("id_user");
 
+        params.put("id", id_user);
+        type = "event";
+        prgDialog = new ProgressDialog(this);
+        // Set Cancelable as False
+        prgDialog.setCancelable(false);
         findViewsById();
 
         Locale locale = new Locale("FR");
@@ -83,8 +111,8 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         // Spinner click listener
         spinnerStatut.setOnItemSelectedListener(this);
 
-        statuts.add(String.valueOf("Ouvert"));
         statuts.add(String.valueOf("Ferme"));
+        statuts.add(String.valueOf("Ouvert"));
 
         // Drop down layout style - list view with radio button
         statutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -145,104 +173,189 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                             public void run() {
 
                                 //update datas in database
-                                InputStream is = null;
+                                is = null;
                                 String result = null;
                                 String tag = "add_event";
 
-                                if(adresse=="Par défaut celle de mon établissement")
-                                {
-                                    adresse ="";
-                                    cp ="";
-                                    ville = "";
-                                    pays = "";
-
-                                }else
-                                {
-                                    adresse = "" + Adresse.getText().toString();
-                                    cp = "" + Cp.getText().toString();
-                                    ville = "" + Ville.getText().toString();
-                                    pays = "" + Pays.getText().toString();
-                                }
+                                params.put("tag", tag);
 
                                 titre = "" + Titre.getText().toString();
-                                dateDebut = ""+ fromDateEtxt.getText().toString();
-                                dateFin = ""+ toDateEtxt.getText().toString();
-                                heureDebut = ""+ HeureDebut.getText().toString();
-                                heureFin = ""+ HeureFin.getText().toString();
+                                dateDebut = "" + fromDateEtxt.getText().toString();
+                                dateFin = "" + toDateEtxt.getText().toString();
+                                heureDebut = "" + HeureDebut.getText().toString();
+                                heureFin = "" + HeureFin.getText().toString();
                                 description = "" + Description.getText().toString();
                                 facebook = "" + Facebook.getText().toString();
                                 siteweb = "" + Siteweb.getText().toString();
                                 genre_musical = "" + genrelist.toString();
                                 statut = "" + statut.toString();
+                               /* msg = tag + id_user + " " + titre  + " " + dateDebut  + " " + dateFin  + " " + heureDebut  + " " + heureFin  + " " + description  + " " + facebook  + " " + siteweb  + " " + genre_musical  + " " +statut  + " " +adresse  + " " +cp + " " + ville + " " + pays;
+                                System.out.println(msg);*/
+                                msg="";
+                                valid="ok";
 
-                                msg = tag + id_user + " " + titre  + " " + dateDebut  + " " + dateFin  + " " + heureDebut  + " " + heureFin  + " " + description  + " " + facebook  + " " + siteweb  + " " + genre_musical  + " " +statut  + " " +adresse  + " " +cp + " " + ville + " " + pays;
-                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                System.out.println(msg);
-                                //setting nameValuePairs
-                                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                                //adding string variables into the NameValuePairs
-                                nameValuePairs.add(new BasicNameValuePair("tag", tag));
-                                nameValuePairs.add(new BasicNameValuePair("id", id_user));
-                                nameValuePairs.add(new BasicNameValuePair("titre", titre));
-                                nameValuePairs.add(new BasicNameValuePair("date_debut", dateDebut));
-                                nameValuePairs.add(new BasicNameValuePair("date_fin", dateFin));
-                                nameValuePairs.add(new BasicNameValuePair("heure_debut", heureDebut));
-                                nameValuePairs.add(new BasicNameValuePair("heure_fin", heureFin));
-                                nameValuePairs.add(new BasicNameValuePair("adresse", adresse));
-                                nameValuePairs.add(new BasicNameValuePair("code_postal", cp));
-                                nameValuePairs.add(new BasicNameValuePair("ville", ville));
-                                nameValuePairs.add(new BasicNameValuePair("pays", pays));
-                                nameValuePairs.add(new BasicNameValuePair("description", description));
-                                nameValuePairs.add(new BasicNameValuePair("statut_recrutement", statut));
-                                nameValuePairs.add(new BasicNameValuePair("facebook", facebook));
-                                nameValuePairs.add(new BasicNameValuePair("siteweb", siteweb));
-                                nameValuePairs.add(new BasicNameValuePair("genre_musical", genre_musical));
-
-                                System.out.println(nameValuePairs);
-
-                                try {
-
-                                    //Setting up the default http client
-                                    HttpClient httpClient = new DefaultHttpClient();
-
-                                    //setting up the http post method
-                                    HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
-                                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                                    //getting the response
-                                    HttpResponse response = httpClient.execute(httpPost);
-
-                                    //setting up the entity
-                                    HttpEntity entity = response.getEntity();
-
-                                    //setting up the content inside the input stream reader
-                                    is = entity.getContent();
-
-                                    //displaying a toast message if the data is entered in the database
-                                    msg = "Votre évènement a été créé.";
-                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                    int position = 1;
-                                    Intent i = new Intent(AddEventActivity.this, MainEtbActivity.class);
-                                    i.putExtra("id_user", id_user);
-                                    i.putExtra("position", position);
-                                    startActivity(i);
-                                    finish();
-
-
-                                } catch (ClientProtocolException e) {
-                                    Log.e("ClientProtocole", "Log_tag");
-                                    msg = "Erreur client protocole";
-                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                                } catch (IOException e) {
-                                    Log.e("Log_tag", "IOException");
-                                    e.printStackTrace();
-                                    msg = "Erreur IOException";
-                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                if(titre=="") {
+                                    valid = "no";
+                                    msg = "Veuillez renseigner le titre de votre évènement\n";
+                                }else
+                                {
+                                    params.put("titre", titre);
                                 }
+
+                                if(dateDebut=="")
+                                {
+                                    valid="no";
+                                    msg += "Veuillez préciser la date de votre évènement\n";
+                                }else
+                                {
+                                    params.put("date_debut", dateDebut);
+                                }
+
+                                params.put("date_fin", dateFin);
+
+                                if(heureDebut=="")
+                                {
+                                    valid="no";
+                                    msg += "Veuillez renseigner l'heure de début de votre évènement\n";
+
+                                }else
+                                {
+
+                                    params.put("heure_debut", heureDebut);
+                                }
+
+                                if(heureFin=="")
+                                {
+                                    valid="no";
+                                    msg += "Veuillez renseigner l'heure où se termine votre évènement\n";
+
+                                }else {
+
+                                    params.put("heure_fin", heureFin);
+                                }
+
+                                if(description==""||description.length()>180)
+                                {
+                                    valid="no";
+                                    msg += "Veuillez renseigner correctement la description de votre évènement. Celle-ci doit " +
+                                            "comporter au maximum 180 caractères.\n";
+
+                                }else
+                                {
+
+                                    params.put("description", description);
+                                }
+
+                                if(genrelist.isEmpty())
+                                {
+                                    valid="no";
+                                    msg += "Veuillez renseigner au minimum un genre musical correspondant à votre évènement\n";
+
+                                }else {
+
+                                    params.put("genre_musical", genre_musical);
+                                }
+
+                                if (adresse == "Ajouter une adresse") {
+
+                                    adresse = "" + Adresse.getText().toString();
+                                    cp = "" + Cp.getText().toString();
+                                    ville = "" + Ville.getText().toString();
+                                    pays = "" + Pays.getText().toString();
+
+                                    if(adresse=="") {
+                                        valid = "no";
+                                        msg += "Veuillez renseigner correctement l'adresse de votre évènement.\n";
+                                    }else {
+
+                                        params.put("adresse", adresse);
+                                    }
+
+                                    if(cp==""||cp.length()>5||cp.length()<5) {
+                                        valid = "no";
+                                            msg += "Veuillez renseigner correctement le code postal.\n";
+                                    }else
+                                    {
+
+                                        params.put("code_postal", cp);
+                                    }
+
+                                    if(ville!="") {
+                                        valid = "no";
+                                        msg += "Veuillez renseigner correctement la ville où aura lieu votre évènement.\n";
+                                    }else
+                                    {
+
+                                        params.put("ville", ville);
+                                    }
+
+                                    if(pays!="") {
+                                        valid = "no";
+                                        msg += "Veuillez préciser le pays dans lequel aura lieu votre évènement";
+                                    }else {
+
+                                        params.put("pays", pays);
+                                    }
+                                }
+                                params.put("statut_recrutement", statut);
+                                params.put("facebook", facebook);
+                                params.put("siteweb", siteweb);
+                                if(valid=="ok") {
+
+                                    uploadImage();
+
+
+
+                                } else
+                                {
+                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                            context);
+
+                                    // set title
+                                    alertDialogBuilder.setTitle("Formulaire incorrect");
+                                    alertDialogBuilder.setIcon(R.drawable.ic_attention);
+
+                                    // set dialog message
+                                    alertDialogBuilder
+                                            .setMessage(msg)
+                                            .setCancelable(true)
+                                            .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    // if this button is clicked, close
+                                                    // current activity
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+                                    // create alert dialog
+                                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                                    // show it
+                                    alertDialog.show();
+
+                                    //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                }
+
                             }
 
                         });
 
+                    }
+
+                    private void uploadImage() {
+                        // When Image is selected from Gallery
+                        if (imgPath != null && !imgPath.isEmpty()) {
+                            prgDialog.setMessage("Conversion de l'image...");
+                            prgDialog.show();
+                            // Convert image to String using Base64
+                            encodeImagetoString();
+                            // When Image is not selected from Gallery
+                        } else {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Vous devez choisir une image pour lancer l'enregistrement.",
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
                 }).start();
 
@@ -252,6 +365,8 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -588,5 +703,213 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
         }
 
+    }
+
+    public void loadImagefromGallery(View view) {
+        // Create intent to Open Image applications like Gallery, Google Photos
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Start the Intent
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+    }
+    // When Image is selected from Gallery
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgPath = cursor.getString(columnIndex);
+                cursor.close();
+                ImageView imgView = (ImageView) findViewById(R.id.imgView);
+                // Set the Image in ImageView
+                imgView.setImageBitmap(BitmapFactory
+                        .decodeFile(imgPath));
+                // Get the Image's file name
+                String fileNameSegments[] = imgPath.split("/");
+                fileName = fileNameSegments[fileNameSegments.length - 1];
+                // Put file name in Async Http Post Param which will used in Php web app
+                params.put("filename", fileName);
+                params.put("imgPath", imgPath);
+
+            } else {
+                Toast.makeText(this, "Vous n'avez sélectionné aucune image.",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Une erreur est survenue", Toast.LENGTH_LONG)
+                    .show();
+        }
+
+    }
+
+
+    // When Upload button is clicked
+    public void uploadImage(View v) {
+        // When Image is selected from Gallery
+        if (imgPath != null && !imgPath.isEmpty()) {
+            prgDialog.setMessage("Conversion de l'image...");
+            prgDialog.show();
+            // Convert image to String using Base64
+            encodeImagetoString();
+            // When Image is not selected from Gallery
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Vous devez choisir une image pour lancer l'enregistrement.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // AsyncTask - To convert Image to String
+    public void encodeImagetoString() {
+        new AsyncTask<Void, Void, String>() {
+
+            protected void onPreExecute() {
+
+            };
+
+            @Override
+            protected String doInBackground(Void... params) {
+                BitmapFactory.Options options = null;
+                options = new BitmapFactory.Options();
+                options.inSampleSize = 3;
+                bitmap = BitmapFactory.decodeFile(imgPath,
+                        options);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Must compress the Image to reduce image size to make upload easy
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                byte[] byte_arr = stream.toByteArray();
+                // Encode Image to String
+                encodedString = Base64.encodeToString(byte_arr, 0);
+                return "";
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                prgDialog.setMessage("Enregistrement des informations...");
+                // Put converted Image string into Async Http Post param
+
+                params.put("filename", fileName);
+                params.put("imgPath", imgPath);
+                params.put("image", encodedString);
+
+                AsyncHttpClient client = new AsyncHttpClient();
+                // Don't forget to change the IP address to your LAN address. Port no as well.
+                client.post("http://peestash.peestash.fr/index.php", params, new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http
+                    // response code '200'
+                    @Override
+                    public void onSuccess(String response) {
+                        //System.out.println(params);
+                        finish();
+                    }
+
+                    // When the response returned by REST has Http
+                    // response code other than '200' such as '404',
+                    // '500' or '403' etc
+
+                    public void onFailure(int statusCode, Throwable error,
+                                          String content) {
+                        // Hide Progress Dialog
+                        prgDialog.hide();
+                        // When Http response code is '404'
+                        if (statusCode == 404) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Requested resource not found",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        // When Http response code is '500'
+                        else if (statusCode == 500) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Something went wrong at server end",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        // When Http response code other than 404, 500
+                        else {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
+                                            + statusCode, Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+                });
+                // Trigger Image upload
+               // triggerImageUpload();
+            }
+        }.execute(null, null, null);
+    }
+
+    public void triggerImageUpload() {
+        makeHTTPCall();
+    }
+
+    // Make Http call to upload Image to Php server
+    public void makeHTTPCall() {
+        prgDialog.setMessage("Enregistrement de l'image...");
+        AsyncHttpClient client = new AsyncHttpClient();
+        // Don't forget to change the IP address to your LAN address. Port no as well.
+        client.post("http://peestash.peestash.fr/index.php", params, new AsyncHttpResponseHandler() {
+            // When the response returned by REST has Http
+            // response code '200'
+            @Override
+            public void onSuccess(String response) {
+
+            }
+
+            // When the response returned by REST has Http
+            // response code other than '200' such as '404',
+            // '500' or '403' etc
+
+            public void onFailure(int statusCode, Throwable error,
+                                  String content) {
+                // Hide Progress Dialog
+                prgDialog.hide();
+                // When Http response code is '404'
+                if (statusCode == 404) {
+                    Toast.makeText(getApplicationContext(),
+                            "Requested resource not found",
+                            Toast.LENGTH_LONG).show();
+                }
+                // When Http response code is '500'
+                else if (statusCode == 500) {
+                    Toast.makeText(getApplicationContext(),
+                            "Something went wrong at server end",
+                            Toast.LENGTH_LONG).show();
+                }
+                // When Http response code other than 404, 500
+                else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
+                                    + statusCode, Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        // Dismiss the progress bar when application is closed
+        if (prgDialog != null) {
+            prgDialog.dismiss();
+        }
     }
 }
