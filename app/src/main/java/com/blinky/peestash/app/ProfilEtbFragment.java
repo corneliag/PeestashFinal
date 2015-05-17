@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.blinky.peestash.app.ProfilFragment.getCircularBitmapWithBorder;
 
 public class ProfilEtbFragment extends Fragment {
 
@@ -135,8 +138,7 @@ public class ProfilEtbFragment extends Fragment {
 
                 //setting up the content inside the input stream reader
                 is = entity.getContent();
-                Log.e("id_user value", id_user);
-                Log.e("is value", String.valueOf(is));
+
 
             } catch (ClientProtocolException e) {
 
@@ -191,7 +193,8 @@ public class ProfilEtbFragment extends Fragment {
                     {
                         InputStream in = new java.net.URL(imgUrl).openStream();
                         imgurl = BitmapFactory.decodeStream(in);
-                        img.setImageBitmap(imgurl);
+                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+
                     }
                     Nom.setText(nom);
                     Email.setText(email);

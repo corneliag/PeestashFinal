@@ -196,7 +196,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                 if(titre=="") {
                                     valid = "no";
-                                    msg = "Veuillez renseigner le titre de votre evenement\n";
+                                    msg = "Veuillez renseigner le titre de votre évènement\n";
                                 }else
                                 {
                                     params.put("titre", titre);
@@ -205,7 +205,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(dateDebut=="")
                                 {
                                     valid="no";
-                                    msg += "Veuillez preciser la date de votre evenement\n";
+                                    msg += "Veuillez préciser la date de votre évènement\n";
                                 }else
                                 {
                                     params.put("date_debut", dateDebut);
@@ -216,7 +216,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(heureDebut=="")
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner l heure de debut de votre evement\n";
+                                    msg += "Veuillez renseigner l'heure de début de votre évènement\n";
 
                                 }else
                                 {
@@ -227,7 +227,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(heureFin=="")
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner l heure ou se termine votre evenement\n";
+                                    msg += "Veuillez renseigner l'heure où se termine votre évènement\n";
 
                                 }else {
 
@@ -237,8 +237,8 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(description==""||description.length()>180)
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner correctement la description de votre evenement. Celle-ci doit " +
-                                            "comporter au maximum 180 caracteres.\n";
+                                    msg += "Veuillez renseigner correctement la description de votre évènement. Celle-ci doit " +
+                                            "comporter au maximum 180 caractères.\n";
 
                                 }else
                                 {
@@ -249,7 +249,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(genrelist.isEmpty())
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner au minimum un genre musical correspondant a votre evenement\n";
+                                    msg += "Veuillez renseigner au minimum un genre musical correspondant à votre évènement\n";
 
                                 }else {
 
@@ -265,7 +265,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                     if(adresse=="") {
                                         valid = "no";
-                                        msg += "Veuillez renseigner correctement l adresse de votre evenement.\n";
+                                        msg += "Veuillez renseigner correctement l'adresse de votre évènement.\n";
                                     }else {
 
                                         params.put("adresse", adresse);
@@ -282,7 +282,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                     if(ville!="") {
                                         valid = "no";
-                                        msg += "Veuillez renseigner correctement la ville ou aura lieu votre evenement.\n";
+                                        msg += "Veuillez renseigner correctement la ville où aura lieu votre évènement.\n";
                                     }else
                                     {
 
@@ -291,7 +291,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                     if(pays!="") {
                                         valid = "no";
-                                        msg += "Veuillez preciser le pays dans lequel aura lieu votre evenement";
+                                        msg += "Veuillez préciser le pays dans lequel aura lieu votre évènement";
                                     }else {
 
                                         params.put("pays", pays);
@@ -404,7 +404,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
     private void findViewsById() {
 
-        //recuperation des checkbox genres musicaux
+        //récupération des checkbox genres musicaux
         rock = (CheckBox) findViewById(R.id.rock);
         pop = (CheckBox) findViewById(R.id.pop);
         metal = (CheckBox) findViewById(R.id.metal);
@@ -746,7 +746,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 params.put("imgPath", imgPath);
 
             } else {
-                Toast.makeText(this, "Vous n avez selectionne aucune image.",
+                Toast.makeText(this, "Vous n'avez sélectionné aucune image.",
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {

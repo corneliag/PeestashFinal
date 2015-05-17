@@ -600,10 +600,7 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
-
             age = spinnerAge.getItemAtPosition(position).toString();
-
-
     }
 
 
@@ -871,9 +868,6 @@ public class EditArtistProfilActivity extends Activity implements AdapterView.On
             if((spinnerTypeArtiste.getItemAtPosition(position).toString())!="") {
                 type_artiste = spinnerTypeArtiste.getItemAtPosition(position).toString();
             }
-            String msg = "type "+type_artiste;
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-
         }
 
         @Override
