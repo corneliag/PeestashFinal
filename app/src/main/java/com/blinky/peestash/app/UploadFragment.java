@@ -111,6 +111,7 @@ public class UploadFragment extends Fragment {
                 // When Image is selected from Gallery
                 if (imgPath != null && !imgPath.isEmpty()) {
                    // prgDialog.setMessage("Conversion de l'image...");
+                    Toast.makeText(getActivity(), "Conversion de l'image...", Toast.LENGTH_LONG).show();
                     //prgDialog.show();
                     // Convert image to String using Base64
                     //encodeImagetoString();

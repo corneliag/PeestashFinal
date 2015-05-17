@@ -5,11 +5,9 @@ package com.blinky.peestash.app;
  */
 
 import android.app.*;
-import android.content.Intent;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +29,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import android.support.v4.app.FragmentManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +37,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfilFragment extends Fragment {
+public class ProfilFragment extends Fragment{
 
     public ProfilFragment(){}
 
@@ -61,23 +58,85 @@ public class ProfilFragment extends Fragment {
 
     String html;
 
-
+    private ViewPager viewPager;
+    private TabPagerAdapter mAdapter;
+    private ActionBar actionBar;
+    // Tab titles
+    private String[] tabs = {"Top Rated", "Games", "Movies"};
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
 
         View rootView = inflater.inflate(R.layout.fragment_profil, container, false);
 
-        Button testtab = (Button) rootView.findViewById(R.id.testtab);
-        testtab.setOnClickListener(new View.OnClickListener() {
+        /*Button testtab = (Button) rootView.findViewById(R.id.testtab);
+        Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
+        Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);*/
+
+        /*testtab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), TabActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
+        /*final LinearLayout propLayout = (LinearLayout) rootView.findViewById(R.id.properLayout);
+        final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
+        final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
+        testtab.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout.setVisibility(View.VISIBLE);
+                                    propLayout1.setVisibility(View.INVISIBLE);
+                                    propLayout2.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+        testtab1.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout1.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout1.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout1.setVisibility(View.VISIBLE);
+                                    propLayout.setVisibility(View.INVISIBLE);
+                                    propLayout2.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+        testtab2.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout2.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout2.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout2.setVisibility(View.VISIBLE);
+                                    propLayout.setVisibility(View.INVISIBLE);
+                                    propLayout1.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+*/
 
         btnEditProfil = (Button) rootView.findViewById(R.id.btnEditProfil);
 
@@ -111,10 +170,21 @@ public class ProfilFragment extends Fragment {
                 new Thread(new Runnable() {
                     public void run() {
                         type="artiste";
-                        Intent i = new Intent(getActivity(), UploadActivity.class);
-                        i.putExtra("id_user", id_user);
-                        i.putExtra("type", type);
-                        startActivity(i);
+
+                        // Create new fragment and transaction
+                        Fragment newFragment = new UploadFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id_user", id_user);
+                        bundle.putString("type", type);
+                        newFragment.setArguments(bundle);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                        // Replace whatever is in the fragment_container view with this fragment,
+                        // and add the transaction to the back stack
+                        transaction.replace(R.id.frame_container, newFragment);
+                        transaction.addToBackStack(null);
+                        // Commit the transaction
+                        transaction.commit();
 
                     }
                 }).start();
@@ -129,9 +199,21 @@ public class ProfilFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditArtistProfilActivity.class);
-                intent.putExtra("id_user", id_user);
-                startActivity(intent);
+
+
+                // Create new fragment and transaction
+                Fragment newFragment = new EditArtistProfilFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id_user", id_user);
+                newFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.frame_container, newFragment);
+                transaction.addToBackStack(null);
+                // Commit the transaction
+                transaction.commit();
             }
         });
 
@@ -318,4 +400,6 @@ public class ProfilFragment extends Fragment {
                 paint);
         return canvasBitmap;
     }
+
+
 }

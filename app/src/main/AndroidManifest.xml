@@ -80,6 +80,12 @@
                 android:screenOrientation="portrait" >
 
         </activity>
+        <activity
+                android:name=".AddEventActivity"
+                android:label="@string/title_activity_add_event"
+                android:screenOrientation="portrait" >
+
+        </activity>
 
         <activity
                 android:name=".SlideActivity"
