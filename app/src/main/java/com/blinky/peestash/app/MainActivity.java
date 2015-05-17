@@ -31,7 +31,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-public class MainActivity extends Activity implements UploadFragment.OnFragmentInteractionListener, EditArtistProfilFragment.OnFragmentInteractionListener {
+public class MainActivity extends Activity implements UploadFragment.OnFragmentInteractionListener, EditArtistProfilFragment.OnFragmentInteractionListener, AddEventFragment.OnFragmentInteractionListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
