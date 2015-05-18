@@ -4,6 +4,7 @@ package com.blinky.peestash.app;
  * Created by nelly on 15/04/2015.
  */
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,7 +44,15 @@ public class EventsEtbFragment extends Fragment {
               Intent intent = new Intent(getActivity(), AddEventActivity.class);
                 intent.putExtra("id_user", id_user);
                 startActivity(intent);
-
+              /*
+              Fragment newFragment = new AddEventFragment();
+              Bundle bundle = new Bundle();
+              bundle.putString("id_user", id_user);
+              newFragment.setArguments(bundle);
+              FragmentTransaction transaction = getFragmentManager().beginTransaction();
+              transaction.replace(R.id.frame_container, newFragment);
+              transaction.addToBackStack(null);
+              transaction.commit();*/
             }
         });
 

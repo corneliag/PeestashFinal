@@ -14,26 +14,16 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
+
 import android.widget.*;
+import com.blinky.peestash.app.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +31,19 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AddEventActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+
+public class AddEventFragment extends Fragment  implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    View rootView;
+    private OnFragmentInteractionListener mListener;
 
     private String id_user="", valid="ok";
     List<String> statuts, adresses;
@@ -65,7 +67,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
     int layoutHeight;
 
     Button btnCreateEvent, btnLoadPicture;
-    final Context context = this;
+    final Context context = getActivity();
     List<NameValuePair> nameValuePairs;
 
     ProgressDialog prgDialog;
@@ -79,34 +81,56 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
     ProgressDialog progress;
     InputStream is;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+    // TODO: Rename and change types and number of parameters
+    public static AddEventFragment newInstance(String param1, String param2) {
+        AddEventFragment fragment = new AddEventFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-        Bundle var = this.getIntent().getExtras();
-        id_user=var.getString("id_user");
+    public AddEventFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            id_user = getArguments().getString("id_user");
+            /*Toast.makeText(getActivity(), "id user: " + id_user,
+                    Toast.LENGTH_LONG).show();*/
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.fragment_add_event, container, false);
 
         params.put("id", id_user);
         type = "event";
-        prgDialog = new ProgressDialog(this);
+        prgDialog = new ProgressDialog(getActivity());
         // Set Cancelable as False
         prgDialog.setCancelable(false);
-        findViewsById();
+       // rootView.findViewsById();
 
         Locale locale = new Locale("FR");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getApplicationContext().getResources().updateConfiguration(config, null);
+        getActivity().getResources().updateConfiguration(config, null);
 
         // Spinner element
-        spinnerStatut = (Spinner) findViewById(R.id.spinnerStatut);
+        spinnerStatut = (Spinner) rootView.findViewById(R.id.spinnerStatut);
         // Spinner Drop down elements
         statuts = new ArrayList<String>();
 
         // Creating adapter for spinner
-        statutAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, statuts);
+        statutAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, statuts);
 
         // Spinner click listener
         spinnerStatut.setOnItemSelectedListener(this);
@@ -121,20 +145,20 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        setDateTimeField();
+       setDateTimeField();
         setHourTimeField();
 
         addListenerOnChkWindows();
         // Spinner element
-        spinnerAdresse = (Spinner) findViewById(R.id.spinnerStatut);
+        spinnerAdresse = (Spinner) rootView.findViewById(R.id.spinnerStatut);
         // Spinner Drop down elements
         adresses = new ArrayList<String>();
 
         // Creating adapter for spinner
-        adresseAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, adresses);
+        adresseAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, adresses);
 
 
-        spinnerAdresse = (Spinner) findViewById(R.id.spinnerAdresse);
+        spinnerAdresse = (Spinner) rootView.findViewById(R.id.spinnerAdresse);
         // Spinner click listener
         spinnerAdresse.setOnItemSelectedListener(new SelectAdress());
 
@@ -146,20 +170,20 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         // attaching data adapter to spinner
         spinnerAdresse.setAdapter(adresseAdapter);
         // Get the layout id
-        root = (LinearLayout) findViewById(R.id.layout_hidden);
+        root = (LinearLayout) rootView.findViewById(R.id.layout_hidden);
 
         // Lastly, set the height of the layout
-        Adresse = (EditText)findViewById(R.id.Adresse);
-        Cp = (EditText)findViewById(R.id.Cp);
-        Ville = (EditText)findViewById(R.id.Ville);
-        Pays = (EditText)findViewById(R.id.Pays);
+        Adresse = (EditText) rootView.findViewById(R.id.Adresse);
+        Cp = (EditText) rootView.findViewById(R.id.Cp);
+        Ville = (EditText) rootView.findViewById(R.id.Ville);
+        Pays = (EditText)rootView.findViewById(R.id.Pays);
 
-        Titre = (EditText)findViewById(R.id.Titre);
-        Facebook = (EditText)findViewById(R.id.Facebook);
-        Siteweb = (EditText)findViewById(R.id.Siteweb);
-        Description = (EditText)findViewById(R.id.Description);
+        Titre = (EditText)rootView.findViewById(R.id.Titre);
+        Facebook = (EditText)rootView.findViewById(R.id.Facebook);
+        Siteweb = (EditText)rootView.findViewById(R.id.Siteweb);
+        Description = (EditText) rootView.findViewById(R.id.Description);
 
-        btnCreateEvent = (Button)findViewById(R.id.btnCreateEvent);
+        btnCreateEvent = (Button) rootView.findViewById(R.id.btnCreateEvent);
 
         // On met un Listener sur le bouton Artist
         btnCreateEvent.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +193,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                 new Thread(new Runnable() {
                     public void run() {
-                        runOnUiThread(new Runnable() {
+                        getActivity().runOnUiThread(new Runnable() {
                             public void run() {
 
                                 //update datas in database
@@ -352,7 +376,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                             // When Image is not selected from Gallery
                         } else {
                             Toast.makeText(
-                                    getApplicationContext(),
+                                   getActivity(),
                                     "Vous devez choisir une image pour lancer l'enregistrement.",
                                     Toast.LENGTH_LONG).show();
                         }
@@ -363,17 +387,38 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
         });
 
-
+        return rootView;
     }
 
-
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_event, menu);
-        return true;
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -402,31 +447,32 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
     }
 
+
     private void findViewsById() {
 
         //récupération des checkbox genres musicaux
-        rock = (CheckBox) findViewById(R.id.rock);
-        pop = (CheckBox) findViewById(R.id.pop);
-        metal = (CheckBox) findViewById(R.id.metal);
-        rap = (CheckBox) findViewById(R.id.rap);
-        funk = (CheckBox) findViewById(R.id.funk);
-        classique = (CheckBox) findViewById(R.id.classique);
-        blues = (CheckBox) findViewById(R.id.blues);
-        electro = (CheckBox) findViewById(R.id.electro);
-        folk = (CheckBox) findViewById(R.id.folk);
-        jazz = (CheckBox) findViewById(R.id.jazz);
+        rock = (CheckBox) rootView.findViewById(R.id.rock);
+        pop = (CheckBox)  rootView.findViewById(R.id.pop);
+        metal = (CheckBox)  rootView.findViewById(R.id.metal);
+        rap = (CheckBox)  rootView.findViewById(R.id.rap);
+        funk = (CheckBox)  rootView.findViewById(R.id.funk);
+        classique = (CheckBox)  rootView.findViewById(R.id.classique);
+        blues = (CheckBox)  rootView.findViewById(R.id.blues);
+        electro = (CheckBox)  rootView.findViewById(R.id.electro);
+        folk = (CheckBox)  rootView.findViewById(R.id.folk);
+        jazz = (CheckBox)  rootView.findViewById(R.id.jazz);
 
-        fromDateEtxt = (EditText) findViewById(R.id.etxt_fromdate);
+        fromDateEtxt = (EditText)  rootView.findViewById(R.id.etxt_fromdate);
         fromDateEtxt.setInputType(InputType.TYPE_NULL);
         fromDateEtxt.requestFocus();
 
-        toDateEtxt = (EditText) findViewById(R.id.etxt_todate);
+        toDateEtxt = (EditText)  rootView.findViewById(R.id.etxt_todate);
         toDateEtxt.setInputType(InputType.TYPE_NULL);
 
-        HeureDebut = (EditText) findViewById(R.id.HeureDebut);
+        HeureDebut = (EditText)  rootView.findViewById(R.id.HeureDebut);
         HeureDebut.setInputType(InputType.TYPE_NULL);
 
-        HeureFin = (EditText) findViewById(R.id.HeureFin);
+        HeureFin = (EditText)  rootView.findViewById(R.id.HeureFin);
         HeureFin.setInputType(InputType.TYPE_NULL);
 
     }
@@ -436,7 +482,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
         toDateEtxt.setOnClickListener(this);
 
         Calendar newCalendar = Calendar.getInstance();
-        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        fromDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -446,7 +492,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-        toDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        toDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -467,7 +513,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 final TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         HeureDebut.setText( selectedHour + ":" + selectedMinute);
@@ -487,7 +533,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 final TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         HeureFin.setText(selectedHour + ":" + selectedMinute);
@@ -714,11 +760,11 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
     }
     // When Image is selected from Gallery
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+            if (requestCode == RESULT_LOAD_IMG && resultCode == Activity.RESULT_OK
                     && null != data) {
                 // Get the Image from data
 
@@ -726,7 +772,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
                 // Get the cursor
-                Cursor cursor = getContentResolver().query(selectedImage,
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 // Move to first row
                 cursor.moveToFirst();
@@ -734,7 +780,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 imgPath = cursor.getString(columnIndex);
                 cursor.close();
-                ImageView imgView = (ImageView) findViewById(R.id.imgView);
+                ImageView imgView = (ImageView)  rootView.findViewById(R.id.imgView);
                 // Set the Image in ImageView
                 imgView.setImageBitmap(BitmapFactory
                         .decodeFile(imgPath));
@@ -746,11 +792,11 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 params.put("imgPath", imgPath);
 
             } else {
-                Toast.makeText(this, "Vous n'avez sélectionné aucune image.",
+                Toast.makeText(getActivity(), "Vous n'avez sélectionné aucune image.",
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Une erreur est survenue", Toast.LENGTH_LONG)
+            Toast.makeText(getActivity(), "Une erreur est survenue", Toast.LENGTH_LONG)
                     .show();
         }
 
@@ -768,7 +814,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
             // When Image is not selected from Gallery
         } else {
             Toast.makeText(
-                    getApplicationContext(),
+                    getActivity(),
                     "Vous devez choisir une image pour lancer l'enregistrement.",
                     Toast.LENGTH_LONG).show();
         }
@@ -815,7 +861,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                     @Override
                     public void onSuccess(String response) {
                         //System.out.println(params);
-                        finish();
+                        getActivity().finish();
                     }
 
                     // When the response returned by REST has Http
@@ -828,20 +874,20 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                         prgDialog.hide();
                         // When Http response code is '404'
                         if (statusCode == 404) {
-                            Toast.makeText(getApplicationContext(),
+                            Toast.makeText(getActivity(),
                                     "Requested resource not found",
                                     Toast.LENGTH_LONG).show();
                         }
                         // When Http response code is '500'
                         else if (statusCode == 500) {
-                            Toast.makeText(getApplicationContext(),
+                            Toast.makeText(getActivity(),
                                     "Something went wrong at server end",
                                     Toast.LENGTH_LONG).show();
                         }
                         // When Http response code other than 404, 500
                         else {
                             Toast.makeText(
-                                    getApplicationContext(),
+                                  getActivity(),
                                     "Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
                                             + statusCode, Toast.LENGTH_LONG)
                                     .show();
@@ -881,20 +927,20 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(),
+                    Toast.makeText(getActivity(),
                             "Requested resource not found",
                             Toast.LENGTH_LONG).show();
                 }
                 // When Http response code is '500'
                 else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(),
+                    Toast.makeText(getActivity(),
                             "Something went wrong at server end",
                             Toast.LENGTH_LONG).show();
                 }
                 // When Http response code other than 404, 500
                 else {
                     Toast.makeText(
-                            getApplicationContext(),
+                            getActivity(),
                             "Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
                                     + statusCode, Toast.LENGTH_LONG)
                             .show();
@@ -904,7 +950,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
         // Dismiss the progress bar when application is closed

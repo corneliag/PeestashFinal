@@ -528,18 +528,65 @@
                     android:background="@drawable/orange_button"
                     android:text="@string/btnEditProfil"
                     style="@style/button_text" />
-
         </LinearLayout>
 
-        <Button
-                android:id="@+id/testtab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dip"
-                android:background="@drawable/orange_button"
-                android:text="test tab"
-                style="@style/button_text" />
+        <!--<LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <Button
+                    android:id="@+id/testtab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dip"
+                    android:text="TAB 1"
+                    style="@style/button_text" />
+
+            <Button
+                    android:id="@+id/testtab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dip"
+                    android:text="TAB 2"
+                    style="@style/button_text" />
+            <Button
+                    android:id="@+id/testtab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dip"
+                    android:text="TAB 3"
+                    style="@style/button_text" />
+        </LinearLayout>-->
+
+
+        <!-- <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:visibility="gone"
+             android:orientation="horizontal"
+             android:id="@+id/properLayout">
+             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                     android:text="HELLO"/>
+         </LinearLayout>
+         <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:visibility="gone"
+                 android:orientation="horizontal"
+                 android:id="@+id/properLayout1">
+             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                       android:text="Bonjour"/>
+         </LinearLayout>
+         <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:visibility="gone"
+                 android:orientation="horizontal"
+                 android:id="@+id/properLayout2">
+             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                       android:text="Buna"/>
+         </LinearLayout>-->
     </LinearLayout>
 
 </ScrollView>

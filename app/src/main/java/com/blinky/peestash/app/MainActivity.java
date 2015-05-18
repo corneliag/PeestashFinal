@@ -1,33 +1,44 @@
 package com.blinky.peestash.app;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements UploadFragment.OnFragmentInteractionListener, EditArtistProfilFragment.OnFragmentInteractionListener, AddEventFragment.OnFragmentInteractionListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
     // nav drawer title
     private CharSequence mDrawerTitle;
-
+    String id_user = "",type="", tag="upload_img";
     // used to store app title
     private CharSequence mTitle;
 
@@ -37,6 +48,16 @@ public class MainActivity extends Activity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    String msg;
+    String imgPath, fileName;
+    Bitmap bitmap;
+    private static int RESULT_LOAD_IMG = 1;
+    ProgressDialog progress;
+    ProgressDialog prgDialog;
+    String encodedString;
+    RequestParams params = new RequestParams();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +137,12 @@ public class MainActivity extends Activity {
             displayView(position);
         }
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
 
     /**
      * Slide menu item click listener
@@ -241,5 +268,6 @@ public class MainActivity extends Activity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
 
 }
