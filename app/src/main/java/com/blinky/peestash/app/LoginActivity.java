@@ -19,9 +19,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -31,6 +33,8 @@ import java.io.InputStreamReader;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import android.view.View.OnClickListener;
 
 
@@ -40,11 +44,16 @@ public class LoginActivity extends Activity {
     EditText etEmail, etPassword;
     ProgressDialog progress;
     ImageView btArtist, btEtablissement;
+    String email="";
+    String password="";
+    int actif=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -83,6 +92,8 @@ public class LoginActivity extends Activity {
             }
 
         });
+
+
     }
     private class ConnexionTask extends AsyncTask<Void, Void, ArrayList> {
         ArrayList<String> valid = new ArrayList<String>();
@@ -90,11 +101,12 @@ public class LoginActivity extends Activity {
         InputStream is = null;
         String msg="";
         String result = null;
+
         @Override
         protected ArrayList doInBackground(Void... params) {
 
-            String email = ""+etEmail.getText().toString();
-            String password = ""+etPassword.getText().toString();
+             email = ""+etEmail.getText().toString();
+            password = ""+etPassword.getText().toString();
             //tag Connexion
             String tag = "connexion";
 
@@ -104,6 +116,7 @@ public class LoginActivity extends Activity {
             nameValuePairs.add(new BasicNameValuePair("email", email));
             nameValuePairs.add(new BasicNameValuePair("password", password));
             nameValuePairs.add(new BasicNameValuePair("tag", tag));
+            nameValuePairs.add(new BasicNameValuePair("actif", Integer.toString(actif)));
             //setting the connection to the database
             try{
                 //Setting up the default http client
@@ -121,6 +134,7 @@ public class LoginActivity extends Activity {
 
                 //setting up the content inside the input stream reader
                 is = entity.getContent();
+
 
             }catch(ClientProtocolException e){
 
@@ -171,6 +185,22 @@ public class LoginActivity extends Activity {
                 Log.i("tagconvertstr", "" + e.toString());
             }
 
+           /* try {
+                HttpClient client = new DefaultHttpClient();
+                String getURL = "http://peestash.peestash.fr/index.php";
+                HttpGet get = new HttpGet(getURL);
+                HttpResponse responseGet = client.execute(get);
+                HttpEntity resEntityGet = responseGet.getEntity();
+                String sourceString = "";
+                if (resEntityGet != null) {
+                    //do something with the response
+                    sourceString= new String(EntityUtils.toString(resEntityGet));
+                    Log.i("GET RESPONSE", sourceString);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+
             return valid;
         }
         @Override
@@ -180,8 +210,8 @@ public class LoginActivity extends Activity {
                     public void run() {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                msg = "Erreur de connexion! Veuillez entrer vos coordonnees !";
-                                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                   msg = "Erreur de connexion!";
+                                   Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -189,16 +219,22 @@ public class LoginActivity extends Activity {
             }else {
                 if(valid.indexOf("artiste")==-1)
                 {
-                    String id= (valid.get(0)).toString();
-                    Intent i = new Intent(LoginActivity.this, MainEtbActivity.class);
-                    i.putExtra("id_user", id);
-                    startActivity(i);
+
+
+                        String id= (valid.get(0)).toString();
+                        Intent i = new Intent(LoginActivity.this, MainEtbActivity.class);
+                        i.putExtra("id_user", id);
+                        startActivity(i);
+
+
                 }
                 else {
-                    String id= (valid.get(0)).toString();
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    i.putExtra("id_user", id);
-                    startActivity(i);
+
+                        String id= (valid.get(0)).toString();
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.putExtra("id_user", id);
+                        startActivity(i);
+
                 }
             }
         }
