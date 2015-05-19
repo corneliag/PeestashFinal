@@ -78,4 +78,16 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_event">AddEventActivity</string>
+    <string name="email_template">
+    Bienvenue <b>%1$s</b> sur notre application Peestash,
+
+    Pour activer votre compte, veuillez cliquer sur le lien ci dessous
+    ou copier/coller dans votre navigateur internet.
+
+   <i>http://peestash.peestash.fr/activation.php?email=%2$s&amp;guid=%3$s</i>
+
+
+    ---------------
+    Ceci est un mail automatique, Merci de ne pas y répondre.
+    </string>
 </resources>
