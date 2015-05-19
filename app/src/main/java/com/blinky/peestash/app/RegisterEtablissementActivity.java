@@ -167,22 +167,23 @@ public class RegisterEtablissementActivity extends Activity {
         protected void onPostExecute(String loginOk) {
             if(loginOk=="ok") {
 
+                Intent i = new Intent(RegisterEtablissementActivity.this, LoginActivity.class);
+                startActivity(i);
+                msg="Bienvenue ! Vous allez recevoir un email dans un instant pour confirmer votre inscription !";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+
+                //envoyer l'email
                 Resources res = getResources();
                 msgTemplate = String.format(res.getString(R.string.email_template), nom, email, guid);
                 try {
                     GmailSender sender = new GmailSender("peestashgirls", "peestash2015");
-                    sender.sendMail("Confirmer votre compte",
+                    sender.sendMail("Confirmer votre compte sur Peestash",
                             msgTemplate,
                             "peestashgirls@gmail.com",
                             email);
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
-
-                Intent i = new Intent(RegisterEtablissementActivity.this, LoginActivity.class);
-                startActivity(i);
-                msg = "Bienvenue !Veuillez activer votre compte avant de vous connecter !";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 
             } else {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
