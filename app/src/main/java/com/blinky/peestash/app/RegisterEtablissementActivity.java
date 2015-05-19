@@ -2,6 +2,7 @@ package com.blinky.peestash.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,20 +28,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class RegisterEtablissementActivity extends Activity {
 
     EditText etName, etEmail, etConfirmEmail, etPassword, etConfirmMdp;
     Button btSubmit;
-    String nom, email, confirmEmail, password, confirmPassword, tag, msg;
+    String nom, email, confirmEmail, password, confirmPassword, tag, msg, guid;
     Verify test = new Verify();
+    String msgTemplate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register_etablissement);
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+
+        guid = randomUUIDString;
 
         etName = (EditText) findViewById(R.id.editName);
         etEmail = (EditText) findViewById(R.id.editEmail);
@@ -72,12 +79,15 @@ public class RegisterEtablissementActivity extends Activity {
             tag = "etablissement_register";
             InputStream is = null;
             String loginOk="no";
+            int actif=0;
             //setting nameValuePairs
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             //adding string variables into the NameValuePairs
             nameValuePairs.add(new BasicNameValuePair("nom", nom));
             nameValuePairs.add(new BasicNameValuePair("password", password));
             nameValuePairs.add(new BasicNameValuePair("tag", tag));
+            nameValuePairs.add(new BasicNameValuePair("guid", guid));
+            nameValuePairs.add(new BasicNameValuePair("actif", Integer.toString(actif)));
 
             String emailvalid = "ok", passwordvalid = "ok";
 
@@ -156,9 +166,22 @@ public class RegisterEtablissementActivity extends Activity {
 
         protected void onPostExecute(String loginOk) {
             if(loginOk=="ok") {
+
+                Resources res = getResources();
+                msgTemplate = String.format(res.getString(R.string.email_template), nom, email, guid);
+                try {
+                    GmailSender sender = new GmailSender("peestashgirls", "peestash2015");
+                    sender.sendMail("Confirmer votre compte",
+                            msgTemplate,
+                            "peestashgirls@gmail.com",
+                            email);
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
+
                 Intent i = new Intent(RegisterEtablissementActivity.this, LoginActivity.class);
                 startActivity(i);
-                msg = "Bienvenue ! ";
+                msg = "Bienvenue ! Veuillez activer votre compte avant de vous connecter !";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 
             } else {
