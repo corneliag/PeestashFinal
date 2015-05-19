@@ -181,7 +181,7 @@ public class RegisterEtablissementActivity extends Activity {
 
                 Intent i = new Intent(RegisterEtablissementActivity.this, LoginActivity.class);
                 startActivity(i);
-                msg = "Bienvenue ! Veuillez activer votre compte avant de vous connecter !";
+                msg = "Bienvenue !Veuillez activer votre compte avant de vous connecter !";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 
             } else {
