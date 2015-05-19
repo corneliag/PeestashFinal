@@ -196,7 +196,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                 if(titre=="") {
                                     valid = "no";
-                                    msg = "Veuillez renseigner le titre de votre évènement\n";
+                                    msg = "Veuillez renseigner le titre de votre ï¿½vï¿½nement\n";
                                 }else
                                 {
                                     params.put("titre", titre);
@@ -205,7 +205,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(dateDebut=="")
                                 {
                                     valid="no";
-                                    msg += "Veuillez préciser la date de votre évènement\n";
+                                    msg += "Veuillez prï¿½ciser la date de votre ï¿½vï¿½nement\n";
                                 }else
                                 {
                                     params.put("date_debut", dateDebut);
@@ -216,7 +216,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(heureDebut=="")
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner l'heure de début de votre évènement\n";
+                                    msg += "Veuillez renseigner l'heure de dï¿½but de votre ï¿½vï¿½nement\n";
 
                                 }else
                                 {
@@ -227,7 +227,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(heureFin=="")
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner l'heure où se termine votre évènement\n";
+                                    msg += "Veuillez renseigner l'heure oï¿½ se termine votre ï¿½vï¿½nement\n";
 
                                 }else {
 
@@ -237,8 +237,8 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(description==""||description.length()>180)
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner correctement la description de votre évènement. Celle-ci doit " +
-                                            "comporter au maximum 180 caractères.\n";
+                                    msg += "Veuillez renseigner correctement la description de votre ï¿½vï¿½nement. Celle-ci doit " +
+                                            "comporter au maximum 180 caractï¿½res.\n";
 
                                 }else
                                 {
@@ -249,7 +249,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                                 if(genrelist.isEmpty())
                                 {
                                     valid="no";
-                                    msg += "Veuillez renseigner au minimum un genre musical correspondant à votre évènement\n";
+                                    msg += "Veuillez renseigner au minimum un genre musical correspondant ï¿½ votre ï¿½vï¿½nement\n";
 
                                 }else {
 
@@ -265,7 +265,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                     if(adresse=="") {
                                         valid = "no";
-                                        msg += "Veuillez renseigner correctement l'adresse de votre évènement.\n";
+                                        msg += "Veuillez renseigner correctement l'adresse de votre ï¿½vï¿½nement.\n";
                                     }else {
 
                                         params.put("adresse", adresse);
@@ -282,7 +282,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                     if(ville!="") {
                                         valid = "no";
-                                        msg += "Veuillez renseigner correctement la ville où aura lieu votre évènement.\n";
+                                        msg += "Veuillez renseigner correctement la ville oï¿½ aura lieu votre ï¿½vï¿½nement.\n";
                                     }else
                                     {
 
@@ -291,7 +291,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
                                     if(pays!="") {
                                         valid = "no";
-                                        msg += "Veuillez préciser le pays dans lequel aura lieu votre évènement";
+                                        msg += "Veuillez prï¿½ciser le pays dans lequel aura lieu votre ï¿½vï¿½nement";
                                     }else {
 
                                         params.put("pays", pays);
@@ -404,7 +404,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
 
     private void findViewsById() {
 
-        //récupération des checkbox genres musicaux
+        //rï¿½cupï¿½ration des checkbox genres musicaux
         rock = (CheckBox) findViewById(R.id.rock);
         pop = (CheckBox) findViewById(R.id.pop);
         metal = (CheckBox) findViewById(R.id.metal);
@@ -746,7 +746,7 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                 params.put("imgPath", imgPath);
 
             } else {
-                Toast.makeText(this, "Vous n'avez sélectionné aucune image.",
+                Toast.makeText(this, "Vous n'avez sï¿½lectionnï¿½ aucune image.",
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
@@ -848,60 +848,11 @@ public class AddEventActivity extends Activity implements AdapterView.OnItemSele
                         }
                     }
                 });
-                // Trigger Image upload
-                // triggerImageUpload();
+
             }
         }.execute(null, null, null);
     }
 
-    public void triggerImageUpload() {
-        makeHTTPCall();
-    }
-
-    // Make Http call to upload Image to Php server
-    public void makeHTTPCall() {
-        prgDialog.setMessage("Enregistrement de l'image...");
-        AsyncHttpClient client = new AsyncHttpClient();
-        // Don't forget to change the IP address to your LAN address. Port no as well.
-        client.post("http://peestash.peestash.fr/index.php", params, new AsyncHttpResponseHandler() {
-            // When the response returned by REST has Http
-            // response code '200'
-            @Override
-            public void onSuccess(String response) {
-
-            }
-
-            // When the response returned by REST has Http
-            // response code other than '200' such as '404',
-            // '500' or '403' etc
-
-            public void onFailure(int statusCode, Throwable error,
-                                  String content) {
-                // Hide Progress Dialog
-                prgDialog.hide();
-                // When Http response code is '404'
-                if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(),
-                            "Requested resource not found",
-                            Toast.LENGTH_LONG).show();
-                }
-                // When Http response code is '500'
-                else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(),
-                            "Something went wrong at server end",
-                            Toast.LENGTH_LONG).show();
-                }
-                // When Http response code other than 404, 500
-                else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Error Occured \n Most Common Error: \n1. Device not connected to Internet\n2. Web App is not deployed in App server\n3. App server is not running\n HTTP Status code : "
-                                    + statusCode, Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
