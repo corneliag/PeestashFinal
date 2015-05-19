@@ -5,6 +5,7 @@ package com.blinky.peestash.app;
  */
 
 import android.app.*;
+import android.content.Intent;
 import android.graphics.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.PhantomReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,17 +73,17 @@ public class ProfilFragment extends Fragment{
 
         View rootView = inflater.inflate(R.layout.fragment_profil, container, false);
 
-        /*Button testtab = (Button) rootView.findViewById(R.id.testtab);
-        Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
+        Button testtab = (Button) rootView.findViewById(R.id.testtab);
+        /*Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
         Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);*/
 
-        /*testtab.setOnClickListener(new View.OnClickListener() {
+        testtab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), TabActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
         /*final LinearLayout propLayout = (LinearLayout) rootView.findViewById(R.id.properLayout);
         final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
         final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
