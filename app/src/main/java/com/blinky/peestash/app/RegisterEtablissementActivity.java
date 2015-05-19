@@ -91,7 +91,7 @@ public class RegisterEtablissementActivity extends Activity {
 
             String emailvalid = "ok", passwordvalid = "ok";
 
-            if (test.checkEmailWriting(email)) {
+            if (test.checkEmailWriting(email)&&email!="") {
                 if (test.checkEmail(email, confirmEmail)) {
                     emailvalid = "ok";
                     nameValuePairs.add(new BasicNameValuePair("email", email));
@@ -103,7 +103,7 @@ public class RegisterEtablissementActivity extends Activity {
                 emailvalid = "no";
                 msg = "Veuillez écrire correctement votre email";
             }
-            if(test.checkMdpWriting(password))
+            if(test.checkMdpWriting(password)&&password!="")
             {
                 if(test.checkMdp(password, confirmPassword)) {
                     passwordvalid = "ok";
