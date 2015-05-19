@@ -528,9 +528,11 @@
                     android:background="@drawable/orange_button"
                     android:text="@string/btnEditProfil"
                     style="@style/button_text" />
+
+
         </LinearLayout>
 
-        <!--<LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:orientation="horizontal">
             <Button
                     android:id="@+id/testtab"
@@ -541,7 +543,7 @@
                     android:text="TAB 1"
                     style="@style/button_text" />
 
-            <Button
+           <!-- <Button
                     android:id="@+id/testtab1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -585,8 +587,8 @@
                  android:orientation="horizontal"
                  android:id="@+id/properLayout2">
              <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                       android:text="Buna"/>
-         </LinearLayout>-->
+                       android:text="Buna"/>-->
+         </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
