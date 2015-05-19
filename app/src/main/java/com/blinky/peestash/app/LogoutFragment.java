@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,21 +36,23 @@ public class LogoutFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+
+
                 // TODO Auto-generated method stub
                 new AlertDialog.Builder(getActivity())
                         .setMessage("Voulez-vous vraiment vous deconnecter ?")
                         .setCancelable(false)
                         .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(getActivity(), SlideActivity.class);
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
+
                             }
                         })
                         .setNegativeButton("Non", null)
                         .show();
-
 
             }
         });
@@ -63,7 +66,7 @@ public class LogoutFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(getActivity(), SlideActivity.class);
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
