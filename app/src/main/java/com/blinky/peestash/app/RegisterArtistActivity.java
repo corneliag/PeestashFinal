@@ -2,6 +2,7 @@ package com.blinky.peestash.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,20 +28,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class RegisterArtistActivity extends Activity {
 
     EditText etPseudo, etEmail, etConfirmEmail, etPassword, etConfirmMdp;
     Button btSubmit;
-    String pseudo, email, confirmEmail, password, confirmPassword, tag, msg;
+    String pseudo, email, confirmEmail, password, confirmPassword, tag, msg, guid;
     Verify test = new Verify();
+    String msgTemplate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register_artist);
+
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+
+        guid = randomUUIDString;
+       // Toast.makeText(getApplicationContext(), "GUID " + guid, Toast.LENGTH_LONG).show();
 
         etPseudo = (EditText) findViewById(R.id.editPseudo);
         etEmail = (EditText) findViewById(R.id.editEmail);
@@ -75,11 +84,15 @@ public class RegisterArtistActivity extends Activity {
             tag = "artist_register";
             InputStream is = null;
             String loginOk="no";
+            int actif=0;
+
             //setting nameValuePairs
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
             //adding string variables into the NameValuePairs
             nameValuePairs.add(new BasicNameValuePair("pseudo", pseudo));
             nameValuePairs.add(new BasicNameValuePair("tag", tag));
+            nameValuePairs.add(new BasicNameValuePair("guid", guid));
+            nameValuePairs.add(new BasicNameValuePair("actif", Integer.toString(actif)));
 
             String emailvalid = "ok", passwordvalid = "ok";
 
@@ -162,9 +175,21 @@ public class RegisterArtistActivity extends Activity {
         protected void onPostExecute(String loginOk) {
             if(loginOk=="ok") {
 
+                Resources res = getResources();
+                msgTemplate = String.format(res.getString(R.string.email_template), pseudo, email, guid);
+                try {
+                    GmailSender sender = new GmailSender("peestashgirls", "peestash2015");
+                    sender.sendMail("Confirmer votre compte",
+                            msgTemplate,
+                            "peestashgirls@gmail.com",
+                            email);
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
+                }
+
                 Intent i = new Intent(RegisterArtistActivity.this, LoginActivity.class);
                 startActivity(i);
-                msg="Bienvenue ! ";
+                msg="Bienvenue ! Veuillez activer votre compte avant de vous connecter !";
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                 finish();
 
