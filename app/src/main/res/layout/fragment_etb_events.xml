@@ -3,12 +3,14 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
         >
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                  android:orientation="vertical" android:background="#eaeaea">
+    <LinearLayout  android:orientation="vertical"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:background="#eaeaea">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="wrap_content">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -21,13 +23,12 @@
                     <ImageView
                             android:id="@+id/imageView"
                             android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_alignParentBottom="true"
+                            android:layout_height="40dp"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:src="@drawable/icon_events"
-                            />
+                            android:layout_alignParentBottom="true"/>
 
                 </RelativeLayout>
 
@@ -65,7 +66,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/middleProfil"
                 android:id="@+id/bottomProfil"
                 android:gravity="center"
@@ -126,13 +127,13 @@
                 android:id="@+id/l15"
                 android:layout_below="@+id/l14"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp">
             <ImageView android:layout_width="30dp"
                        android:src="@drawable/ic_demande_inscription"
-                       android:layout_height="wrap_content"
+                       android:layout_height="30dp"
                        android:layout_gravity="left"
                        android:layout_marginRight="5dp"
                        android:text="Email"
@@ -146,7 +147,7 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="wrap_content">
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:id="@+id/txt12"
@@ -162,24 +163,19 @@
         </LinearLayout>
 
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
                 android:layout_below="@+id/bottomProfil"
-                android:id="@+id/layoutVoirEvent"
-                android:gravity="center"
-                android:layout_weight="1">
+                android:id="@+id/ListeEvents"
+                android:layout_gravity="left|top"
+                android:background="#eaeaeaea" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                android:layout_marginTop="0dp">
 
-            <Button
-                    android:id="@+id/btnGetEvents"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dip"
-                    android:background="@drawable/orange_button"
-                    android:text="@string/BtnGetEvents"
-                    style="@style/button_text" />
-
+            <ListView android:id="@android:id/list"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content" android:background="@color/gray"
+                      android:layout_gravity="left|top"/>
         </LinearLayout>
 
 
