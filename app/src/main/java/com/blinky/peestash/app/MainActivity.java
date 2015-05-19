@@ -1,18 +1,17 @@
 package com.blinky.peestash.app;
 
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ProgressDialog;
+import android.app.*;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,10 +25,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class MainActivity extends Activity implements UploadFragment.OnFragmentInteractionListener, EditArtistProfilFragment.OnFragmentInteractionListener, AddEventFragment.OnFragmentInteractionListener {
     private DrawerLayout mDrawerLayout;
@@ -38,7 +50,7 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
 
     // nav drawer title
     private CharSequence mDrawerTitle;
-    String id_user = "",type="", tag="upload_img";
+    String id_user = "",type="";
     // used to store app title
     private CharSequence mTitle;
 
@@ -57,6 +69,11 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
     ProgressDialog prgDialog;
     String encodedString;
     RequestParams params = new RequestParams();
+    int i;
+    String result = null;
+    String tag = "read_ArtistProfil";
+    InputStream is = null;
+    List<NameValuePair> nameValuePairs;
 
 
     @Override
@@ -110,6 +127,7 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
         getActionBar().setHomeButtonEnabled(true);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#e87e04")));
 
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility
@@ -160,6 +178,94 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        Bundle var = getIntent().getExtras();
+        id_user = var.getString("id_user");
+
+        String pseudo ="";
+        //setting nameValuePairs
+        nameValuePairs = new ArrayList<NameValuePair>(1);
+        //adding string variables into the NameValuePairs
+        nameValuePairs.add(new BasicNameValuePair("tag", tag));
+        nameValuePairs.add(new BasicNameValuePair("id_user", id_user));
+
+        //setting the connection to the database
+        try {
+            //Setting up the default http client
+            HttpClient httpClient = new DefaultHttpClient();
+
+            //setting up the http post method
+            HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            //getting the response
+            HttpResponse response = httpClient.execute(httpPost);
+
+            //setting up the entity
+            HttpEntity entity = response.getEntity();
+
+            //setting up the content inside the input stream reader
+            is = entity.getContent();
+
+        } catch (ClientProtocolException e) {
+
+            Log.e("ClientProtocole", "Log_tag");
+            String msg = "Erreur client protocole";
+
+        } catch (IOException e) {
+            Log.e("Log_tag", "IOException");
+            e.printStackTrace();
+            String msg = "Erreur IOException";
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            StringBuilder total = new StringBuilder();
+            String json = reader.readLine();
+            JSONTokener tokener = new JSONTokener(json);
+            JSONArray finalResult = new JSONArray(tokener);
+            Bitmap imgurl;
+            // Access by key : value
+            for (i = 0; i < finalResult.length(); i++) {
+                JSONObject element = finalResult.getJSONObject(0);
+
+                 pseudo = element.getString("pseudo");
+
+
+
+            }
+
+            is.close();
+
+        } catch (Exception e) {
+            Log.i("tagconvertstr", "" + e.toString());
+        }
+
+
+        MenuItem bedMenuItem = menu.findItem(R.id.userName);
+
+        bedMenuItem.setTitle(pseudo);
+        bedMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                // Create new fragment and transaction
+                Fragment newFragment = new ProfilFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id_user", id_user);
+                bundle.putString("type", type);
+                newFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.frame_container, newFragment);
+                transaction.addToBackStack(null);
+                // Commit the transaction
+                transaction.commit();
+                return false;
+            }
+        });
+
         return true;
     }
 
