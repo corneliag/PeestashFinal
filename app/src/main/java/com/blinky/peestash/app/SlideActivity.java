@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
@@ -23,6 +24,7 @@ public class SlideActivity extends FragmentActivity {
     private ViewPagerAdapter _adapter;
     private Button _btn1,_btn2, _btn3, _btn4;
     Context appContext;
+    SessionManager session;
 
     /** Called when the activity is first created. */
     @Override
@@ -33,7 +35,16 @@ public class SlideActivity extends FragmentActivity {
         setContentView(R.layout.slide);
         setUpView();
         setTab();
-
+/*
+        SharedPreferences prefs = getSharedPreferences("CONNEXION",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean isFirst = session.isLoggedIn();
+        if(isFirst) {
+            Intent intent = new Intent(this, MainActivity.class);
+            editor.putBoolean(KEY_IS_FIRST_TIME, false);
+            editor.commit();
+            startActivity(intent);
+        }*/
         final Button btn = (Button) findViewById(R.id.btn);
 
 
