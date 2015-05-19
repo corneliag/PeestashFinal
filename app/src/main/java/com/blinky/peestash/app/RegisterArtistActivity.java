@@ -94,9 +94,9 @@ public class RegisterArtistActivity extends Activity {
             nameValuePairs.add(new BasicNameValuePair("guid", guid));
             nameValuePairs.add(new BasicNameValuePair("actif", Integer.toString(actif)));
 
-            String emailvalid = "ok", passwordvalid = "ok";
+            String emailvalid = "no", passwordvalid = "no";
 
-            if(test.checkEmailWriting(email))
+            if(test.checkEmailWriting(email)&&email!="")
             {
                 if(test.checkEmail(email, confirmEmail))
                 {
@@ -112,7 +112,7 @@ public class RegisterArtistActivity extends Activity {
                 emailvalid = "no";
                 msg = msg + "Veuillez écrire correctement votre email.\n";
             }
-            if(test.checkMdpWriting(password))
+            if(test.checkMdpWriting(password)&&password!="")
             {
                 if(test.checkMdp(password, confirmPassword)) {
                     passwordvalid = "ok";
