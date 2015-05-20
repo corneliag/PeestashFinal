@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -183,7 +185,9 @@ public class RegisterArtistActivity extends Activity {
 
                 //envoyer l'email
                 Resources res = getResources();
+
                 msgTemplate = String.format(res.getString(R.string.email_template), pseudo, email, guid);
+
                 try {
                     GmailSender sender = new GmailSender("peestashgirls", "peestash2015");
                     sender.sendMail("Confirmer votre compte sur Peestash",
