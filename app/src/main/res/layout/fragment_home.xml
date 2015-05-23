@@ -20,8 +20,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false" android:weightSum="300" android:orientation="vertical"
-
                     >
+
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:gravity="center"
@@ -44,14 +44,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginTop="5dp"
-
                         >
 
                     <LinearLayout android:layout_width="fill_parent"
                                   android:layout_height="wrap_content"
                                   android:orientation="horizontal"
                                   android:id="@+id/l1"
+                                  android:layout_marginTop="10dp"
                                   android:gravity="center_horizontal">
 
                         <TextView
@@ -63,8 +62,15 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/black"
                                 android:textSize="20dp"
+                                android:layout_marginTop="10dp"
                                 android:textAllCaps="true"
                                 />
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                                   android:layout_marginRight="10dp"
+                                   android:id="@+id/addContact"
+                                   android:layout_marginLeft="10dp"
+                                   android:layout_marginTop="10dp"
+                                   android:src="@drawable/ic_save_icon"/>
                     </LinearLayout>
 
                     <LinearLayout android:layout_width="fill_parent"
@@ -150,13 +156,7 @@
                                 />
 
                         </LinearLayout>
-                        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-                                  android:id="@+id/addContact"
-                                  android:text="@string/enregistContact"
-                                  android:autoLink="all"
-                                  android:gravity="right"
-                                  android:layout_marginRight="5dp"
-                                />
+
 
                     </LinearLayout>
                 </RelativeLayout>
@@ -168,9 +168,9 @@
 
                     <Button
                             android:id="@+id/testtab1"
-                            android:layout_width="130dp"
+                            android:layout_width="126dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dip"
+                            android:layout_marginTop="20dp"
                             android:text="Description"
                             android:background="@drawable/tab_custom"
                             />
@@ -179,15 +179,15 @@
                             android:id="@+id/testtab2"
                             android:layout_width="128dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dip"
+                            android:layout_marginTop="20dp"
                             android:text="Playlist"
                             android:background="@drawable/tab_custom"
-                          />
+                            />
                     <Button
                             android:id="@+id/testtab3"
-                            android:layout_width="128dp"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dip"
+                            android:layout_marginTop="20dp"
                             android:text="Social"
                             android:background="@drawable/tab_custom"
                             />
@@ -334,63 +334,99 @@
             </LinearLayout>
             <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:visibility="gone"
+                    android:layout_height="150dp"
                     android:gravity="left"
-                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:orientation="vertical"
                     android:layout_marginTop="-417dp"
                     android:background="@drawable/layout_style"
                     android:id="@+id/properLayout3">
 
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:id="@+id/idFb">
                     <ImageView android:layout_width="30dp"
                                android:src="@drawable/share_fb"
                                android:layout_height="wrap_content"
                                android:text="Facebook"
-                               android:layout_marginStart="20dp"
                                android:id="@+id/imgFacebook"
-                               android:layout_marginTop="20dp"
                             />
 
-                    <TextView android:layout_width="100dp"
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="30dp"
+                               android:src="@drawable/ic_vertical_trait"
+                               android:layout_marginRight="5dp"
+                               android:layout_marginLeft="5dp"
+                               android:layout_marginTop="10dp"
+                            />
+                    <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:id="@+id/Facebook"
                               android:text="pas défini"
                               android:textStyle="bold"
-                            android:visibility="invisible"/>
-
+                              android:autoLink="web"
+                              android:layout_marginRight="5dp"
+                              android:layout_marginTop="15dp"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:layout_below="@+id/idFb"
+                              android:id="@+id/idTwitter">
                     <ImageView android:layout_width="30dp"
-                               android:layout_marginTop="20dp"
                                android:src="@drawable/twitter_logo"
                                android:layout_height="wrap_content"
                                android:text="Twitter"
-                               android:layout_marginStart="10dp"
                                android:id="@+id/imgTwitter"
                             />
-                    <TextView android:layout_width="100dp"
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="30dp"
+                               android:src="@drawable/ic_vertical_trait"
+                               android:layout_marginRight="5dp"
+                               android:layout_marginLeft="5dp"
+                               android:layout_marginTop="10dp"
+                            />
+                    <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:id="@+id/Twitter"
                               android:text="pas défini"
                               android:textStyle="bold"
-                            android:visibility="invisible"/>
+                              android:autoLink="web"
+                              android:layout_marginRight="5dp"
+                              android:layout_marginTop="15dp"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:layout_below="@+id/idTwitter"
+                              android:id="@+id/idSite">
 
                     <ImageView android:layout_width="30dp"
                                android:src="@drawable/ic_action_web_site"
                                android:layout_height="wrap_content"
-                               android:layout_marginTop="20dp"
+                               android:layout_gravity="left"
                                android:text="Site web"
-                               android:layout_marginStart="10dp"
                                android:id="@+id/imgSite"
                             />
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="30dp"
+                               android:src="@drawable/ic_vertical_trait"
+                               android:layout_marginRight="5dp"
+                               android:layout_marginLeft="5dp"
+                               android:layout_marginTop="10dp"
+                            />
 
-                    <TextView android:layout_width="100dp"
+                    <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:id="@+id/Siteweb"
                               android:text="pas défini"
                               android:textStyle="bold"
-                            android:visibility="invisible"/>
+                              android:layout_marginRight="5dp"
+                              android:autoLink="web"
+                              android:layout_marginTop="15dp"/>
+
+
+                </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
 
 
