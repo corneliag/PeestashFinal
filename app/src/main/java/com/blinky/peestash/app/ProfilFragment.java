@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -45,12 +46,12 @@ public class ProfilFragment extends Fragment{
 
 
     ImageView btnEdit;
-    Button btnEditProfil;
+    ImageView btnEditProfil;
 
     int id;
     String id_user = "", type="";
     private TextView Pseudo, Email, Adresse, CP, Nom, Prenom, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age, Type_artiste;
+            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Age, Type_artiste, idWebview;
 
     ImageView img, editImg;
     private String pseudo = "", nom = "", prenom = "", age = "", email = "", ville = "", adresse = "", cp = "", pays = "",
@@ -73,74 +74,7 @@ public class ProfilFragment extends Fragment{
 
         View rootView = inflater.inflate(R.layout.fragment_profil, container, false);
 
-        Button testtab = (Button) rootView.findViewById(R.id.testtab);
-        /*Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
-        Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);*/
-
-        testtab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), TabActivity.class);
-                startActivity(intent);
-            }
-        });
-        /*final LinearLayout propLayout = (LinearLayout) rootView.findViewById(R.id.properLayout);
-        final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
-        final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
-        testtab.setOnClickListener
-                (
-                        new View.OnClickListener()
-                        {
-                            public void onClick(View v) {
-                                if (propLayout.getVisibility() == View.VISIBLE ) {
-
-                                    propLayout.setVisibility(View.INVISIBLE);
-
-                                } else {
-                                    propLayout.setVisibility(View.VISIBLE);
-                                    propLayout1.setVisibility(View.INVISIBLE);
-                                    propLayout2.setVisibility(View.INVISIBLE);
-                                }
-                            }
-                        }
-                );
-        testtab1.setOnClickListener
-                (
-                        new View.OnClickListener()
-                        {
-                            public void onClick(View v) {
-                                if (propLayout1.getVisibility() == View.VISIBLE ) {
-
-                                    propLayout1.setVisibility(View.INVISIBLE);
-
-                                } else {
-                                    propLayout1.setVisibility(View.VISIBLE);
-                                    propLayout.setVisibility(View.INVISIBLE);
-                                    propLayout2.setVisibility(View.INVISIBLE);
-                                }
-                            }
-                        }
-                );
-        testtab2.setOnClickListener
-                (
-                        new View.OnClickListener()
-                        {
-                            public void onClick(View v) {
-                                if (propLayout2.getVisibility() == View.VISIBLE ) {
-
-                                    propLayout2.setVisibility(View.INVISIBLE);
-
-                                } else {
-                                    propLayout2.setVisibility(View.VISIBLE);
-                                    propLayout.setVisibility(View.INVISIBLE);
-                                    propLayout1.setVisibility(View.INVISIBLE);
-                                }
-                            }
-                        }
-                );
-*/
-
-        btnEditProfil = (Button) rootView.findViewById(R.id.btnEditProfil);
+        btnEditProfil = (ImageView) rootView.findViewById(R.id.btnEditProfil);
 
 
         Bundle var = getActivity().getIntent().getExtras();
@@ -166,6 +100,7 @@ public class ProfilFragment extends Fragment{
         img = (ImageView) rootView.findViewById(R.id.imageView);
         editImg = (ImageView) rootView.findViewById(R.id.imageView2);
         wv = (WebView) rootView.findViewById(R.id.webView);
+        idWebview = (TextView) rootView.findViewById(R.id.idWebview);
 
         View.OnClickListener listnr = new View.OnClickListener() {
             public void onClick(View v) {
@@ -228,6 +163,66 @@ public class ProfilFragment extends Fragment{
                 });
             }
         }).start();
+
+        //gestion des onglets
+        Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
+        Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);
+        Button testtab3 = (Button) rootView.findViewById(R.id.testtab3);
+
+        final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
+        final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
+        final LinearLayout propLayout3 = (LinearLayout) rootView.findViewById(R.id.properLayout3);
+        testtab1.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout1.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout1.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout1.setVisibility(View.VISIBLE);
+                                    propLayout2.setVisibility(View.INVISIBLE);
+                                    propLayout3.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+        testtab2.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout2.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout2.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout2.setVisibility(View.VISIBLE);
+                                    propLayout3.setVisibility(View.INVISIBLE);
+                                    propLayout1.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+        testtab3.setOnClickListener
+                (
+                        new View.OnClickListener() {
+                            public void onClick(View v) {
+                                if (propLayout3.getVisibility() == View.VISIBLE) {
+
+                                    propLayout3.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout3.setVisibility(View.VISIBLE);
+                                    propLayout1.setVisibility(View.INVISIBLE);
+                                    propLayout2.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+
 
         return rootView;
     }
@@ -324,7 +319,7 @@ public class ProfilFragment extends Fragment{
                         InputStream in = new java.net.URL(imgUrl).openStream();
                         imgurl = BitmapFactory.decodeStream(in);
 
-                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 2, Color.rgb(255, 255, 255)));
+                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 1, Color.rgb(232,126,4)));
 
 
                     }
@@ -344,13 +339,21 @@ public class ProfilFragment extends Fragment{
                     dispo = dispo.replace(String.valueOf("["), "");
                     dispo = dispo.replace(String.valueOf("]"), "");
                     Dispo.setText(dispo);
-                    Mobile.setText(telportable);
-                    Fixe.setText(telfixe);
+                    Mobile.setText("0"+telportable);
+                    Fixe.setText("0"+telfixe);
                     Siteweb.setText(siteweb);
                     Facebook.setText(facebook);
                     Twitter.setText(twitter);
                     Type_artiste.setText(type_artiste);
+                    idWebview.setText(soundcloud);
 
+
+                }
+                if(telfixe.toString().equals("0")){
+                    Fixe.setText("Pas defini");
+                }
+                if(telportable.toString().equals("0")){
+                    Mobile.setText("Pas defini");
                 }
                 if (soundcloud.length() != 0) {
                     html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" + soundcloud + "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";

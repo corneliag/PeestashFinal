@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
     int i=0;
     String html;
     Bitmap imgurl;
-    TextView btnAddContact;
+    ImageView btnAddContact;
     ImageView fixeVisuel;
     ImageView imgFacebook;
     ImageView imgTwitter;
@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment {
         Type_artiste = (TextView) rootView.findViewById(R.id.Type_artiste);
         img = (ImageView) rootView.findViewById(R.id.imageView);
         wv = (WebView) rootView.findViewById(R.id.webView);
+
 
         new Thread(new Runnable() {
             public void run() {
@@ -250,30 +251,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        Fixe.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent myIntent = new Intent(Intent.ACTION_CALL);
-                String phNum = "tel:" + Fixe.getText().toString();
-                myIntent.setData(Uri.parse(phNum));
-                startActivity(myIntent);
-
-            }
-        });
-        Mobile.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent myIntent = new Intent(Intent.ACTION_CALL);
-                String phNum = "tel:" + Mobile.getText().toString();
-                myIntent.setData(Uri.parse(phNum));
-                startActivity(myIntent);
-
-            }
-        });
         ImageView imgMail = (ImageView) rootView.findViewById(R.id.imgEmail);
        imgMail.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -284,15 +262,6 @@ public class HomeFragment extends Fragment {
                startActivity(i);
            }
        });
-        Email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                String strEmail = Email.getText().toString();
-                i.setData(Uri.fromParts("mailto", strEmail, null));
-                startActivity(i);
-            }
-        });
 
         imgSite = (ImageView) rootView.findViewById(R.id.imgSite);
         imgTwitter = (ImageView) rootView.findViewById(R.id.imgTwitter);
@@ -328,8 +297,28 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        Facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strFacebook = "https://www.facebook.com/"+Facebook.getText().toString();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(strFacebook));
+                startActivity(intent);
+            }
+        });
+        Twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strFacebook = "https://twitter.com/" + Twitter.getText().toString();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(strFacebook));
+                startActivity(intent);
+            }
+        });
 
-       btnAddContact = (TextView) rootView.findViewById(R.id.addContact);
+        btnAddContact = (ImageView) rootView.findViewById(R.id.addContact);
         btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -394,7 +383,7 @@ public class HomeFragment extends Fragment {
 
         protected void onPreExecute() {
             progress = new ProgressDialog(getActivity());
-            progress.setMessage("Chargement de vos informations de profil...");
+            progress.setMessage("Chargement des profils...");
             progress.show();
         }
 
