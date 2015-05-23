@@ -4,24 +4,27 @@ package com.blinky.peestash.app;
  * Created by nelly on 15/04/2015.
  */
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.TwoStatePreference;
+import android.provider.ContactsContract;
 import android.support.v4.util.ArrayMap;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.blinky.peestash.app.R;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -63,14 +66,17 @@ public class HomeFragment extends Fragment {
     int i=0;
     String html;
     Bitmap imgurl;
+    TextView btnAddContact;
+    ImageView fixeVisuel;
+    ImageView imgFacebook;
+    ImageView imgTwitter;
+    ImageView imgSite;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        btnNextProfil = (Button) rootView.findViewById(R.id.btnNextProfil);
 
         Bundle var = getActivity().getIntent().getExtras();
         id_user = var.getString("id_user");
@@ -91,25 +97,6 @@ public class HomeFragment extends Fragment {
         Type_artiste = (TextView) rootView.findViewById(R.id.Type_artiste);
         img = (ImageView) rootView.findViewById(R.id.imageView);
         wv = (WebView) rootView.findViewById(R.id.webView);
-
-        btnNextProfil.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-               /* String msg = "nb" + nbreponse;
-                System.out.println("nb" + nbreponse);*/
-
-                if (i == (nbreponse-1)) {
-                    i = 0;
-                    afficheProfilContent(i);
-                }
-                else {
-                    i++;
-                    afficheProfilContent(i);
-                }
-
-            }
-        });
 
         new Thread(new Runnable() {
             public void run() {
@@ -174,6 +161,179 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onTouch(View rootView, MotionEvent event) {
                 return gesture.onTouchEvent(event);
+            }
+        });
+
+        //gestion des onglets
+        Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
+        Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);
+        Button testtab3 = (Button) rootView.findViewById(R.id.testtab3);
+
+        final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
+        final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
+        final LinearLayout propLayout3 = (LinearLayout) rootView.findViewById(R.id.properLayout3);
+        testtab1.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout1.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout1.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout1.setVisibility(View.VISIBLE);
+                                    propLayout2.setVisibility(View.INVISIBLE);
+                                    propLayout3.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+        testtab2.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout2.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout2.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout2.setVisibility(View.VISIBLE);
+                                    propLayout3.setVisibility(View.INVISIBLE);
+                                    propLayout1.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+        testtab3.setOnClickListener
+                (
+                        new View.OnClickListener()
+                        {
+                            public void onClick(View v) {
+                                if (propLayout3.getVisibility() == View.VISIBLE ) {
+
+                                    propLayout3.setVisibility(View.INVISIBLE);
+
+                                } else {
+                                    propLayout3.setVisibility(View.VISIBLE);
+                                    propLayout1.setVisibility(View.INVISIBLE);
+                                    propLayout2.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                );
+
+        fixeVisuel = (ImageView) rootView.findViewById(R.id.FixeVisuel);
+        ImageView mobileVisuel = (ImageView) rootView.findViewById(R.id.MobileVisuel);
+        fixeVisuel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Fixe.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });
+        mobileVisuel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Mobile.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });
+        Fixe.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Fixe.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });
+        Mobile.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Mobile.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });
+        ImageView imgMail = (ImageView) rootView.findViewById(R.id.imgEmail);
+       imgMail.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent i = new Intent(Intent.ACTION_VIEW);
+               String strEmail = Email.getText().toString();
+               i.setData(Uri.fromParts("mailto", strEmail, null));
+               startActivity(i);
+           }
+       });
+        Email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                String strEmail = Email.getText().toString();
+                i.setData(Uri.fromParts("mailto", strEmail, null));
+                startActivity(i);
+            }
+        });
+
+        imgSite = (ImageView) rootView.findViewById(R.id.imgSite);
+        imgTwitter = (ImageView) rootView.findViewById(R.id.imgTwitter);
+        imgFacebook = (ImageView) rootView.findViewById(R.id.imgFacebook);
+        imgSite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strSite = Siteweb.getText().toString();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(strSite));
+                startActivity(intent);
+            }
+        });
+        imgTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strTwitter = "https://twitter.com/"+Twitter.getText().toString();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(strTwitter));
+                startActivity(intent);
+            }
+        });
+        imgFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strFacebook = "https://www.facebook.com/"+Facebook.getText().toString();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(strFacebook));
+                startActivity(intent);
+            }
+        });
+
+       btnAddContact = (TextView) rootView.findViewById(R.id.addContact);
+        btnAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertContact(Pseudo.getText().toString(), Email.getText().toString(), Mobile.getText().toString());
             }
         });
 
@@ -270,6 +430,8 @@ public class HomeFragment extends Fragment {
                 facebook = new ArrayList<String>(nbreponse);
                 twitter = new ArrayList<String>(nbreponse);
 
+
+
                 for (i = 0; i < finalResult.length(); i++) {
 
                     JSONObject element = finalResult.getJSONObject(i);
@@ -316,13 +478,19 @@ public class HomeFragment extends Fragment {
         Pays.setText(pays.get(i).toString());
         Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
         Siteweb.setText(siteweb.get(i).toString());
-        Fixe.setText(telfixe.get(i).toString());
-        Mobile.setText(telportable.get(i).toString());
+        Fixe.setText("0"+telfixe.get(i).toString());
+        Mobile.setText("0"+telportable.get(i).toString());
         Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
         Type_artiste.setText(type_artiste.get(i).toString());
         Facebook.setText(facebook.get(i).toString());
         Twitter.setText(twitter.get(i).toString());
 
+        if(telfixe.get(i).toString().equals("0")){
+            Fixe.setText("Inconnu");
+        }
+        if(telportable.get(i).toString().equals("0")){
+            Mobile.setText("Inconnu");
+        }
         if(imgUrl.get(i).toString().length() != 0) {
             InputStream in = null;
             try {
@@ -331,7 +499,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
             imgurl = BitmapFactory.decodeStream(in);
-            img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+            img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 1, Color.rgb(232,126,4)));
 
         }else
         {
@@ -350,4 +518,17 @@ public class HomeFragment extends Fragment {
         }
 
     }
+    public void insertContact(String name, String email, String tel) {
+
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+        intent.putExtra(ContactsContract.Intents.Insert.NAME, name);
+        intent.putExtra(ContactsContract.Intents.Insert.EMAIL, email);
+        intent.putExtra(ContactsContract.Intents.Insert.PHONE, tel);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+
 }

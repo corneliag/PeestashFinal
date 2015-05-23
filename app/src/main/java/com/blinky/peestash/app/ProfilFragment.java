@@ -324,7 +324,7 @@ public class ProfilFragment extends Fragment{
                         InputStream in = new java.net.URL(imgUrl).openStream();
                         imgurl = BitmapFactory.decodeStream(in);
 
-                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 2, Color.rgb(255, 255, 255)));
 
 
                     }

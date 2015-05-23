@@ -259,6 +259,7 @@ public class EditArtistProfilFragment extends Fragment  implements AdapterView.O
                                 nameValuePairs.add(new BasicNameValuePair("type_artiste", type_artiste));
                                 nameValuePairs.add(new BasicNameValuePair("genre_musical", genre_musical));
 
+
                                 String emailvalid = "ok", passwordvalid = "ok", msg = "";
 
                                 if (email != "") {

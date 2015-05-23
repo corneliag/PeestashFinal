@@ -12,9 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -40,6 +38,7 @@ public class RegisterArtistActivity extends Activity {
     String pseudo, email, confirmEmail, password, confirmPassword, tag, msg, guid;
     Verify test = new Verify();
     String msgTemplate;
+    Switch mySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,25 @@ public class RegisterArtistActivity extends Activity {
 
             }
         });
+       /* mySwitch = (Switch) findViewById(R.id.mySwitch);
+
+        //set the switch to ON
+        mySwitch.setChecked(true);
+        //attach a listener to check for changes in state
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+          if(isChecked){
+           Toast.makeText(getApplicationContext(), "CGU ON", Toast.LENGTH_LONG).show();
+          }else{
+              Toast.makeText(getApplicationContext(), "CGU OFF", Toast.LENGTH_LONG).show();
+          }
+
+            }
+        });*/
 
     }
     private class RegisterProfilTask extends AsyncTask<Void, Void, String>
