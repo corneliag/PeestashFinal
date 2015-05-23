@@ -35,7 +35,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/textView1"
                         android:layout_marginTop="20dp"
-                        android:text="Votre nom de scène" />
+                        android:text="@string/votreNomScene" />
                 <EditText
                         android:id="@+id/editPseudo"
                         android:layout_width="340dp"
@@ -56,7 +56,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editPseudo"
                         android:layout_marginTop="10dp"
-                        android:text="Votre E-mail" />
+                        android:text="@string/email" />
                 <EditText
                         android:id="@+id/editEmail"
                         android:layout_width="340dp"
@@ -79,7 +79,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editEmail"
                         android:layout_marginTop="10dp"
-                        android:text="Confirmez votre e-mail" />
+                        android:text="@string/confEmail" />
 
 
 
@@ -105,7 +105,7 @@
                         android:layout_below="@+id/editConfirmEmail"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
-                        android:text="Votre mot de passe" />
+                        android:text="@string/mdp" />
 
                 <EditText
                         android:id="@+id/editPassword"
@@ -127,7 +127,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
                         android:layout_below="@+id/editPassword"
-                        android:text="Confirmez votre mot de passe" />
+                        android:text="@string/confMdp" />
 
 
             <EditText
@@ -143,19 +143,32 @@
                     android:textColorHint="@color/gray"
                     android:hint="Confirmation mdp"/>
 
+               <!-- <Switch
+                        android:id="@+id/mySwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/cgu"
 
+                        />-->
 
-
-            <Button
+                <Button
                     android:id="@+id/btregister"
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_gravity="left"
                     android:layout_below="@+id/editConfirmMdp"
                     android:text="Je crée mon compte"
                     android:background="@drawable/orange_button"
                     style="@style/button_text"/>
+
+
+                <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                          android:gravity="right"
+                          android:text="@string/requiredFields"/>
 
         </LinearLayout>
 </ScrollView>

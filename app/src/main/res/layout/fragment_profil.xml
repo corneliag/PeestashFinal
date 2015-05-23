@@ -25,15 +25,15 @@
                                 android:gravity="center"
                         >
                     <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentTop="true"
-                            android:src="@drawable/ic_img_base"
-                            />
+                        android:id="@+id/imageView"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/ic_img_base"
+                        />
                     <ImageView
                             android:id="@+id/imageView2"
                             android:layout_width="40dp"
