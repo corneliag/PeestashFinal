@@ -84,7 +84,7 @@
         \n\n---------------\n\nCeci est un mail automatique, Merci de ne pas y répondre.
 
     </string>
-    <string name="enregistContact"><u>Enregistrer ce contact</u></string>
+    <string name="enregistContact"><u>Enregistrer</u></string>
     <string name="votreNomScene">Votre nom de scène<b><font color="red">*</font></b></string>
     <string name="email">Votre E-mail<b><font color="red">*</font></b></string>
     <string name="confEmail">Confirmez votre e-mail<b><font color="red">*</font></b></string>
@@ -119,4 +119,5 @@
     <string name="requiredFields"><b><font color="red">*</font></b>Tous les champs sont obligatoires!</string>
     <string name="cgu">*J\'ai lu et j\'accepte les CGU</string>
     <string name="facebook_app_id">335426429995872</string>
+    <string name="modifProfil"><u>Modifier</u></string>
 </resources>
