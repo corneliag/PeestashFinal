@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -165,60 +166,63 @@ public class ProfilFragment extends Fragment{
         }).start();
 
         //gestion des onglets
-        Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
-        Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);
-        Button testtab3 = (Button) rootView.findViewById(R.id.testtab3);
+        final Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
+        final Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);
+        final Button testtab3 = (Button) rootView.findViewById(R.id.testtab3);
 
         final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
         final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
         final LinearLayout propLayout3 = (LinearLayout) rootView.findViewById(R.id.properLayout3);
-        testtab1.setOnClickListener
+        testtab1.setPressed(true);
+        testtab2.setPressed(false);
+        testtab3.setPressed(false);
+
+        testtab1.setOnTouchListener
                 (
-                        new View.OnClickListener()
-                        {
-                            public void onClick(View v) {
-                                if (propLayout1.getVisibility() == View.VISIBLE ) {
+                        new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                testtab1.setPressed(true);
+                                testtab2.setPressed(false);
+                                testtab3.setPressed(false);
 
-                                    propLayout1.setVisibility(View.INVISIBLE);
+                                propLayout1.setVisibility(View.VISIBLE);
+                                propLayout2.setVisibility(View.INVISIBLE);
+                                propLayout3.setVisibility(View.INVISIBLE);
 
-                                } else {
-                                    propLayout1.setVisibility(View.VISIBLE);
-                                    propLayout2.setVisibility(View.INVISIBLE);
-                                    propLayout3.setVisibility(View.INVISIBLE);
-                                }
+                                return true;
                             }
                         }
                 );
-        testtab2.setOnClickListener
+        testtab2.setOnTouchListener
                 (
-                        new View.OnClickListener()
-                        {
-                            public void onClick(View v) {
-                                if (propLayout2.getVisibility() == View.VISIBLE ) {
+                        new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                testtab2.setPressed(true);
+                                testtab1.setPressed(false);
+                                testtab3.setPressed(false);
 
-                                    propLayout2.setVisibility(View.INVISIBLE);
-
-                                } else {
-                                    propLayout2.setVisibility(View.VISIBLE);
-                                    propLayout3.setVisibility(View.INVISIBLE);
-                                    propLayout1.setVisibility(View.INVISIBLE);
-                                }
+                                propLayout2.setVisibility(View.VISIBLE);
+                                propLayout1.setVisibility(View.INVISIBLE);
+                                propLayout3.setVisibility(View.INVISIBLE);
+                                return true;
                             }
                         }
                 );
-        testtab3.setOnClickListener
+        testtab3.setOnTouchListener
                 (
-                        new View.OnClickListener() {
-                            public void onClick(View v) {
-                                if (propLayout3.getVisibility() == View.VISIBLE) {
+                        new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                testtab3.setPressed(true);
+                                testtab2.setPressed(false);
+                                testtab1.setPressed(false);
 
-                                    propLayout3.setVisibility(View.INVISIBLE);
-
-                                } else {
-                                    propLayout3.setVisibility(View.VISIBLE);
-                                    propLayout1.setVisibility(View.INVISIBLE);
-                                    propLayout2.setVisibility(View.INVISIBLE);
-                                }
+                                propLayout3.setVisibility(View.VISIBLE);
+                                propLayout1.setVisibility(View.INVISIBLE);
+                                propLayout2.setVisibility(View.INVISIBLE);
+                                return true;
                             }
                         }
                 );
