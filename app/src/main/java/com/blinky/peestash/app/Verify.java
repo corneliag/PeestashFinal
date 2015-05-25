@@ -46,7 +46,7 @@ public class Verify {
 
     public Boolean checkMdpWriting(String password)
     {
-        if(password.length()>3)
+        if(password.length()>3&&password!="")
         {
             valid = true;
         }

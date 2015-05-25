@@ -103,7 +103,7 @@ public class RegisterEtablissementActivity extends Activity {
                 emailvalid = "no";
                 msg = "Veuillez écrire correctement votre email";
             }
-            if(test.checkMdpWriting(password)&&password!="")
+            if(test.checkMdpWriting(password))
             {
                 if(test.checkMdp(password, confirmPassword)) {
                     passwordvalid = "ok";
