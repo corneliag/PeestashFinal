@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -38,6 +38,7 @@ public class RegisterArtistActivity extends Activity {
     String pseudo, email, confirmEmail, password, confirmPassword, tag, msg, guid;
     Verify test = new Verify();
     String msgTemplate;
+    Switch mySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,25 @@ public class RegisterArtistActivity extends Activity {
 
             }
         });
+       /* mySwitch = (Switch) findViewById(R.id.mySwitch);
+
+        //set the switch to ON
+        mySwitch.setChecked(true);
+        //attach a listener to check for changes in state
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+          if(isChecked){
+           Toast.makeText(getApplicationContext(), "CGU ON", Toast.LENGTH_LONG).show();
+          }else{
+              Toast.makeText(getApplicationContext(), "CGU OFF", Toast.LENGTH_LONG).show();
+          }
+
+            }
+        });*/
 
     }
     private class RegisterProfilTask extends AsyncTask<Void, Void, String>
@@ -175,23 +195,26 @@ public class RegisterArtistActivity extends Activity {
         protected void onPostExecute(String loginOk) {
             if(loginOk=="ok") {
 
+                Intent i = new Intent(RegisterArtistActivity.this, LoginActivity.class);
+                startActivity(i);
+                msg="Bienvenue ! Vous allez recevoir un email dans un instant pour confirmer votre inscription !";
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                finish();
+
+                //envoyer l'email
                 Resources res = getResources();
+
                 msgTemplate = String.format(res.getString(R.string.email_template), pseudo, email, guid);
+
                 try {
                     GmailSender sender = new GmailSender("peestashgirls", "peestash2015");
-                    sender.sendMail("Confirmer votre compte",
+                    sender.sendMail("Confirmer votre compte sur Peestash",
                             msgTemplate,
                             "peestashgirls@gmail.com",
                             email);
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
-
-                Intent i = new Intent(RegisterArtistActivity.this, LoginActivity.class);
-                startActivity(i);
-                msg="Bienvenue ! Veuillez activer votre compte avant de vous connecter !";
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                finish();
 
             }
             else

@@ -34,7 +34,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/textView1"
                         android:layout_marginTop="20dp"
-                        android:text="Votre nom d'établissement" />
+                        android:text="@string/nomEtb" />
 
                 <EditText
                         android:id="@+id/editName"
@@ -57,7 +57,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editName"
                         android:layout_marginTop="15dp"
-                        android:text="Votre e-mail" />
+                        android:text="@string/emailEtb" />
 
                 <EditText
                         android:id="@+id/editEmail"
@@ -79,7 +79,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editEmail"
                         android:layout_marginTop="15dp"
-                        android:text="Confirmez votre e-mail" />
+                        android:text="@string/confEmailEtb" />
 
                 <EditText
                         android:id="@+id/editConfirmEmail"
@@ -101,7 +101,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editConfirmEmail"
                         android:layout_marginTop="15dp"
-                        android:text="Votre mot de passe" />
+                        android:text="@string/mdpEtb" />
 
                 <EditText
                         android:id="@+id/editPassword"
@@ -123,7 +123,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editPassword"
                         android:layout_marginTop="15dp"
-                        android:text="Confirmez votre mot de passe" />
+                        android:text="@string/confMdpEtb" />
 
                 <EditText
                         android:id="@+id/editConfirmMdp"
@@ -139,11 +139,12 @@
                         android:inputType="textPassword"
                         android:hint="Confirmation mdp"/>
 
+
                 <Button
                         android:id="@+id/btregister"
                         android:layout_width="340dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="5dp"
                         android:layout_below="@+id/editConfirmMdp"
                         android:text="Je crée mon compte"
@@ -151,6 +152,8 @@
                         android:background="@drawable/orange_button"
                         style="@style/button_text"/>
 
-
+            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:gravity="right"
+                      android:text="@string/requiredFields"/>
         </LinearLayout>
 </ScrollView>

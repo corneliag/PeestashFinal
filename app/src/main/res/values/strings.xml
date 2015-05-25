@@ -78,16 +78,46 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_event">AddEventActivity</string>
-    <string name="email_template">
-    Bienvenue <b>%1$s</b> sur notre application Peestash,
+    <string name="email_template">Bienvenue %1$s sur notre application Peestash,
+        \n\nPour activer votre compte, veuillez cliquer sur le lien ci dessous ou copier/coller dans votre navigateur internet
+        \n\nhttp://peestash.peestash.fr/activation.php?email=%2$s&amp;guid=%3$s
+        \n\n---------------\n\nCeci est un mail automatique, Merci de ne pas y répondre.
 
-    Pour activer votre compte, veuillez cliquer sur le lien ci dessous
-    ou copier/coller dans votre navigateur internet.
-
-   <i>http://peestash.peestash.fr/activation.php?email=%2$s&amp;guid=%3$s</i>
-
-
-    ---------------
-    Ceci est un mail automatique, Merci de ne pas y répondre.
     </string>
+    <string name="enregistContact"><u>Enregistrer</u></string>
+    <string name="votreNomScene">Votre nom de scène<b><font color="red">*</font></b></string>
+    <string name="email">Votre E-mail<b><font color="red">*</font></b></string>
+    <string name="confEmail">Confirmez votre e-mail<b><font color="red">*</font></b></string>
+    <string name="mdp">Votre mot de passe<b><font color="red">*</font></b></string>
+    <string name="confMdp">Confirmez votre mot de passe<b><font color="red">*</font></b></string>
+    <string name="nomEtb">Votre nom d\'établissement<b><font color="red">*</font></b></string>
+    <string name="emailEtb">Votre e-mail<b><font color="red">*</font></b></string>
+    <string name="confEmailEtb">Confirmez votre e-mail<b><font color="red">*</font></b></string>
+    <string name="mdpEtb">Votre mot de passe<b><font color="red">*</font></b></string>
+    <string name="confMdpEtb">Confirmez votre mot de passe<b><font color="red">*</font></b></string>
+    <string name="nomScene">Nom de scène<b><font color="red">*</font></b></string>
+    <string name="adress">Adresse<b><font color="red">*</font></b></string>
+    <string name="codePostal">Code Postal<b><font color="red">*</font></b></string>
+    <string name="Ville">Ville<b><font color="red">*</font></b></string>
+    <string name="Nom">Nom<b><font color="red">*</font></b></string>
+    <string name="Prenom">Prénom<b><font color="red">*</font></b></string>
+    <string name="Age">Âge<b><font color="red">*</font></b></string>
+    <string name="typeArtist">Vous êtes :<b><font color="red">*</font></b></string>
+    <string name="genreMusical">Genre Musical<b><font color="red">*</font></b></string>
+    <string name="Pays">Pays<b><font color="red">*</font></b></string>
+    <string name="telFixe">Tel Fixe</string>
+    <string name="telMobile">Tel Mobile<b><font color="red">*</font></b></string>
+    <string name="Dispos">Mes disponibilités<b><font color="red">*</font></b></string>
+    <string name="idPlaylist">ID de votre playlist Soundcloud<b><font color="red">*</font></b></string>
+    <string name="siteWeb">Site Web<b><font color="red">*</font></b></string>
+    <string name="facebook">Facebook<b><font color="red">*</font></b></string>
+    <string name="twitter">Twitter<b><font color="red">*</font></b></string>
+    <string name="VotreEmail">Votre E-mail<b><font color="red">*</font></b></string>
+    <string name="modifEmail">Modifier votre e-mail</string>
+    <string name="modifMdp">Modifier votre mot de passe</string>
+    <string name="confirmMdp">Confirmez votre mot de passe</string>
+    <string name="requiredFields"><b><font color="red">*</font></b>Tous les champs sont obligatoires!</string>
+    <string name="cgu">*J\'ai lu et j\'accepte les CGU</string>
+    <string name="facebook_app_id">335426429995872</string>
+    <string name="modifProfil"><u>Modifier</u></string>
 </resources>
