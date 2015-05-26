@@ -187,24 +187,24 @@ public class EventsEtbFragment extends Fragment {
                 System.out.println("nb reponse "+ nb);
 
                 titre = new ArrayList<String>(nbreponse);
-               /* ville = new ArrayList<String>(nbreponse);
+                ville = new ArrayList<String>(nbreponse);
                 pays = new ArrayList<String>(nbreponse);
                 date_debut = new ArrayList<String>(nbreponse);
                 imgUrl = new ArrayList<String>(nbreponse);
                 genre_musical = new ArrayList<String>(nbreponse);
-                statut_recrutement = new ArrayList<String>(nbreponse);*/
+                statut_recrutement = new ArrayList<String>(nbreponse);
 
                 for (i = 0; i < finalResult.length(); i++) {
 
                     JSONObject element = finalResult.getJSONObject(i);
 
                     titre.add(element.getString("titre"));
-                  /*  date_debut.add(element.getString("date_debut"));
+                    date_debut.add(element.getString("date_debut"));
                     ville.add(element.getString("ville"));
                     pays.add(element.getString("pays"));
-                    imgUrl.add(element.getString("image_url"));
+                    imgUrl.add(element.getString("img_url"));
                     genre_musical.add(element.getString("genre_musical"));
-                    statut_recrutement.add(element.getString("statut_recrutement"));*/
+                    statut_recrutement.add(element.getString("statut_recrutement"));
 
                 }
 
@@ -227,12 +227,14 @@ public class EventsEtbFragment extends Fragment {
     }
     protected void afficheAllEventsResume(int i)
     {
-        arrayList.add(titre.get(i).toString());
-        System.out.println(arrayList.toString());
-      // Titre.setText(titre.get(i).toString());
+        arrayList.add(titre.get(i).toString().toUpperCase()+"\n"+"Date : "+date_debut.get(i).toString()
+                +"\n"+ville.get(i).toString().toUpperCase()+", "+pays.get(i).toString().toUpperCase()
+                +"\n"+"Genre : "+genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), "")
+                        +"\n"+"Statut du recrutement : "+statut_recrutement.get(i).toString());
 
-       /* Date_debut.setText(date_debut.get(i).toString());
-        Ville.setText(ville.get(i).toString());
+
+
+      /*  Ville.setText(ville.get(i).toString());
         Pays.setText(pays.get(i).toString());
         Statut.setText(statut_recrutement.get(i).toString());
 
@@ -256,4 +258,5 @@ public class EventsEtbFragment extends Fragment {
         }*/
 
     }
+
 }

@@ -132,7 +132,7 @@ public class RegisterArtistActivity extends Activity {
                 emailvalid = "no";
                 msg = msg + "Veuillez écrire correctement votre email.\n";
             }
-            if(test.checkMdpWriting(password)&&password!="")
+            if(test.checkMdpWriting(password))
             {
                 if(test.checkMdp(password, confirmPassword)) {
                     passwordvalid = "ok";
