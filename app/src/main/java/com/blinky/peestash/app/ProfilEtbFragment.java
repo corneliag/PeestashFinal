@@ -4,6 +4,7 @@ package com.blinky.peestash.app;
  * Created by nelly on 15/04/2015.
  */
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,12 +14,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.blinky.peestash.app.EditArtistProfilActivity;
 import com.blinky.peestash.app.R;
 import org.apache.http.HttpEntity;
@@ -47,12 +46,12 @@ public class ProfilEtbFragment extends Fragment {
 
     public ProfilEtbFragment(){}
 
-    private Button editProfil;
+    private ImageView editProfil;
     ImageView btnEdit;
-    String id_user="";
+    String id_user="",type="";
     private TextView Nom, Adresse, CP, Ville, Pays, Mobile,
             Fixe, Email, Siteweb, Facebook, Twitter, Genre_musical, Type_etab;
-    ImageView img;
+    ImageView img, editImage;
     private String nom = "", email = "", ville = "", adresse = "", cp = "", pays = "",
             telportable = "", telfixe = "", siteweb = "", imgUrl = "", facebook = "", twitter="", description = "", genre="", type_etab;
     ProgressDialog progress;
@@ -80,16 +79,27 @@ public class ProfilEtbFragment extends Fragment {
         Genre_musical = (TextView) rootView.findViewById(R.id.Genre);
         Type_etab =(TextView) rootView.findViewById(R.id.typeetab);
         img = (ImageView) rootView.findViewById(R.id.imageView);
+        editImage = (ImageView) rootView.findViewById(R.id.imageView2);
 
-        editProfil = (Button) rootView.findViewById(R.id.editprofil);
+        editProfil = (ImageView) rootView.findViewById(R.id.editprofil);
 
         editProfil.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EditEtablissementProfilActivity.class);
-                intent.putExtra("id_user", id_user);
-                startActivity(intent);
+                // Create new fragment and transaction
+                Fragment newFragment = new EditEtbProfilFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id_user", id_user);
+                newFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.frame_container, newFragment);
+                transaction.addToBackStack(null);
+                // Commit the transaction
+                transaction.commit();
             }
         });
         new Thread(new Runnable() {
@@ -101,6 +111,97 @@ public class ProfilEtbFragment extends Fragment {
                 });
             }
         }).start();
+
+        //gestion des onglets
+        final Button testtab1 = (Button) rootView.findViewById(R.id.testtab1);
+        final Button testtab2 = (Button) rootView.findViewById(R.id.testtab2);
+        final Button testtab3 = (Button) rootView.findViewById(R.id.testtab3);
+
+        final LinearLayout propLayout1 = (LinearLayout) rootView.findViewById(R.id.properLayout1);
+        final LinearLayout propLayout2 = (LinearLayout) rootView.findViewById(R.id.properLayout2);
+        final LinearLayout propLayout3 = (LinearLayout) rootView.findViewById(R.id.properLayout3);
+        testtab1.setPressed(true);
+        testtab2.setPressed(false);
+        testtab3.setPressed(false);
+
+        testtab1.setOnTouchListener
+                (
+                        new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                testtab1.setPressed(true);
+                                testtab2.setPressed(false);
+                                testtab3.setPressed(false);
+
+                                propLayout1.setVisibility(View.VISIBLE);
+                                propLayout2.setVisibility(View.INVISIBLE);
+                                propLayout3.setVisibility(View.INVISIBLE);
+
+                                return true;
+                            }
+                        }
+                );
+        testtab2.setOnTouchListener
+                (
+                        new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                testtab2.setPressed(true);
+                                testtab1.setPressed(false);
+                                testtab3.setPressed(false);
+
+                                propLayout2.setVisibility(View.VISIBLE);
+                                propLayout1.setVisibility(View.INVISIBLE);
+                                propLayout3.setVisibility(View.INVISIBLE);
+                                return true;
+                            }
+                        }
+                );
+        testtab3.setOnTouchListener
+                (
+                        new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                testtab3.setPressed(true);
+                                testtab2.setPressed(false);
+                                testtab1.setPressed(false);
+
+                                propLayout3.setVisibility(View.VISIBLE);
+                                propLayout1.setVisibility(View.INVISIBLE);
+                                propLayout2.setVisibility(View.INVISIBLE);
+                                return true;
+                            }
+                        }
+                );
+
+        View.OnClickListener listnr = new View.OnClickListener() {
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        type="etablissement";
+
+                        // Create new fragment and transaction
+                        Fragment newFragment = new UploadFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id_user", id_user);
+                        bundle.putString("type", type);
+                        newFragment.setArguments(bundle);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                        // Replace whatever is in the fragment_container view with this fragment,
+                        // and add the transaction to the back stack
+                        transaction.replace(R.id.frame_container, newFragment);
+                        transaction.addToBackStack(null);
+                        // Commit the transaction
+                        transaction.commit();
+
+                    }
+                }).start();
+            }
+
+        };
+
+        editImage.setOnClickListener(listnr);
 
         return rootView;
     }
@@ -202,14 +303,20 @@ public class ProfilEtbFragment extends Fragment {
                     CP.setText(cp);
                     Ville.setText(ville);
                     Pays.setText(pays);
-                    Mobile.setText(telportable);
-                    Fixe.setText(telfixe);
+                    Mobile.setText("0"+telportable);
+                    Fixe.setText("0"+telfixe);
                     Siteweb.setText(siteweb);
                     Facebook.setText(facebook);
                     Twitter.setText(twitter);
                     Genre_musical.setText(genre.toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
                     Type_etab.setText(type_etab);
 
+                }
+                if(telfixe.toString().equals("0")){
+                    Fixe.setText("Inconnu");
+                }
+                if(telportable.toString().equals("0")){
+                    Mobile.setText("Inconnu");
                 }
 
                 is.close();

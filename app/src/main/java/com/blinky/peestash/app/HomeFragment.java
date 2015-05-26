@@ -4,9 +4,7 @@ package com.blinky.peestash.app;
  * Created by nelly on 15/04/2015.
  */
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,17 +12,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.TwoStatePreference;
 import android.provider.ContactsContract;
-import android.support.v4.util.ArrayMap;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.blinky.peestash.app.R;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,11 +38,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Handler;
 
 import static com.blinky.peestash.app.ProfilFragment.getCircularBitmapWithBorder;
 
@@ -55,17 +47,15 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment(){}
 
-    Button btnNextProfil;
+    Button btnEvent;
     String id_user = "";
-    private TextView Pseudo, Email, Adresse, CP, Ville, Pays, Mobile,
-            Fixe, Siteweb, Genre, Dispo, Facebook, Twitter, Type_artiste;
+    private TextView Email, Adresse, CP, Nom, Ville, Pays, Mobile,
+            Fixe, Siteweb, Genre, Facebook, Twitter, Type_etab;
     int nbreponse;
-    List<String>  adresse, ville, pays, cp, email, pseudo, type_artiste, telportable, telfixe, soundcloud, facebook, twitter, dispo, siteweb, imgUrl, genre_musical;
+    List<String> nom, adresse, ville, pays, cp, email, telportable, telfixe, facebook, twitter, siteweb, imgUrl, genre_musical, type_etablissement;
     ImageView img;
     ProgressDialog progress;
-    private WebView wv;
     int i=0;
-    String html;
     Bitmap imgurl;
     ImageView btnAddContact;
     ImageView fixeVisuel;
@@ -73,32 +63,44 @@ public class HomeFragment extends Fragment {
     ImageView imgTwitter;
     ImageView imgSite;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+        btnEvent = (Button) rootView.findViewById(R.id.btnEvent);
+
         Bundle var = getActivity().getIntent().getExtras();
         id_user = var.getString("id_user");
 
-        Pseudo = (TextView) rootView.findViewById(R.id.Pseudo);
-        //Adresse = (TextView) rootView.findViewById(R.id.Adresse);
+        Nom = (TextView) rootView.findViewById(R.id.Nom);
+        Adresse = (TextView) rootView.findViewById(R.id.Adresse);
         CP = (TextView) rootView.findViewById(R.id.CP);
         Ville = (TextView) rootView.findViewById(R.id.Ville);
         Pays = (TextView) rootView.findViewById(R.id.Pays);
         Genre = (TextView) rootView.findViewById(R.id.Genre);
-        Dispo = (TextView) rootView.findViewById(R.id.Dispo);
         Facebook = (TextView) rootView.findViewById(R.id.Facebook);
         Twitter = (TextView) rootView.findViewById(R.id.Twitter);
         Siteweb = (TextView) rootView.findViewById(R.id.Siteweb);
         Fixe = (TextView) rootView.findViewById(R.id.Fixe);
         Mobile = (TextView) rootView.findViewById(R.id.Mobile);
         Email = (TextView) rootView.findViewById(R.id.Email);
-        Type_artiste = (TextView) rootView.findViewById(R.id.Type_artiste);
+        Type_etab = (TextView) rootView.findViewById(R.id.typeetab);
         img = (ImageView) rootView.findViewById(R.id.imageView);
-        wv = (WebView) rootView.findViewById(R.id.webView);
 
+        btnEvent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+              /*  Intent intent = new Intent(getActivity(), EvenementActivity.class);
+                intent.putExtra("id_user", id_user);
+                startActivity(intent);
+                */
+            }
+        });
 
         new Thread(new Runnable() {
             public void run() {
@@ -257,15 +259,15 @@ public class HomeFragment extends Fragment {
         });
 
         ImageView imgMail = (ImageView) rootView.findViewById(R.id.imgEmail);
-       imgMail.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               Intent i = new Intent(Intent.ACTION_VIEW);
-               String strEmail = Email.getText().toString();
-               i.setData(Uri.fromParts("mailto", strEmail, null));
-               startActivity(i);
-           }
-       });
+        imgMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                String strEmail = Email.getText().toString();
+                i.setData(Uri.fromParts("mailto", strEmail, null));
+                startActivity(i);
+            }
+        });
 
         imgSite = (ImageView) rootView.findViewById(R.id.imgSite);
         imgTwitter = (ImageView) rootView.findViewById(R.id.imgTwitter);
@@ -326,19 +328,17 @@ public class HomeFragment extends Fragment {
         btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertContact(Pseudo.getText().toString(), Email.getText().toString(), Mobile.getText().toString());
+                insertContact(Nom.getText().toString(), Email.getText().toString(), Mobile.getText().toString());
             }
         });
 
         return rootView;
     }
-
-
     private class ReadProfilTask extends AsyncTask<Void, Void, InputStream> {
         int i;
         String result = null;
         String tag = "read_AllProfil";
-        String type = "artiste";
+        String type = "etablissement";
         InputStream is = null;
         List<NameValuePair> nameValuePairs;
 
@@ -387,7 +387,7 @@ public class HomeFragment extends Fragment {
 
         protected void onPreExecute() {
             progress = new ProgressDialog(getActivity());
-            progress.setMessage("Chargement des profils...");
+            progress.setMessage("Chargement de la liste des établissements...");
             progress.show();
         }
 
@@ -403,47 +403,41 @@ public class HomeFragment extends Fragment {
                 int i=0;
                 // Access by key : value
                 nbreponse = finalResult.length();
-               /* String nb = String.valueOf(nbreponse);
-                System.out.println("nb reponse "+ nb); */
+                String nb = String.valueOf(nbreponse);
+                //System.out.println("nb reponse "+ nb);
 
                 email = new ArrayList<String>(nbreponse);
-                pseudo = new ArrayList<String>(nbreponse);
+                nom = new ArrayList<String>(nbreponse);
                 adresse = new ArrayList<String>(nbreponse);
                 cp = new ArrayList<String>(nbreponse);
-                soundcloud = new ArrayList<String>(nbreponse);
                 ville = new ArrayList<String>(nbreponse);
                 pays = new ArrayList<String>(nbreponse);
                 telportable = new ArrayList<String>(nbreponse);
                 telfixe = new ArrayList<String>(nbreponse);
-                dispo = new ArrayList<String>(nbreponse);
                 siteweb = new ArrayList<String>(nbreponse);
                 imgUrl = new ArrayList<String>(nbreponse);
                 genre_musical = new ArrayList<String>(nbreponse);
-                type_artiste = new ArrayList<String>(nbreponse);
+                type_etablissement = new ArrayList<String>(nbreponse);
                 facebook = new ArrayList<String>(nbreponse);
                 twitter = new ArrayList<String>(nbreponse);
-
-
 
                 for (i = 0; i < finalResult.length(); i++) {
 
                     JSONObject element = finalResult.getJSONObject(i);
                     email.add(element.getString("email"));
-                    pseudo.add(element.getString("pseudo"));
-                    soundcloud.add(element.getString("soundcloud"));
+                    nom.add(element.getString("nom"));
                     adresse.add(element.getString("adresse"));
                     cp.add(element.getString("code_postal"));
                     ville.add(element.getString("ville"));
                     pays.add(element.getString("pays"));
                     telportable.add(element.getString("tel_portable"));
                     telfixe.add(element.getString("tel_fixe"));
-                    dispo.add(element.getString("disponibilites"));
                     siteweb.add(element.getString("siteweb"));
                     imgUrl.add(element.getString("image_url"));
-                    genre_musical.add(element.getString("genre_musical"));
-                    type_artiste.add(element.getString("type_artiste"));
                     facebook.add(element.getString("facebook"));
                     twitter.add(element.getString("twitter"));
+                    type_etablissement.add(element.getString("type_etablissement"));
+                    genre_musical.add(element.getString("genre_musical"));
 
                 }
                 i=0;
@@ -463,20 +457,21 @@ public class HomeFragment extends Fragment {
     }
     protected void afficheProfilContent(int i)
     {
-        Pseudo.setText(pseudo.get(i).toString());
         Email.setText(email.get(i).toString());
-        //Adresse.setText(adresse.get(i).toString());
+        Nom.setText(nom.get(i).toString());
+        Adresse.setText(adresse.get(i).toString());
         CP.setText(cp.get(i).toString());
         Ville.setText(ville.get(i).toString());
         Pays.setText(pays.get(i).toString());
-        Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
         Siteweb.setText(siteweb.get(i).toString());
         Fixe.setText("0"+telfixe.get(i).toString());
         Mobile.setText("0"+telportable.get(i).toString());
-        Dispo.setText(dispo.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-        Type_artiste.setText(type_artiste.get(i).toString());
         Facebook.setText(facebook.get(i).toString());
         Twitter.setText(twitter.get(i).toString());
+
+        Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
+
+        Type_etab.setText(type_etablissement.get(i).toString());
 
         if(telfixe.get(i).toString().equals("0")){
             Fixe.setText("Inconnu");
@@ -484,6 +479,10 @@ public class HomeFragment extends Fragment {
         if(telportable.get(i).toString().equals("0")){
             Mobile.setText("Inconnu");
         }
+        if(type_etablissement.get(i).toString().equals("")){
+            Type_etab.setText("Inconnu");
+        }
+
         if(imgUrl.get(i).toString().length() != 0) {
             InputStream in = null;
             try {
@@ -492,25 +491,17 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
             imgurl = BitmapFactory.decodeStream(in);
+
             img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 1, Color.rgb(232,126,4)));
 
         }else
         {
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ic_img_base));
-
-        }
-        if (soundcloud.get(i).toString().length() != 0) {
-            html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" +soundcloud.get(i).toString()+ "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";
-            wv.getSettings().setJavaScriptEnabled(true);
-            wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
-        } else {
-            html = "Vous n'avez pas renseigne l\'ID de votre playlist Soundcloud";
-            wv.getSettings().setJavaScriptEnabled(true);
-            wv.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+            img.setImageDrawable(getResources().getDrawable(R.drawable.ic_profil_etb));
 
         }
 
     }
+
     public void insertContact(String name, String email, String tel) {
 
         Intent intent = new Intent(Intent.ACTION_INSERT);
@@ -522,6 +513,4 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         }
     }
-
-
 }
