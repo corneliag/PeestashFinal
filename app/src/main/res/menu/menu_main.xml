@@ -8,7 +8,7 @@
 
     <item
             android:id="@+id/userName"
-            android:title="USER"
+            android:title="@string/string_user_name"
             android:showAsAction="ifRoom|withText"
             />
 </menu>
