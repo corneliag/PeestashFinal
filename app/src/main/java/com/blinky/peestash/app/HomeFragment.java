@@ -245,6 +245,31 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        /*Fixe.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Fixe.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });
+        Mobile.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Mobile.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });*/
+
         mobileVisuel.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -257,7 +282,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
         ImageView imgMail = (ImageView) rootView.findViewById(R.id.imgEmail);
         imgMail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -387,7 +411,7 @@ public class HomeFragment extends Fragment {
 
         protected void onPreExecute() {
             progress = new ProgressDialog(getActivity());
-            progress.setMessage("Chargement de la liste des établissements...");
+            progress.setMessage("Chargement de la liste des etablissements...");
             progress.show();
         }
 

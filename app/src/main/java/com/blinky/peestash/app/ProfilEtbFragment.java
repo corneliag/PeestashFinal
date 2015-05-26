@@ -294,7 +294,7 @@ public class ProfilEtbFragment extends Fragment {
                     {
                         InputStream in = new java.net.URL(imgUrl).openStream();
                         imgurl = BitmapFactory.decodeStream(in);
-                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
+                        img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 1, Color.rgb(232,126,4)));
 
                     }
                     Nom.setText(nom);

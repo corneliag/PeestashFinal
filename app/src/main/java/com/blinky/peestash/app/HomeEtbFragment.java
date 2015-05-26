@@ -18,7 +18,9 @@ import android.preference.TwoStatePreference;
 import android.provider.ContactsContract;
 import android.support.v4.util.ArrayMap;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
@@ -254,7 +256,34 @@ public class HomeEtbFragment extends Fragment {
                 startActivity(myIntent);
 
             }
+        });/*
+
+        Fixe.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Fixe.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
         });
+
+        Mobile.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent myIntent = new Intent(Intent.ACTION_CALL);
+                String phNum = "tel:" + Mobile.getText().toString();
+                myIntent.setData(Uri.parse(phNum));
+                startActivity(myIntent);
+
+            }
+        });*/
+
 
         ImageView imgMail = (ImageView) rootView.findViewById(R.id.imgEmail);
         imgMail.setOnClickListener(new View.OnClickListener() {
