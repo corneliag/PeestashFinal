@@ -1,10 +1,10 @@
 package com.blinky.peestash.app;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.*;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -17,10 +17,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.loopj.android.http.RequestParams;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainEtbActivity extends Activity implements AddEventFragment.OnFragmentInteractionListener {
+public class MainEtbActivity extends Activity implements AddEventFragment.OnFragmentInteractionListener, EditEtbProfilFragment.OnFragmentInteractionListener,
+UploadFragment.OnFragmentInteractionListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -37,6 +56,21 @@ public class MainEtbActivity extends Activity implements AddEventFragment.OnFrag
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    String id_user="", type="";
+    String msg;
+    String imgPath, fileName;
+    Bitmap bitmap;
+    private static int RESULT_LOAD_IMG = 1;
+    ProgressDialog progress;
+    ProgressDialog prgDialog;
+    String encodedString;
+    RequestParams params = new RequestParams();
+    int i;
+    String result = null;
+    String tag = "read_EtablissementProfil";
+    InputStream is = null;
+    List<NameValuePair> nameValuePairs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +172,96 @@ public class MainEtbActivity extends Activity implements AddEventFragment.OnFrag
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_etb_main, menu);
+        Bundle var = getIntent().getExtras();
+        id_user = var.getString("id_user");
+
+        String nom ="";
+        //setting nameValuePairs
+        nameValuePairs = new ArrayList<NameValuePair>(1);
+        //adding string variables into the NameValuePairs
+        nameValuePairs.add(new BasicNameValuePair("tag", tag));
+        nameValuePairs.add(new BasicNameValuePair("id_user", id_user));
+
+        //setting the connection to the database
+        try {
+            //Setting up the default http client
+            HttpClient httpClient = new DefaultHttpClient();
+
+            //setting up the http post method
+            HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            //getting the response
+            HttpResponse response = httpClient.execute(httpPost);
+
+            //setting up the entity
+            HttpEntity entity = response.getEntity();
+
+            //setting up the content inside the input stream reader
+            is = entity.getContent();
+
+        } catch (ClientProtocolException e) {
+
+            Log.e("ClientProtocole", "Log_tag");
+            String msg = "Erreur client protocole";
+
+        } catch (IOException e) {
+            Log.e("Log_tag", "IOException");
+            e.printStackTrace();
+            String msg = "Erreur IOException";
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            StringBuilder total = new StringBuilder();
+            String json = reader.readLine();
+            JSONTokener tokener = new JSONTokener(json);
+            JSONArray finalResult = new JSONArray(tokener);
+            Bitmap imgurl;
+            // Access by key : value
+            for (i = 0; i < finalResult.length(); i++) {
+                JSONObject element = finalResult.getJSONObject(0);
+
+                nom = element.getString("nom");
+
+
+
+            }
+
+            is.close();
+
+        } catch (Exception e) {
+            Log.i("tagconvertstr", "" + e.toString());
+        }
+
+        Resources res = getResources();
+        String userStr;
+        userStr = String.format(res.getString(R.string.string_user_name), nom);
+
+        MenuItem bedMenuItem = menu.findItem(R.id.userName);
+
+        bedMenuItem.setTitle(userStr);
+        bedMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                // Create new fragment and transaction
+                Fragment newFragment = new ProfilEtbFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id_user", id_user);
+                bundle.putString("type", type);
+                newFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.frame_container, newFragment);
+                transaction.addToBackStack(null);
+                // Commit the transaction
+                transaction.commit();
+                return false;
+            }
+        });
+
         return true;
     }
 
