@@ -120,4 +120,5 @@
     <string name="cgu">*J\'ai lu et j\'accepte les CGU</string>
     <string name="facebook_app_id">335426429995872</string>
     <string name="modifProfil"><u>Modifier</u></string>
+    <string name="string_user_name">Bonjour %1$s</string>
 </resources>
