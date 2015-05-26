@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.*;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -241,10 +242,13 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
             Log.i("tagconvertstr", "" + e.toString());
         }
 
+        Resources res = getResources();
+        String userStr;
+        userStr = String.format(res.getString(R.string.string_user_name), pseudo);
 
         MenuItem bedMenuItem = menu.findItem(R.id.userName);
 
-        bedMenuItem.setTitle(pseudo);
+        bedMenuItem.setTitle(userStr);
         bedMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
