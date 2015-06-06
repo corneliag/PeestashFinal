@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -47,12 +48,13 @@ public class HomeFragment extends Fragment {
     String id_user = "";
     private TextView Email, Adresse, CP, Nom, Ville, Pays, Mobile,
             Fixe, Siteweb, Genre, Facebook, Twitter, Type_etab;
-    List<String> nom, adresse, ville, pays, cp, email, telportable, telfixe, facebook, twitter, siteweb, imgUrl, genre_musical, type_etablissement;
+    List<String> idEtb, nom, adresse, ville, pays, cp, email, telportable, telfixe, facebook, twitter, siteweb, imgUrl, genre_musical, type_etablissement;
     ImageView img;
     private TextView Demande_inscription, Nb_events, Titre, Date_debut, Date_fin, Heure_Debut, Heure_fin, Statut;
     int nbreponse;
-    private List<String> titre, date_debut, statut_recrutement;
+    private List<String> titre, date_debut, statut_recrutement, id_etb;
     ProgressDialog progress;
+    ProgressDialog progress2;
     Bitmap imgurl;
     ImageView btnAddContact;
     ImageView fixeVisuel;
@@ -60,12 +62,16 @@ public class HomeFragment extends Fragment {
     ImageView imgTwitter;
     ImageView imgSite;
 
+
     private LinearLayout listeEvents;
     private int layoutHeight, i=0;
     private LinearLayout.LayoutParams listeEventsParams;
     private ListView list;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
+
+    ShowAllEventsTask eventsTask;
+
 
 
 
@@ -111,6 +117,10 @@ public class HomeFragment extends Fragment {
             }
         }).start();
 
+        eventsTask = new ShowAllEventsTask();
+        StartAsyncTaskInParallel(eventsTask);
+
+
         final GestureDetector gesture = new GestureDetector(getActivity(),
                 new GestureDetector.SimpleOnGestureListener() {
                     @Override
@@ -132,12 +142,18 @@ public class HomeFragment extends Fragment {
                                 if (i == (nbreponse - 1)) {
                                     i = 0;
                                     afficheProfilContent(i);
+                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
                                     afficherEvent(i);
+                                    list.setAdapter(adapter);
 
                                 }else {
                                     i++;
                                     afficheProfilContent(i);
+                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
                                     afficherEvent(i);
+                                    list.setAdapter(adapter);
 
                                 }
 
@@ -149,11 +165,19 @@ public class HomeFragment extends Fragment {
                                 {
                                     i=nbreponse-1;
                                     afficheProfilContent(i);
+                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
                                     afficherEvent(i);
+                                    list.setAdapter(adapter);
+
                                 } else {
                                     i--;
                                     afficheProfilContent(i);
+                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
                                     afficherEvent(i);
+                                    list.setAdapter(adapter);
+
                                 }
 
                             }
@@ -353,6 +377,7 @@ public class HomeFragment extends Fragment {
             nameValuePairs.add(new BasicNameValuePair("type", type));
             nameValuePairs.add(new BasicNameValuePair("id_user", id_user));
 
+
             //setting the connection to the database
             try {
                 //Setting up the default http client
@@ -390,8 +415,8 @@ public class HomeFragment extends Fragment {
 
         protected void onPreExecute() {
             progress = new ProgressDialog(getActivity());
-            progress.setMessage("Chargement de la liste des etablissements...");
-            progress.show();
+           // progress.setMessage("Chargement de la liste des etablissements...");
+          //  progress.show();
         }
 
         protected void onPostExecute(InputStream is) {
@@ -423,6 +448,8 @@ public class HomeFragment extends Fragment {
                 type_etablissement = new ArrayList<String>(nbreponse);
                 facebook = new ArrayList<String>(nbreponse);
                 twitter = new ArrayList<String>(nbreponse);
+                idEtb = new ArrayList<String>(nbreponse);
+
 
                 for (i = 0; i < finalResult.length(); i++) {
 
@@ -441,12 +468,14 @@ public class HomeFragment extends Fragment {
                     twitter.add(element.getString("twitter"));
                     type_etablissement.add(element.getString("type_etablissement"));
                     genre_musical.add(element.getString("genre_musical"));
+                    idEtb.add(element.getString("id"));
                 }
                 i=0;
 
                 afficheProfilContent(i);
-                afficherEvent(i);
 
+                Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
                 is.close();
 
             } catch (Exception e) {
@@ -454,6 +483,115 @@ public class HomeFragment extends Fragment {
             }
             if (progress.isShowing()) {
                 progress.dismiss();
+            }
+
+        }
+    }
+    private class ShowAllEventsTask extends AsyncTask<Void, Void, InputStream> {
+
+        String result = null;
+        String tag = "read_AllEtbEvents";
+        String type="etablissement";
+        InputStream is = null;
+        List<NameValuePair> nameValuePairs;
+
+        protected InputStream doInBackground(Void... params) {
+            //setting nameValuePairs
+            nameValuePairs = new ArrayList<NameValuePair>(1);
+            //adding string variables into the NameValuePairs
+            nameValuePairs.add(new BasicNameValuePair("tag", tag));
+            nameValuePairs.add(new BasicNameValuePair("id_user", id_user));
+            nameValuePairs.add(new BasicNameValuePair("type", type));
+
+            //setting the connection to the database
+            try {
+                //Setting up the default http client
+                HttpClient httpClient = new DefaultHttpClient();
+
+                //setting up the http post method
+                HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                //getting the response
+                HttpResponse response = httpClient.execute(httpPost);
+
+                //setting up the entity
+                HttpEntity entity = response.getEntity();
+
+                //setting up the content inside the input stream reader
+                is = entity.getContent();
+
+            } catch (ClientProtocolException e) {
+
+                Log.e("ClientProtocole", "Log_tag");
+                String msg = "Erreur client protocole";
+
+            } catch (IOException e) {
+                Log.e("Log_tag", "IOException");
+                e.printStackTrace();
+                String msg = "Erreur IOException";
+            }
+            return is;
+        }
+
+        protected void onProgressUpdate(Void params) {
+
+        }
+
+        protected void onPreExecute() {
+            progress2 = new ProgressDialog(getActivity());
+            progress2.setMessage("Chargement de la liste des évènements...");
+            progress2.show();
+        }
+
+        protected void onPostExecute(InputStream is) {
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                String json = reader.readLine();
+                JSONTokener tokener = new JSONTokener(json);
+                JSONArray finalResult = new JSONArray(tokener);
+
+                int i=0;
+                // Access by key : value
+                nbreponse = finalResult.length();
+                String nb = String.valueOf(nbreponse);
+                System.out.println("nb reponse "+ nb);
+
+                titre = new ArrayList<String>(nbreponse);
+                ville = new ArrayList<String>(nbreponse);
+                pays = new ArrayList<String>(nbreponse);
+                date_debut = new ArrayList<String>(nbreponse);
+                imgUrl = new ArrayList<String>(nbreponse);
+                genre_musical = new ArrayList<String>(nbreponse);
+                statut_recrutement = new ArrayList<String>(nbreponse);
+                id_etb = new ArrayList<String>(nbreponse);
+
+                for (i = 0; i < finalResult.length(); i++) {
+
+                    JSONObject element = finalResult.getJSONObject(i);
+
+                    titre.add(element.getString("titre"));
+                    date_debut.add(element.getString("date_debut"));
+                    ville.add(element.getString("ville"));
+                    pays.add(element.getString("pays"));
+                    imgUrl.add(element.getString("img_url"));
+                    genre_musical.add(element.getString("genre_musical"));
+                    statut_recrutement.add(element.getString("statut_recrutement"));
+                    id_etb.add(element.getString("id_etablissement"));
+
+                }
+
+                i=0;
+                afficherEvent(i);
+                list.setAdapter(adapter);
+                is.close();
+
+            } catch (Exception e) {
+                Log.i("tagconvertstr", "" + e.toString());
+            }
+            if (progress2.isShowing()) {
+                progress2.dismiss();
             }
 
         }
@@ -503,99 +641,17 @@ public class HomeFragment extends Fragment {
 
         }
 
+
     }
-    protected  void afficherEvent(int i ){
-        String result = null;
-        String tag = "read_AllEtbEvents";
-        String type="etablissement";
-        InputStream is = null;
-        List<NameValuePair> nameValuePairs;
+    protected  void afficherEvent(int i) {
 
-        //setting nameValuePairs
-        nameValuePairs = new ArrayList<NameValuePair>(1);
-        //adding string variables into the NameValuePairs
-        nameValuePairs.add(new BasicNameValuePair("tag", tag));
-        nameValuePairs.add(new BasicNameValuePair("type", type));
-        nameValuePairs.add(new BasicNameValuePair("id_user", id_user));
-
-        //setting the connection to the database
-        try {
-            //Setting up the default http client
-            HttpClient httpClient = new DefaultHttpClient();
-
-            //setting up the http post method
-            HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            //getting the response
-            HttpResponse response = httpClient.execute(httpPost);
-
-            //setting up the entity
-            HttpEntity entity = response.getEntity();
-
-            //setting up the content inside the input stream reader
-            is = entity.getContent();
-
-        } catch (ClientProtocolException e) {
-
-            Log.e("ClientProtocole", "Log_tag");
-            String msg = "Erreur client protocole";
-
-        } catch (IOException e) {
-            Log.e("Log_tag", "IOException");
-            e.printStackTrace();
-            String msg = "Erreur IOException";
-        }
-
-        Toast.makeText(getActivity(), "Chargement des evenements...", Toast.LENGTH_LONG).show();
-
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String json = reader.readLine();
-            JSONTokener tokener = new JSONTokener(json);
-            JSONArray finalResult = new JSONArray(tokener);
-
-             i=0;
-            // Access by key : value
-            nbreponse = finalResult.length();
-            String nb = String.valueOf(nbreponse);
-            System.out.println("nb reponse "+ nb);
-
-            titre = new ArrayList<String>(nbreponse);
-            ville = new ArrayList<String>(nbreponse);
-            pays = new ArrayList<String>(nbreponse);
-            date_debut = new ArrayList<String>(nbreponse);
-            imgUrl = new ArrayList<String>(nbreponse);
-            genre_musical = new ArrayList<String>(nbreponse);
-            statut_recrutement = new ArrayList<String>(nbreponse);
+        //if(id_etb.get(i).toString().equals(idEtb.get(i).toString())) {
+            arrayList.add(titre.get(i).toString().toUpperCase() + "\n" + "Date : " + date_debut.get(i).toString()
+                    + "\n" + ville.get(i).toString().toUpperCase() + ", " + pays.get(i).toString().toUpperCase()
+                    + "\n" + "Genre : " + genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), "")
+                    + "\n" + "Statut du recrutement : " + statut_recrutement.get(i).toString());
 
 
-            for(i=0;i<finalResult.length();i++) {
-                JSONObject element = finalResult.getJSONObject(i);
-                titre.add(element.getString("titre"));
-                date_debut.add(element.getString("date_debut"));
-                ville.add(element.getString("ville"));
-                pays.add(element.getString("pays"));
-                imgUrl.add(element.getString("img_url"));
-                genre_musical.add(element.getString("genre_musical"));
-                statut_recrutement.add(element.getString("statut_recrutement"));
-
-            }
-            Toast.makeText(getActivity(), "Titre "+titre, Toast.LENGTH_LONG).show();
-            for(i=0;i<finalResult.length();i++) {
-                arrayList.add(titre.get(i).toString().toUpperCase() + "\n" + "Date : " + date_debut.get(i).toString()
-                        + "\n" + ville.get(i).toString().toUpperCase() + ", " + pays.get(i).toString().toUpperCase()
-                        + "\n" + "Genre : " + genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), "")
-                        + "\n" + "Statut du recrutement : " + statut_recrutement.get(i).toString());
-            }
-
-            list.setAdapter(adapter);
-
-            is.close();
-
-        } catch (Exception e) {
-            Log.i("tagconvertstr", "" + e.toString());
-        }
 
     }
 
@@ -609,5 +665,12 @@ public class HomeFragment extends Fragment {
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    private void StartAsyncTaskInParallel(ShowAllEventsTask task) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else
+            task.execute();
     }
 }
