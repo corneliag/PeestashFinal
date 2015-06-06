@@ -304,15 +304,11 @@
                     android:orientation="vertical"
                     android:background="@drawable/layout_style"
                     android:id="@+id/properLayout2">
-                <Button
-                        android:id="@+id/btnEvent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/orange_button"
-                        android:text="Liste des évènements"
-                        style="@style/button_text" />
+                <ListView android:id="@android:id/list"
+                          android:layout_width="match_parent"
+                          android:layout_height="500dp"
+                        />
+
             </LinearLayout>
             <LinearLayout
                     android:layout_width="match_parent"
