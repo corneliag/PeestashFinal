@@ -16,10 +16,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.*;
 import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.blinky.peestash.app.R;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,21 +44,29 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment(){}
 
-    Button btnEvent;
     String id_user = "";
     private TextView Email, Adresse, CP, Nom, Ville, Pays, Mobile,
             Fixe, Siteweb, Genre, Facebook, Twitter, Type_etab;
-    int nbreponse;
     List<String> nom, adresse, ville, pays, cp, email, telportable, telfixe, facebook, twitter, siteweb, imgUrl, genre_musical, type_etablissement;
     ImageView img;
+    private TextView Demande_inscription, Nb_events, Titre, Date_debut, Date_fin, Heure_Debut, Heure_fin, Statut;
+    int nbreponse;
+    private List<String> titre, date_debut, statut_recrutement;
     ProgressDialog progress;
-    int i=0;
     Bitmap imgurl;
     ImageView btnAddContact;
     ImageView fixeVisuel;
     ImageView imgFacebook;
     ImageView imgTwitter;
     ImageView imgSite;
+
+    private LinearLayout listeEvents;
+    private int layoutHeight, i=0;
+    private LinearLayout.LayoutParams listeEventsParams;
+    private ListView list;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> arrayList;
+
 
 
     @Override
@@ -70,7 +75,12 @@ public class HomeFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        btnEvent = (Button) rootView.findViewById(R.id.btnEvent);
+        arrayList = new ArrayList<String>();
+
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
+
+
+        list = (ListView) rootView.findViewById(android.R.id.list);
 
         Bundle var = getActivity().getIntent().getExtras();
         id_user = var.getString("id_user");
@@ -90,17 +100,6 @@ public class HomeFragment extends Fragment {
         Type_etab = (TextView) rootView.findViewById(R.id.typeetab);
         img = (ImageView) rootView.findViewById(R.id.imageView);
 
-        btnEvent.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-              /*  Intent intent = new Intent(getActivity(), EvenementActivity.class);
-                intent.putExtra("id_user", id_user);
-                startActivity(intent);
-                */
-            }
-        });
 
         new Thread(new Runnable() {
             public void run() {
@@ -133,10 +132,12 @@ public class HomeFragment extends Fragment {
                                 if (i == (nbreponse - 1)) {
                                     i = 0;
                                     afficheProfilContent(i);
+                                    afficherEvent(i);
 
                                 }else {
                                     i++;
                                     afficheProfilContent(i);
+                                    afficherEvent(i);
 
                                 }
 
@@ -148,9 +149,11 @@ public class HomeFragment extends Fragment {
                                 {
                                     i=nbreponse-1;
                                     afficheProfilContent(i);
+                                    afficherEvent(i);
                                 } else {
                                     i--;
                                     afficheProfilContent(i);
+                                    afficherEvent(i);
                                 }
 
                             }
@@ -245,30 +248,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        /*Fixe.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent myIntent = new Intent(Intent.ACTION_CALL);
-                String phNum = "tel:" + Fixe.getText().toString();
-                myIntent.setData(Uri.parse(phNum));
-                startActivity(myIntent);
-
-            }
-        });
-        Mobile.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent myIntent = new Intent(Intent.ACTION_CALL);
-                String phNum = "tel:" + Mobile.getText().toString();
-                myIntent.setData(Uri.parse(phNum));
-                startActivity(myIntent);
-
-            }
-        });*/
 
         mobileVisuel.setOnClickListener(new View.OnClickListener() {
 
@@ -462,11 +441,11 @@ public class HomeFragment extends Fragment {
                     twitter.add(element.getString("twitter"));
                     type_etablissement.add(element.getString("type_etablissement"));
                     genre_musical.add(element.getString("genre_musical"));
-
                 }
                 i=0;
 
                 afficheProfilContent(i);
+                afficherEvent(i);
 
                 is.close();
 
@@ -522,6 +501,100 @@ public class HomeFragment extends Fragment {
         {
             img.setImageDrawable(getResources().getDrawable(R.drawable.ic_profil_etb));
 
+        }
+
+    }
+    protected  void afficherEvent(int i ){
+        String result = null;
+        String tag = "read_AllEtbEvents";
+        String type="etablissement";
+        InputStream is = null;
+        List<NameValuePair> nameValuePairs;
+
+        //setting nameValuePairs
+        nameValuePairs = new ArrayList<NameValuePair>(1);
+        //adding string variables into the NameValuePairs
+        nameValuePairs.add(new BasicNameValuePair("tag", tag));
+        nameValuePairs.add(new BasicNameValuePair("type", type));
+        nameValuePairs.add(new BasicNameValuePair("id_user", id_user));
+
+        //setting the connection to the database
+        try {
+            //Setting up the default http client
+            HttpClient httpClient = new DefaultHttpClient();
+
+            //setting up the http post method
+            HttpPost httpPost = new HttpPost("http://peestash.peestash.fr/index.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            //getting the response
+            HttpResponse response = httpClient.execute(httpPost);
+
+            //setting up the entity
+            HttpEntity entity = response.getEntity();
+
+            //setting up the content inside the input stream reader
+            is = entity.getContent();
+
+        } catch (ClientProtocolException e) {
+
+            Log.e("ClientProtocole", "Log_tag");
+            String msg = "Erreur client protocole";
+
+        } catch (IOException e) {
+            Log.e("Log_tag", "IOException");
+            e.printStackTrace();
+            String msg = "Erreur IOException";
+        }
+
+        Toast.makeText(getActivity(), "Chargement des evenements...", Toast.LENGTH_LONG).show();
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String json = reader.readLine();
+            JSONTokener tokener = new JSONTokener(json);
+            JSONArray finalResult = new JSONArray(tokener);
+
+             i=0;
+            // Access by key : value
+            nbreponse = finalResult.length();
+            String nb = String.valueOf(nbreponse);
+            System.out.println("nb reponse "+ nb);
+
+            titre = new ArrayList<String>(nbreponse);
+            ville = new ArrayList<String>(nbreponse);
+            pays = new ArrayList<String>(nbreponse);
+            date_debut = new ArrayList<String>(nbreponse);
+            imgUrl = new ArrayList<String>(nbreponse);
+            genre_musical = new ArrayList<String>(nbreponse);
+            statut_recrutement = new ArrayList<String>(nbreponse);
+
+
+            for(i=0;i<finalResult.length();i++) {
+                JSONObject element = finalResult.getJSONObject(i);
+                titre.add(element.getString("titre"));
+                date_debut.add(element.getString("date_debut"));
+                ville.add(element.getString("ville"));
+                pays.add(element.getString("pays"));
+                imgUrl.add(element.getString("img_url"));
+                genre_musical.add(element.getString("genre_musical"));
+                statut_recrutement.add(element.getString("statut_recrutement"));
+
+            }
+            Toast.makeText(getActivity(), "Titre "+titre, Toast.LENGTH_LONG).show();
+            for(i=0;i<finalResult.length();i++) {
+                arrayList.add(titre.get(i).toString().toUpperCase() + "\n" + "Date : " + date_debut.get(i).toString()
+                        + "\n" + ville.get(i).toString().toUpperCase() + ", " + pays.get(i).toString().toUpperCase()
+                        + "\n" + "Genre : " + genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), "")
+                        + "\n" + "Statut du recrutement : " + statut_recrutement.get(i).toString());
+            }
+
+            list.setAdapter(adapter);
+
+            is.close();
+
+        } catch (Exception e) {
+            Log.i("tagconvertstr", "" + e.toString());
         }
 
     }
