@@ -121,4 +121,12 @@
     <string name="facebook_app_id">335426429995872</string>
     <string name="modifProfil"><u>Modifier</u></string>
     <string name="string_user_name">Bonjour %1$s</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+
+    <string-array name="genres_array">
+            <item>Rock</item>
+            <item>Pop</item>
+            <item>Jazz</item>
+    </string-array>
+
 </resources>
