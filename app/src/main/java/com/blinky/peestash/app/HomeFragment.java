@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
     ImageView img;
     private TextView Demande_inscription, Nb_events, Titre, Date_debut, Date_fin, Heure_Debut, Heure_fin, Statut;
     int nbreponse;
-    private List<String> titre, date_debut, statut_recrutement, id_etb;
+    private List<String> titre, date_debut, statut_recrutement, id_etablissement;
     ProgressDialog progress;
     ProgressDialog progress2;
     Bitmap imgurl;
@@ -142,18 +142,10 @@ public class HomeFragment extends Fragment {
                                 if (i == (nbreponse - 1)) {
                                     i = 0;
                                     afficheProfilContent(i);
-                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    afficherEvent(i);
-                                    list.setAdapter(adapter);
 
                                 }else {
                                     i++;
                                     afficheProfilContent(i);
-                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    afficherEvent(i);
-                                    list.setAdapter(adapter);
 
                                 }
 
@@ -165,18 +157,10 @@ public class HomeFragment extends Fragment {
                                 {
                                     i=nbreponse-1;
                                     afficheProfilContent(i);
-                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    afficherEvent(i);
-                                    list.setAdapter(adapter);
 
                                 } else {
                                     i--;
                                     afficheProfilContent(i);
-                                    Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
-                                    afficherEvent(i);
-                                    list.setAdapter(adapter);
 
                                 }
 
@@ -474,8 +458,6 @@ public class HomeFragment extends Fragment {
 
                 afficheProfilContent(i);
 
-                Toast.makeText(getActivity(), "etb table "+idEtb.get(i).toString(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity(), " event table "+id_etb.get(i).toString(), Toast.LENGTH_LONG).show();
                 is.close();
 
             } catch (Exception e) {
@@ -565,7 +547,7 @@ public class HomeFragment extends Fragment {
                 imgUrl = new ArrayList<String>(nbreponse);
                 genre_musical = new ArrayList<String>(nbreponse);
                 statut_recrutement = new ArrayList<String>(nbreponse);
-                id_etb = new ArrayList<String>(nbreponse);
+                id_etablissement = new ArrayList<String>(nbreponse);
 
                 for (i = 0; i < finalResult.length(); i++) {
 
@@ -578,13 +560,9 @@ public class HomeFragment extends Fragment {
                     imgUrl.add(element.getString("img_url"));
                     genre_musical.add(element.getString("genre_musical"));
                     statut_recrutement.add(element.getString("statut_recrutement"));
-                    id_etb.add(element.getString("id_etablissement"));
+                    id_etablissement.add(element.getString("id_etablissement"));
 
                 }
-
-                i=0;
-                afficherEvent(i);
-                list.setAdapter(adapter);
                 is.close();
 
             } catch (Exception e) {
@@ -640,12 +618,16 @@ public class HomeFragment extends Fragment {
             img.setImageDrawable(getResources().getDrawable(R.drawable.ic_profil_etb));
 
         }
+        //if(idEtb.get(i).toString().equals(id_etablissement.get(i).toString())) {
+            afficherEvent(i);
+
+        list.setAdapter(adapter);
 
 
     }
     protected  void afficherEvent(int i) {
 
-        //if(id_etb.get(i).toString().equals(idEtb.get(i).toString())) {
+
             arrayList.add(titre.get(i).toString().toUpperCase() + "\n" + "Date : " + date_debut.get(i).toString()
                     + "\n" + ville.get(i).toString().toUpperCase() + ", " + pays.get(i).toString().toUpperCase()
                     + "\n" + "Genre : " + genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), "")
