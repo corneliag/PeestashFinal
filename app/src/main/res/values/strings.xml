@@ -30,8 +30,6 @@
         <item>Mon profil</item>
         <item>Mes événements</item>
         <item>Mes notifications</item>
-        <item>Mes options</item>
-        <item>Réglage du filtre</item>
         <item>Déconnexion</item>
         <item>Supprimer mon compte</item>
     </string-array>
@@ -44,8 +42,6 @@
         <item>@drawable/icon_profil</item>
         <item>@drawable/icon_events</item>
         <item>@drawable/icon_messages</item>
-        <item>@drawable/icon_options</item>
-        <item>@drawable/icon_filtre</item>
         <item>@drawable/icon_lougout</item>
         <item>@drawable/icon_supprimer</item>
     </array>
