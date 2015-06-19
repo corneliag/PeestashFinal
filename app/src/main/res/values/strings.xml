@@ -30,8 +30,6 @@
         <item>Mon profil</item>
         <item>Mes événements</item>
         <item>Mes notifications</item>
-        <item>Mes options</item>
-        <item>Réglage du filtre</item>
         <item>Déconnexion</item>
         <item>Supprimer mon compte</item>
     </string-array>
@@ -44,8 +42,6 @@
         <item>@drawable/icon_profil</item>
         <item>@drawable/icon_events</item>
         <item>@drawable/icon_messages</item>
-        <item>@drawable/icon_options</item>
-        <item>@drawable/icon_filtre</item>
         <item>@drawable/icon_lougout</item>
         <item>@drawable/icon_supprimer</item>
     </array>
@@ -120,6 +116,13 @@
     <string name="cgu">*J\'ai lu et j\'accepte les CGU</string>
     <string name="facebook_app_id">335426429995872</string>
     <string name="modifProfil"><u>Modifier</u></string>
-    <string name="title_activity_custom_list">CustomList</string>
-    <string name="title_activity_edit_event">Editer mon évènement</string>
+    <string name="string_user_name">Bonjour %1$s</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+
+    <string-array name="genres_array">
+            <item>Rock</item>
+            <item>Pop</item>
+            <item>Jazz</item>
+    </string-array>
+
 </resources>

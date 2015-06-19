@@ -800,8 +800,8 @@ public class EditArtistProfilFragment extends Fragment  implements AdapterView.O
                     editCP.setText(cp);
                     editVille.setText(ville);
                     editPays.setText(pays);
-                    editTelMobile.setText(telportable);
-                    editTelFixe.setText(telfixe);
+                    editTelMobile.setText("0"+telportable);
+                    editTelFixe.setText("0"+telfixe);
                     editSoundcloud.setText(soundcloud);
                     editSiteweb.setText(siteweb);
                     editFacebook.setText(facebook);

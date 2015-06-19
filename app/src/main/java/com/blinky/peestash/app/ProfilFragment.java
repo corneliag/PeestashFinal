@@ -354,10 +354,10 @@ public class ProfilFragment extends Fragment{
 
                 }
                 if(telfixe.toString().equals("0")){
-                    Fixe.setText("Pas defini");
+                    Fixe.setText("Inconnu");
                 }
                 if(telportable.toString().equals("0")){
-                    Mobile.setText("Pas defini");
+                    Mobile.setText("Inconnu");
                 }
                 if (soundcloud.length() != 0) {
                     html = "<iframe width=\"100%\" height=\"400\" scrolling=\"yes\" frameborder=\"no\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/" + soundcloud + "&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false&amp;show_artwork=false&amp;buying=false\"></iframe>";

@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.*;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -103,13 +104,15 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
         // Photos
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+       // navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+
         // Pages
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // What's hot, We  will add a counter here
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+       // navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
 
 
         // Recycle the typed array
@@ -241,10 +244,13 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
             Log.i("tagconvertstr", "" + e.toString());
         }
 
+        Resources res = getResources();
+        String userStr;
+        userStr = String.format(res.getString(R.string.string_user_name), pseudo);
 
         MenuItem bedMenuItem = menu.findItem(R.id.userName);
 
-        bedMenuItem.setTitle(pseudo);
+        bedMenuItem.setTitle(userStr);
         bedMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -318,17 +324,19 @@ public class MainActivity extends Activity implements UploadFragment.OnFragmentI
                 fragment = new NotifFragment();
                 break;
             case 4:
-                fragment = new OptionsFragment();
+                fragment = new LogoutFragment();
+                //fragment = new OptionsFragment();
                 break;
             case 5:
-                fragment = new FiltreFragment();
+                fragment = new SupprimerFragment();
+               // fragment = new FiltreFragment();
                 break;
-            case 6:
+           /* case 6:
                 fragment = new LogoutFragment();
                 break;
             case 7:
                 fragment = new SupprimerFragment();
-                break;
+                break;*/
 
             default:
                 break;

@@ -24,7 +24,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +36,7 @@ import java.util.UUID;
 
 import android.view.View.OnClickListener;
 
+import javax.activation.DataHandler;
 
 public class LoginActivity extends Activity {
 
@@ -48,11 +48,15 @@ public class LoginActivity extends Activity {
     String password="";
     int actif=1;
 
+    Button btnLogin;
+    Button btnLinkToRegister;
+    EditText inputEmail;
+    EditText inputPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -93,8 +97,8 @@ public class LoginActivity extends Activity {
 
         });
 
-
     }
+
     private class ConnexionTask extends AsyncTask<Void, Void, ArrayList> {
         ArrayList<String> valid = new ArrayList<String>();
         List<NameValuePair> nameValuePairs;

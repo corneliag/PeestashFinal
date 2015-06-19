@@ -81,17 +81,31 @@ public class UploadFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_upload, container, false);
 
         ImageView btnBack = (ImageView) rootView.findViewById(R.id.btnBack);
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = 1;
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                i.putExtra("id_user", id_user);
-                i.putExtra("position", position);
-                startActivity(i);
-                getActivity().finish();
+
+                if(type=="artiste"){
+                    int position = 1;
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    i.putExtra("id_user", id_user);
+                    i.putExtra("position", position);
+                    startActivity(i);
+                    getActivity().finish();
+                }else {
+                    int position = 1;
+                    Intent i = new Intent(getActivity(), MainEtbActivity.class);
+                    i.putExtra("id_user", id_user);
+                    i.putExtra("position", position);
+                    startActivity(i);
+                    getActivity().finish();
+                }
+
             }
         });
+
+
 
         Button btnLoad = (Button) rootView.findViewById(R.id.buttonLoadPicture);
         btnLoad.setOnClickListener(new View.OnClickListener() {
