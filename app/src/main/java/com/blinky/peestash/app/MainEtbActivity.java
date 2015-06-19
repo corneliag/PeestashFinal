@@ -20,7 +20,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainEtbActivity extends Activity implements AddEventFragment.OnFragmentInteractionListener {
+public class MainEtbActivity extends Activity implements AddEventFragment.OnFragmentInteractionListener, EditEventFragment.OnFragmentInteractionListener{
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -200,12 +200,15 @@ public class MainEtbActivity extends Activity implements AddEventFragment.OnFrag
             case 7:
                 fragment = new SupprimerEtbFragment();
                 break;
+            case 8:
+                fragment = new EditEventFragment();
+                break;
 
             default:
                 break;
         }
 
-        if (fragment != null) {
+       if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();

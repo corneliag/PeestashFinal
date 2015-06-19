@@ -5,21 +5,16 @@ package com.blinky.peestash.app;
  */
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.blinky.peestash.app.R;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -40,17 +35,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.blinky.peestash.app.ProfilFragment.getCircularBitmapWithBorder;
-
-public class EventsEtbFragment extends Fragment {
+public class EventsEtbFragment extends Fragment  {
 
     public EventsEtbFragment(){}
 
-    private String id_user = "";
+    private String id_user = "", num_event="";
     private Button BtnAddEvent;
     private TextView Demande_inscription, Nb_events, Titre, Ville, Pays, Genre, Date_debut, Date_fin, Heure_Debut, Heure_fin, Statut;
-    int nbreponse;
-    private List<String> titre, date_debut, ville, pays, genre_musical, statut_recrutement, imgUrl;
+    int nbreponse, position;
+    private List<String> id_event, titre, date_debut, ville, pays, genre_musical, statut_recrutement, imgUrl;
     private ImageView img;
     Bitmap imgurl;
     ProgressDialog progress;
@@ -60,6 +53,7 @@ public class EventsEtbFragment extends Fragment {
     private ListView list;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
+
     View rootView;
 
 
@@ -95,6 +89,42 @@ public class EventsEtbFragment extends Fragment {
 
              }
          });
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                System.out.print("position"+position);
+
+                num_event=id_event.get(position);
+                new Thread(new Runnable() {
+                    public void run() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+
+                                // Create new fragment and transaction
+                                Fragment newFragment = new EditEventFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("id_user", id_user);
+                                bundle.putString("id_event", num_event);
+                                newFragment.setArguments(bundle);
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                                // Replace whatever is in the fragment_container view with this fragment,
+                                // and add the transaction to the back stack
+                                transaction.replace(R.id.frame_container, newFragment);
+                                transaction.addToBackStack(null);
+                                // Commit the transaction
+                                transaction.commit();
+                            }
+                        });
+                    }
+                }).start();
+
+            }
+
+
+        });
 
         new Thread(new Runnable() {
             public void run() {
@@ -107,15 +137,17 @@ public class EventsEtbFragment extends Fragment {
         }).start();
 
 
-
         return rootView;
     }
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
 
     }
+
 
     private class ShowAllEventsTask extends AsyncTask<Void, Void, InputStream> {
 
@@ -185,7 +217,9 @@ public class EventsEtbFragment extends Fragment {
                 nbreponse = finalResult.length();
                 String nb = String.valueOf(nbreponse);
                 System.out.println("nb reponse "+ nb);
+                Nb_events.setText(nb);
 
+                id_event = new ArrayList<String>(nbreponse);
                 titre = new ArrayList<String>(nbreponse);
                 ville = new ArrayList<String>(nbreponse);
                 pays = new ArrayList<String>(nbreponse);
@@ -198,6 +232,7 @@ public class EventsEtbFragment extends Fragment {
 
                     JSONObject element = finalResult.getJSONObject(i);
 
+                    id_event.add(element.getString("id"));
                     titre.add(element.getString("titre"));
                     date_debut.add(element.getString("date_debut"));
                     ville.add(element.getString("ville"));
@@ -210,6 +245,7 @@ public class EventsEtbFragment extends Fragment {
 
 
                 for(i=0;i<finalResult.length();i++) {
+
                     afficheAllEventsResume(i);
                 }
                 list.setAdapter(adapter);
@@ -227,36 +263,13 @@ public class EventsEtbFragment extends Fragment {
     }
     protected void afficheAllEventsResume(int i)
     {
+
         arrayList.add(titre.get(i).toString().toUpperCase()+"\n"+"Date : "+date_debut.get(i).toString()
                 +"\n"+ville.get(i).toString().toUpperCase()+", "+pays.get(i).toString().toUpperCase()
                 +"\n"+"Genre : "+genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), "")
                         +"\n"+"Statut du recrutement : "+statut_recrutement.get(i).toString());
-
-
-
-      /*  Ville.setText(ville.get(i).toString());
-        Pays.setText(pays.get(i).toString());
-        Statut.setText(statut_recrutement.get(i).toString());
-
-        Genre.setText(genre_musical.get(i).toString().replace(String.valueOf("["), "").replace(String.valueOf("]"), ""));
-
-        if(imgUrl.get(i).toString().length() != 0) {
-            InputStream in = null;
-            try {
-                in = new java.net.URL(imgUrl.get(i).toString()).openStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imgurl = BitmapFactory.decodeStream(in);
-
-            img.setImageBitmap(getCircularBitmapWithBorder(imgurl, 6, Color.rgb(255, 255, 255)));
-
-        }else
-        {
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ic_default_event));
-
-        }*/
-
+        list.setAdapter(adapter);
     }
+
 
 }

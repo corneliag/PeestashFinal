@@ -10,7 +10,7 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="fill_parent">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,13 +111,16 @@
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:id="@+id/Liste_events"
-                          android:text="Vous avez actuellement :"
+                          android:text="Vous avez :"
                           android:textStyle="bold"
                           android:layout_marginTop="5dp"
                           android:layout_marginLeft="5dp"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:id="@+id/nbEvents" android:text="0 évènement"
+                          android:id="@+id/nbEvents" android:text="0"
                           android:textStyle="bold" android:layout_marginTop="5dp" android:layout_marginLeft="20dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:id="@+id/textView8" android:text="évènements" android:textStyle="bold"
+                          android:layout_marginTop="5dp" android:layout_marginLeft="20dp"/>
             </LinearLayout>
         </LinearLayout>
         <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
@@ -164,22 +167,27 @@
 
         <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_below="@+id/bottomProfil"
-                android:id="@+id/ListeEvents"
-                android:layout_gravity="left|top"
-                android:background="#eaeaeaea" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
-                android:layout_marginTop="0dp">
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_below="@+id/bottomProfil"
+                    android:id="@+id/ListeEvents"
+                    android:layout_gravity="left|top"
+                    android:background="#eaeaeaea" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:layout_marginTop="0dp">
 
-            <ListView android:id="@android:id/list"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="left|top" android:padding="5dp"
-                      android:clickable="true" android:textFilterEnabled="false"
-                      style="@style/ListViewStyle.Light"
-
-                      />
+                <ListView android:id="@android:id/list"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="left|top" android:padding="5dp"
+                          android:clickable="true" android:textFilterEnabled="false"
+                          android:scrollbarStyle="insideOverlay"
+                          android:scrollbarAlwaysDrawVerticalTrack="true"
+                          />
+            </LinearLayout>
         </LinearLayout>
 
 

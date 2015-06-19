@@ -120,4 +120,6 @@
     <string name="cgu">*J\'ai lu et j\'accepte les CGU</string>
     <string name="facebook_app_id">335426429995872</string>
     <string name="modifProfil"><u>Modifier</u></string>
+    <string name="title_activity_custom_list">CustomList</string>
+    <string name="title_activity_edit_event">Editer mon évènement</string>
 </resources>
